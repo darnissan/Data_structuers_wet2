@@ -48,6 +48,16 @@ public:
             node = next;
         }
     }
+    void Clear()
+    {
+        ListNode<T> *node = head;
+        while (node != nullptr)
+        {
+            ListNode<T> *next = node->GetNext();
+            delete node;
+            node = next;
+        }
+    }
 
     // Getter and setter methods for the head and tail pointers of the list
     ListNode<T> *GetHead() const
@@ -66,7 +76,7 @@ public:
         ListNode<T> *node = new ListNode<T>(value);
 
         // If the list is empty, set the new node as the head and tail of the list
-        if (head == nullptr)
+        if ( head == nullptr)
         {
             head = node;
             tail = node;

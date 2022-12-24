@@ -140,6 +140,25 @@ public:
             delete node;
         }
     }
+    //get by serial
+    ListNode<T> *GetBySerial(const int &serial)
+    {
+        // Keep track of the previous and current nodes as we iterate through the list
+        ListNode<T> *node = this->head;
+
+        // Iterate through the list until we find a node with the given value
+        while (node != nullptr && node->GetSerial() != serial)
+        {
+            node = node->GetNext();
+        }
+
+ 
+        if (node != nullptr)
+        {
+            return node;
+        }
+        return nullptr;
+    }
 
     bool IsEmpty() const
     {

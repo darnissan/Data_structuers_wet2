@@ -10,15 +10,15 @@ private:
     LinkedList<T> **HTarray;
     int size;
     int moduluNum;
-    int numOfElements=0;
-    int numOfSlotsTaken=0;
-    bool everResized=false;
-    int HashFunction(int toModulu,int value)
+    int numOfElements = 0;
+    int numOfSlotsTaken = 0;
+    bool everResized = false;
+    int HashFunction(int const toModulu, int const value) const
     {
         int returnedVal = (value % toModulu);
         return returnedVal;
     }
-    int HashFunction(int value)
+    int HashFunction(int const value) const
     {
         int returnedVal = (value % size);
         return returnedVal;
@@ -56,24 +56,24 @@ public:
     }
     void Insert(const T &value, int serial)
     {
-        if (isIn(value, serial)==false)
+        if (isIn(value, serial) == false)
         {
             int indexToInsert = HashFunction(serial);
-            if (HTarray[indexToInsert]->GetHead()==nullptr)
+            if (HTarray[indexToInsert]->GetHead() == nullptr)
             {
                 numOfSlotsTaken++;
             }
             HTarray[indexToInsert]->Insert(value, serial);
-            
+
             numOfElements++;
         }
-        if (numOfSlotsTaken==size-1)
+        if (numOfSlotsTaken == size - 1)
         {
-            resize(size*2);
+            resize(size * 2);
         }
-        else if (numOfSlotsTaken==size/2 && everResized==true)
+        else if (numOfSlotsTaken == size / 2 && everResized == true)
         {
-            resize(size/2);
+            resize(size / 2);
         }
     }
     bool isIn(const T &value, int serial)
@@ -81,10 +81,13 @@ public:
         int indexToCheck = HashFunction(serial);
         return HTarray[indexToCheck]->isInList(value);
     }
-  
 
-  
-    
+    T const &Find(int serial) const
+    {
+        int indexToCheck = HashFunction(serial);
+        return HTarray[indexToCheck]->GetBySerial(serial)->GetValue();
+    }
+
     void resize(int newSize)
     {
         // I need to copy the values to a new array
@@ -97,15 +100,15 @@ public:
             newArray[i] = new LinkedList<T>;
             newArray[i]->SetHead(nullptr);
         }
-        numOfSlotsTaken=0;
-        ListNode<T> *temp=nullptr;
-        for (int i = 0 ; i<size;i++)
+        numOfSlotsTaken = 0;
+        ListNode<T> *temp = nullptr;
+        for (int i = 0; i < size; i++)
         {
             temp = HTarray[i]->GetHead();
-            while (temp!=nullptr)
+            while (temp != nullptr)
             {
-                int indexToInsert = HashFunction(newSize,temp->GetSerial());
-                if (newArray[indexToInsert]->GetHead()==nullptr)
+                int indexToInsert = HashFunction(newSize, temp->GetSerial());
+                if (newArray[indexToInsert]->GetHead() == nullptr)
                 {
                     numOfSlotsTaken++;
                 }
@@ -121,9 +124,15 @@ public:
         delete[] HTarray;
         HTarray = newArray;
         size = newSize;
-        everResized=true;
+        everResized = true;
     }
-
-
+    void Print()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            std::cout << "index " << i << ": ";
+            HTarray[i]->Print();
+        }
+    }
 };
 #endif // HASH_TABLE_H

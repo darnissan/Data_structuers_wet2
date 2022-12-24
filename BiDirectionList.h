@@ -2,8 +2,6 @@
 #define LIST_H_
 #include <iostream>
 
-
-
 template <class T>
 class ListNode
 {
@@ -17,12 +15,15 @@ public:
 
     ListNode *GetNext() const { return next; }
     void SetNext(ListNode *next) { this->next = next; }
-    ListNode *GetPrev() const {return prev;}
-    void SetPrev(ListNode otherPrev) {this->prev=otherPrev;} 
+    ListNode *GetPrev() const { return prev; }
+    void SetPrev(ListNode otherPrev) { this->prev = otherPrev; }
+    void Setserial(int otherserial) { this->serial = otherserial; }
+    int GetSerial() const { return serial; }
 
 private:
     // The value and next pointer of the node
     T value;
+    int serial;
     ListNode *next;
     ListNode *prev;
 };
@@ -76,7 +77,25 @@ public:
         ListNode<T> *node = new ListNode<T>(value);
 
         // If the list is empty, set the new node as the head and tail of the list
-        if ( head == nullptr)
+        if (head == nullptr)
+        {
+            head = node;
+            tail = node;
+        }
+        // Otherwise, add the new node to the end of the list and update the tail pointer
+        else
+        {
+            tail->SetNext(node);
+            tail = node;
+        }
+    }
+    void Insert(const T &value, const int &serial)
+    {
+        // Create a new node with the given value
+        ListNode<T> *node = new ListNode<T>(value);
+        node->Setserial(serial);
+        // If the list is empty, set the new node as the head and tail of the list
+        if (head == nullptr)
         {
             head = node;
             tail = node;
@@ -164,7 +183,18 @@ public:
         }
         return os;
     }
+    bool isInList(const T &value)
+    {
+        ListNode<T> *temp;
+        temp = this->head;
+        while (temp != nullptr)
+        {
+            if (temp->GetValue() == value)
+                return true;
+        }
 
+        return false;
+    }
 
 private:
     // The head and tail pointers of the linked list

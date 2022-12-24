@@ -11,5 +11,6 @@ int main()
     ht.Insert(2,2);
     ht.Insert(1,1);
     ht.Insert(11,11);
+    ht.Insert(12,12);
     return 0;
 }

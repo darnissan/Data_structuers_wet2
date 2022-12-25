@@ -14,15 +14,21 @@
 
 #ifndef WORLDCUP23A2_H_
 #define WORLDCUP23A2_H_
-
+#include "AvlTree.h"
 #include "wet2util.h"
-
+#include "Team.h"
+#include "Player.h"
+#include "HashTable.h"
 class world_cup_t {
 private:
 	//
 	// Here you may add anything you want
 	//
-	
+	AvlTree <Team> teamsRankTree;
+	HashTable <Player> AllplayersTable;
+
+
+	bool isTeamExist(int teamId);
 public:
 	// <DO-NOT-MODIFY> {
 	

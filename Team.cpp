@@ -78,4 +78,7 @@ int Team::getTeamStrength()
 {
     return this->teamStrength;
 }
-
+bool Team::operator ==(const Team& team)
+{
+    return this->teamID==team.teamID;
+}

@@ -32,7 +32,7 @@ public:
     void multiplyNewPlayerToTeamSpirit(permutation_t newPlayerSpirit);
     permutation_t getTeamSpirit();
     int getTeamStrength();
-
+    bool operator ==(const Team& team);
 };
 
 

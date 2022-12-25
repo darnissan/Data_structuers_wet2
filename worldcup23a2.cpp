@@ -13,6 +13,19 @@ world_cup_t::~world_cup_t()
 StatusType world_cup_t::add_team(int teamId)
 {
 	// TODO: Your code goes here
+	if (teamId <= 0){
+		return StatusType::INVALID_INPUT;}
+	try {
+		if (isTeamExist(teamId)){
+			return StatusType::FAILURE;
+		}
+		Team newTeam(teamId);
+		teamsRankTree.root=teamsRankTree.Insert(teamsRankTree.root, newTeam);
+	}
+	catch (std::bad_alloc& ba) {
+		return StatusType::ALLOCATION_ERROR;
+	}
+
 	return StatusType::SUCCESS;
 }
 
@@ -57,7 +70,19 @@ output_t<int> world_cup_t::get_player_cards(int playerId)
 output_t<int> world_cup_t::get_team_points(int teamId)
 {
 	// TODO: Your code goes here
-	return 30003;
+	if (teamId <= 0){
+		return StatusType::INVALID_INPUT;
+	}
+	try {
+		if (!isTeamExist(teamId)){
+			return StatusType::FAILURE;
+		}
+		return teamsRankTree.find(teamsRankTree.root, teamId)->GetValue().getPoints();
+	}
+	catch (std::bad_alloc& ba) {
+		return StatusType::ALLOCATION_ERROR;
+	}
+	return StatusType::SUCCESS;
 }
 
 output_t<int> world_cup_t::get_ith_pointless_ability(int i)
@@ -76,4 +101,9 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
 {
 	// TODO: Your code goes here
 	return StatusType::SUCCESS;
+}
+
+
+bool world_cup_t::isTeamExist(int teamId){
+	teamsRankTree.isItInTree(teamsRankTree.root, teamId);
 }

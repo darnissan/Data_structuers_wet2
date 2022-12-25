@@ -38,3 +38,4 @@ public:
     void setGamesTeamPlayedBefore(int gamesTeamPlayedBefore);
     void setGamesFromRootPlayer(int gamesFromRootPlayer);
 };
+#endif // PLAYER_H_

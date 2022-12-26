@@ -332,29 +332,34 @@ RankNode<T> *RankTree<T>::Remove(RankNode<T> *node, const T &value)
     if (balanceFactor == 2 && GetBF(node->GetLeft()) >= 0)
     {
         node = RotateLL(node);
-        node->GetLeft()->SetSumOfSubTreeNodes(node->GetLeft()->GetLeft()->GetSumOfSubTreeNodes() + node->GetLeft()->GetRight()->GetSumOfSubTreeNodes() + 1);
-        node->SetSumOfSubTreeNodes(node->GetLeft()->GetSumOfSubTreeNodes() + node->GetRight()->GetSumOfSubTreeNodes() + node->GetValue() + 1);
+       
     }
     else if (balanceFactor == 2 && GetBF(node->GetLeft()) == -1)
     {
         node = RotateLR(node);
-        node->GetLeft()->SetSumOfSubTreeNodes(node->GetLeft()->GetLeft()->GetSumOfSubTreeNodes() + node->GetLeft()->GetRight()->GetSumOfSubTreeNodes() + 1);
-        node->GetRight()->SetSumOfSubTreeNodes(node->GetRight()->GetLeft()->GetSumOfSubTreeNodes() + node->GetRight()->GetRight()->GetSumOfSubTreeNodes() + 1);
-        node->SetSumOfSubTreeNodes(node->GetLeft()->GetSumOfSubTreeNodes() + node->GetRight()->GetSumOfSubTreeNodes() + node->GetValue() + 1);
+       
     }
     else if (balanceFactor == -2 && GetBF(node->GetRight()) <= 0)
     {
         node = RotateRR(node);
-        node->GetRight()->SetSumOfSubTreeNodes(node->GetRight()->GetLeft()->GetSumOfSubTreeNodes() + node->GetRight()->GetRight()->GetSumOfSubTreeNodes() + 1);
-        node->SetSumOfSubTreeNodes(node->GetLeft()->GetSumOfSubTreeNodes() + node->GetRight()->GetSumOfSubTreeNodes() + node->GetValue() + 1);
+        
     }
     else if (balanceFactor == -2 && GetBF(node->GetRight()) == 1)
     {
         node = RotateRL(node);
-        node->GetLeft()->SetSumOfSubTreeNodes(node->GetLeft()->GetLeft()->GetSumOfSubTreeNodes() + node->GetLeft()->GetRight()->GetSumOfSubTreeNodes() + 1);
-        node->GetRight()->SetSumOfSubTreeNodes(node->GetRight()->GetLeft()->GetSumOfSubTreeNodes() + node->GetRight()->GetRight()->GetSumOfSubTreeNodes() + 1);
-        node->SetSumOfSubTreeNodes(node->GetLeft()->GetSumOfSubTreeNodes() + node->GetRight()->GetSumOfSubTreeNodes() + node->GetValue() + 1);
+        
     }
+    int leftSubTreeNodes = 0;
+    int rightSubTreeNodes = 0;
+    if (node->GetLeft())
+    {
+        leftSubTreeNodes = node->GetLeft()->GetSumOfSubTreeNodes();
+    }
+    if (node->GetRight())
+    {
+        rightSubTreeNodes = node->GetRight()->GetSumOfSubTreeNodes();
+    }
+    node->SetSumOfSubTreeNodes(leftSubTreeNodes + rightSubTreeNodes + 1);
     return node;
 }
 template <class T>
@@ -418,6 +423,10 @@ T &RankTree<T>::Select(RankNode<T> *node, int k_index) const
     else if (node->GetRight())
     {
         return Select(node->GetRight(), k_index - leftSubTreeSize - 1);
+    }
+    else
+    {
+        throw std::out_of_range("Index out of range");
     }
     return node->GetValue();
 }

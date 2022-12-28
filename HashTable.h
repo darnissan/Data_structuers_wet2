@@ -82,7 +82,7 @@ public:
         return HTarray[indexToCheck]->isInList(value);
     }
 
-    T const &Find(int serial) const
+    T  &Find(int serial) 
     {
         int indexToCheck = HashFunction(serial);
         return HTarray[indexToCheck]->GetBySerial(serial)->GetValue();

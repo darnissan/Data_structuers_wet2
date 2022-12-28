@@ -31,11 +31,10 @@ permutation_t Player::getPlayerSpirit()
 {
     return this->playerSpirit;
 }
-int Player::getPlayerCards() const
-{
+int Player::getPlayerCards() {
     return this->playerCards;
 }
-void Player::addCards(int newCards)
+void Player::addCards(int newCards) 
 {
     this->playerCards+=newCards;
 }
@@ -95,7 +94,7 @@ void Player::setPlayerReversedTreeNode(ReversedTreeNode<Player> *playerReversedT
 {
     this->playerReversedTreeNode=playerReversedTreeNode;
 }
-ReversedTreeNode<Player> *Player::getPlayerReversedTreeNode()
+ReversedTreeNode<Player> *Player::getPlayerReversedTreeNode() 
 {
     return this->playerReversedTreeNode;
 }

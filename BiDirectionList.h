@@ -11,6 +11,7 @@ public:
 
     // Getter and setter methods for the value and next pointer of the node
     const T &GetValue() const { return value; }
+     T &GetValue()  { return value; }
     void SetValue(const T &value) { this->value = value; }
 
     ListNode *GetNext() const { return next; }

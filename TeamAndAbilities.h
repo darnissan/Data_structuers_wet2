@@ -17,8 +17,8 @@ class TeamAndAbilities
     ~TeamAndAbilities();
     int getTeamID();
     int getSumPlayersAbility();
-    bool operator ==(const TeamAndAbilities& team);
-    bool operator >(const TeamAndAbilities& team);
-    bool operator <(const TeamAndAbilities& team);
+    bool operator ==(const TeamAndAbilities& team)const;
+    bool operator >(const TeamAndAbilities& team)const;
+    bool operator <(const TeamAndAbilities& team)const;
 };
 #endif // TEAM_AND_ABILITIES_H_

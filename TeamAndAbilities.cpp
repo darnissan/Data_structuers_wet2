@@ -14,11 +14,11 @@ int TeamAndAbilities::getSumPlayersAbility()
 {
     return this->sumPlayersAbility;
 }
-bool TeamAndAbilities::operator ==(const TeamAndAbilities& team)
+bool TeamAndAbilities::operator ==(const TeamAndAbilities& team) const
 {
     return this->teamID==team.teamID;
 }
-bool TeamAndAbilities::operator >(const TeamAndAbilities& team)
+bool TeamAndAbilities::operator >(const TeamAndAbilities& team) const
 {
     if (this->sumPlayersAbility==team.sumPlayersAbility)
     {
@@ -26,7 +26,7 @@ bool TeamAndAbilities::operator >(const TeamAndAbilities& team)
     }
     return this->sumPlayersAbility>team.sumPlayersAbility;
 }
-bool TeamAndAbilities::operator <(const TeamAndAbilities& team)
+bool TeamAndAbilities::operator <(const TeamAndAbilities& team) const
 {
     if (this->sumPlayersAbility==team.sumPlayersAbility)
     {

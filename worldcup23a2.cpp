@@ -129,6 +129,10 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		}
 		teamOnTree->GetValue().multiplyNewPlayerToTeamSpirit(spirit);
 		teamOnTree->GetValue().addPlayerAbility(ability);
+		TeamAndAbilities OLDteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility());
+		teamsAbilitiesRankTree.root=teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root,OLDteamAndAbilities);
+		TeamAndAbilities NEWteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility()+ability);
+		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, NEWteamAndAbilities);
 		newPlayer.setPlayerReversedTreeNode(newPlayerNode);
 		AllplayersTable.Insert(newPlayer, playerId);
 	}

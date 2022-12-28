@@ -160,6 +160,10 @@ public:
         return nullptr;
     }
 
+
+
+
+    
     bool IsEmpty() const
     {
         return head == nullptr;

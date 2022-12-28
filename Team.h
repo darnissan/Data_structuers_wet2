@@ -1,6 +1,8 @@
 #ifndef TEAM_H_
 #define TEAM_H_
 #include "wet2util.h"
+#include "ReversedTree.h"
+#include "Player.h"
 class Team
 {
 private:
@@ -13,7 +15,7 @@ private:
     int gamesPlayed=0;
     permutation_t teamSpirit;
     int teamStrength;
-
+    ReversedTreeNode<Player> *teamReversedTreeRoot=nullptr;
 public:
     Team(int teamID);
     ~Team();
@@ -36,6 +38,8 @@ public:
     bool operator ==(const Team& team);
     bool operator >(const Team& team);
     bool operator <(const Team& team);
+    void setTeamReversedTreeRoot(ReversedTreeNode<Player> *teamReversedTreeRoot);
+    ReversedTreeNode<Player> *getTeamReversedTreeRoot();
 
 };
 

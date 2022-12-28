@@ -83,3 +83,37 @@ void Player::setGamesFromRootPlayer(int gamesFromRootPlayer)
 {
     this->gamesFromRootPlayer=gamesFromRootPlayer;
 }
+bool Player::operator ==(const Player& player) const
+{
+    return this->playerID==player.playerID;
+}
+bool Player::operator !=(const Player& player) const
+{
+    return this->playerID!=player.playerID;
+}
+void Player::setPlayerReversedTreeNode(ReversedTreeNode<Player> *playerReversedTreeNode)
+{
+    this->playerReversedTreeNode=playerReversedTreeNode;
+}
+ReversedTreeNode<Player> *Player::getPlayerReversedTreeNode()
+{
+    return this->playerReversedTreeNode;
+}
+void Player::setSpiritsBeforeMe(permutation_t spiritsBeforeMe)
+{
+    this->spiritsBeforeMe=spiritsBeforeMe;
+}
+permutation_t Player::getSpiritsBeforeMe()
+{
+    return this->spiritsBeforeMe;
+}
+void Player::setlSpiritFromRootPlayer(permutation_t SpiritFromRootPlayer)
+{
+    this->SpiritFromRootPlayer=SpiritFromRootPlayer;
+}
+permutation_t Player::getSpiritFromRootPlayer()
+{
+    return this->SpiritFromRootPlayer;
+}
+
+

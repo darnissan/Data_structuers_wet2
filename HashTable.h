@@ -76,7 +76,7 @@ public:
             resize(size / 2);
         }
     }
-    bool isIn(const T &value, int serial)
+    bool isIn(const T &value, int serial) 
     {
         int indexToCheck = HashFunction(serial);
         return HTarray[indexToCheck]->isInList(value);
@@ -86,6 +86,12 @@ public:
     {
         int indexToCheck = HashFunction(serial);
         return HTarray[indexToCheck]->GetBySerial(serial)->GetValue();
+    }
+   ListNode<T> *FindPointer(int serial) const
+    {
+        int indexToCheck = HashFunction(serial);
+        
+        return HTarray[indexToCheck]->GetBySerial(serial);
     }
 
     void resize(int newSize)

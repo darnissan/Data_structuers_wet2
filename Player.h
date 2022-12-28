@@ -1,6 +1,7 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 #include "wet2util.h"
+#include "ReversedTree.h"
 
 class Player
 {
@@ -16,8 +17,9 @@ private:
     bool isTeamActive = true;
     bool isRootPlayer = false;
     permutation_t playerSpirit;
-    
-
+    ReversedTreeNode<Player> *playerReversedTreeNode=nullptr;
+    permutation_t spiritsBeforeMe;
+    permutation_t SpiritFromRootPlayer;
 public:
     Player(int playerID, int teamId, const permutation_t &spirit, int gamesPlayed, int ability, int cards, bool goalKeeper);
     ~Player();
@@ -38,5 +40,15 @@ public:
     void setIsTeamActive(bool isTeamActive);
     void setGamesTeamPlayedBefore(int gamesTeamPlayedBefore);
     void setGamesFromRootPlayer(int gamesFromRootPlayer);
+    bool operator ==(const Player& player) const;
+    bool operator !=(const Player& player) const;
+
+    void setPlayerReversedTreeNode(ReversedTreeNode<Player> *playerReversedTreeNode);
+    ReversedTreeNode<Player> *getPlayerReversedTreeNode();
+    void setSpiritsBeforeMe(permutation_t spiritsBeforeMe);
+    permutation_t getSpiritsBeforeMe();
+    void setlSpiritFromRootPlayer(permutation_t SpiritFromRootPlayer);
+    permutation_t getSpiritFromRootPlayer();
+    
 };
 #endif // PLAYER_H_

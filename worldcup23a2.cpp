@@ -24,13 +24,16 @@ StatusType world_cup_t::add_team(int teamId)
 			return StatusType::FAILURE;
 		}
 		Team newTeam(teamId);
-		
-		
+
 		numberOfActiveTeams++;
 		TeamAndAbilities newTeamAndAbilities(teamId, 0);
 		teamsTree.root = teamsTree.Insert(teamsTree.root, newTeam);
 		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, newTeamAndAbilities);
+
+		Set<Player> *newTeamSet= new Set<Player>(teamId,nullptr);
 		
+		 
+		TeamsHashTable.Insert(newTeamSet, teamId);
 	}
 	catch (std::bad_alloc &ba)
 	{
@@ -51,6 +54,74 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 								   int ability, int cards, bool goalKeeper)
 {
 	// TODO: Your code goes here
+	// 1 - check if the input is valid
+	// 2 - check if the player is already in the system
+	// 3 - check if the team is in the system
+	// 4 - add the player to the HashTable of AllPLayers
+	// 5 - add the player to the team on the DisjointSet
+	// 6 update the team fields regarding the player and the teamAndAbilities tree
+	// 7- update the relevant fields in the player -gamesPlayed
+	if (playerId <= 0 || teamId <= 0 || spirit.isvalid() == false || gamesPlayed < 0 || cards < 0)
+	{
+		return StatusType::INVALID_INPUT;
+	}
+
+	Player newPlayer(playerId, teamId, spirit, gamesPlayed, ability, cards, goalKeeper);
+
+	if (isPlayerExist(newPlayer, playerId) || isTeamExist(teamId) == false)
+	{
+		return StatusType::FAILURE;
+	}
+	AVLNode<Team> *teamOnTree = teamsTree.find(teamsTree.root, teamId); // the team on the tree ordered by teamId
+
+	ListNode<Set<Player>*> *teamOnHT = TeamsHashTable.FindPointer(teamId); // the team on the Hashtable representing the DisjointSet of UNION - FIND
+
+	ReversedTreeNode<Player> *newPlayerNode;  // the player node on the reversed tree
+
+	if (teamOnTree == nullptr || teamOnHT == nullptr)
+	{
+		return StatusType::FAILURE;
+	}
+	// updating the player fields
+	if (teamOnTree->GetValue().getNumOfPlayers() == 0) // meaning this is the first player to be added to the team
+	{	
+		newPlayer.setIsRootPlayer(true);
+		newPlayer.setIsTeamActive(true);
+		newPlayer.setGamesTeamPlayedBefore(0);
+		newPlayer.setGamesFromRootPlayer(0);
+		newPlayer.setSpiritsBeforeMe(spirit.neutral());
+		newPlayer.setlSpiritFromRootPlayer(spirit.neutral());
+		newPlayerNode= new ReversedTreeNode<Player>(newPlayer);
+		newPlayerNode->SetParent(nullptr);
+		newPlayerNode->SetSetOfTree(teamOnHT->GetValue());
+		teamOnHT->GetValue()->setRootOfSet(newPlayerNode);
+		
+	}
+	else
+	{
+		newPlayer.setIsRootPlayer(false);
+		newPlayer.setIsTeamActive(true);
+		newPlayer.setGamesTeamPlayedBefore(teamOnTree->GetValue().getGamesPlayed());
+		newPlayer.setGamesFromRootPlayer(teamOnHT->GetValue()->GetRootOfSet()->GetValue().getGamesFromRootPlayer());
+		newPlayer.setSpiritsBeforeMe(teamOnTree->GetValue().getTeamSpirit());
+		newPlayer.setlSpiritFromRootPlayer(teamOnHT->GetValue()->GetRootOfSet()->GetValue().getSpiritFromRootPlayer());
+		newPlayerNode = new ReversedTreeNode<Player>(newPlayer);
+		newPlayerNode->SetSetOfTree(nullptr);
+		newPlayerNode->SetParent(teamOnHT->GetValue()->GetRootOfSet());
+	}
+
+
+	//updating the team fields on the tree
+	teamOnHT->GetValue()->IncreaseSizeOfSetByOne();
+	teamOnTree->GetValue().increaseNumOfPlayers();
+	if (goalKeeper)
+	{
+		teamOnTree->GetValue().increaseNumOfGoalKeepers();
+	}
+	teamOnTree->GetValue().multiplyNewPlayerToTeamSpirit(spirit);
+	teamOnTree->GetValue().addPlayerAbility(ability);
+	newPlayer.setPlayerReversedTreeNode(newPlayerNode);
+	AllplayersTable.Insert(newPlayer, playerId);
 	return StatusType::SUCCESS;
 }
 
@@ -121,4 +192,8 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
 bool world_cup_t::isTeamExist(int teamId)
 {
 	return teamsTree.isItInTree(teamsTree.root, teamId);
+}
+bool world_cup_t::isPlayerExist(const Player &player, int playerId)
+{
+	return AllplayersTable.isIn(player, playerId);
 }

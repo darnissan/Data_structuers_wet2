@@ -1,5 +1,6 @@
 #ifndef REVERSED_TREE_H
 #define REVERSED_TREE_H
+#include "iostream"
 
 template <class T>
 class ReversedTreeNode;
@@ -14,6 +15,9 @@ class Set
     void setRootOfSet(ReversedTreeNode<T> *newRootOfSet) { rootOfSet = newRootOfSet; }
     ReversedTreeNode<T> *GetRootOfSet() { return rootOfSet; }
     int GetSizeOfSet() { return sizeOfSet; }
+    void SetSizeOfSet(int newSizeOfSet) { sizeOfSet = newSizeOfSet; }
+    void IncreaseSizeOfSetByOne() { sizeOfSet++; }
+    void IncreaseSizeOfSetBy(int num) { sizeOfSet += num; }
     void Print() const { std::cout << "Set with ID " << idOfSet << " and size " << sizeOfSet << std::endl; }
 
     private:
@@ -33,6 +37,7 @@ class ReversedTreeNode
     void SetValue(const T &newValue) { value = newValue; }
     void SetParent(ReversedTreeNode *newParent) { parent = newParent; }
     void SetSetOfTree(Set<T> *newSetOfTree) { setOfTree = newSetOfTree; }
+    
     T &GetValue() { return value; }
     ReversedTreeNode *GetParent() { return parent; }
     void Print() const { std::cout << "ReversedTreeNode with value " << value << std::endl; }

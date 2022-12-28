@@ -65,9 +65,10 @@ public:
 private:
 	// DO NOT access these private fields - may be enforced by verifier.
 
-	int a[N];
+	
 	
 public:
+	int a[N];
 	permutation_t() { for (int i = 0; i < N; ++i) { a[i] = -1; } }
 	permutation_t(const int a[N]) { for (int i = 0; i < N; ++i) { this->a[i] = a[i]; } }
 	permutation_t(const permutation_t &other) : permutation_t(other.a) { }

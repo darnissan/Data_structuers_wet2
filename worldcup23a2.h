@@ -30,13 +30,19 @@ private:
 	//
 	AvlTree<Team> teamsTree;
 	HashTable<Player> AllplayersTable;
-	DisjointSet<Player> PlayersByTeam;
 	RankTree<TeamAndAbilities> teamsAbilitiesRankTree;
+
+	HashTable<Set<Player>*> TeamsHashTable;
+	
+	//DisjointSet<Player> playersByTeamId;
 
 	bool isTeamExist(int teamId);
 	int numberOfActiveTeams=0;
-	
 	int numberOfPlayers=0;
+
+	bool isPlayerExist(const Player &player, int playerId);
+
+	void unionSets(int teamId1, int teamId2);
 
 public:
 	// <DO-NOT-MODIFY> {

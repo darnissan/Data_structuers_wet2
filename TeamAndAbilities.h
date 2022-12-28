@@ -2,7 +2,7 @@
 #define TEAM_AND_ABILITIES_H_
 
 #include "wet2util.h"
-#include "AvlTree.h"
+#include "RankTree.h"
 
 class TeamAndAbilities
 {

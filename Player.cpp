@@ -31,7 +31,7 @@ permutation_t Player::getPlayerSpirit()
 {
     return this->playerSpirit;
 }
-int Player::getPlayerCards()
+int Player::getPlayerCards() const
 {
     return this->playerCards;
 }

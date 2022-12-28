@@ -210,6 +210,25 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
 output_t<int> world_cup_t::get_player_cards(int playerId)
 {
 	// TODO: Your code goes here
+	if (playerId <= 0)
+	{
+		return StatusType::INVALID_INPUT;
+	}
+	try{
+	Player ToFindPlayer(playerId);
+	if (isPlayerExist(ToFindPlayer, playerId) == false)
+	{
+		return StatusType::FAILURE;
+	}
+	int cards = AllplayersTable.Find(playerId).getPlayerCards();
+	
+	return cards;
+	}
+	catch (std::bad_alloc &ba)
+	{
+		return StatusType::ALLOCATION_ERROR;
+	}
+	
 	return StatusType::SUCCESS;
 }
 

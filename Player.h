@@ -21,13 +21,14 @@ private:
     permutation_t spiritsBeforeMe;
     permutation_t SpiritFromRootPlayer;
 public:
+    Player(int playerID):playerID(playerID){};
     Player(int playerID, int teamId, const permutation_t &spirit, int gamesPlayed, int ability, int cards, bool goalKeeper);
     ~Player();
     int getPlayerID();
     int getPlayerAbility();
     int getPlayerTeamID();
     permutation_t getPlayerSpirit();
-    int getPlayerCards();
+    int getPlayerCards() const; 
     void addCards(int newCards);
     void setPlayerTeamID(int newTeamID);
     int getGamesPlayedINIT();
@@ -42,7 +43,7 @@ public:
     void setGamesFromRootPlayer(int gamesFromRootPlayer);
     bool operator ==(const Player& player) const;
     bool operator !=(const Player& player) const;
-
+    
     void setPlayerReversedTreeNode(ReversedTreeNode<Player> *playerReversedTreeNode);
     ReversedTreeNode<Player> *getPlayerReversedTreeNode();
     void setSpiritsBeforeMe(permutation_t spiritsBeforeMe);

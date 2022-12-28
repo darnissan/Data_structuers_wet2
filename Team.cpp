@@ -82,3 +82,11 @@ bool Team::operator ==(const Team& team)
 {
     return this->teamID==team.teamID;
 }
+bool Team::operator >(const Team& team)
+{
+    return this->teamID>team.teamID;
+}
+bool Team::operator <(const Team& team)
+{
+    return this->teamID<team.teamID;
+}

@@ -28,7 +28,7 @@ void print(string cmd, StatusType res);
 
 template<typename T>
 void print(string cmd, output_t<T> res);
-
+/*
 int main()
 {
 	cin >> std::boolalpha;
@@ -145,3 +145,4 @@ void print(string cmd, output_t<T> res)
 	    cout << cmd << ": " << StatusTypeStr[(int) res.status()] << endl;
     }
 }
+*/

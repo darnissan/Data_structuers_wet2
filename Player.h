@@ -13,12 +13,13 @@ private:
     int gamesTeamPlayedBefore;
     int gamesFromRootPlayer;
     bool isGoalKeeper;
-    bool isTeamActive=true;
-    bool isRootPlayer=false;
+    bool isTeamActive = true;
+    bool isRootPlayer = false;
     permutation_t playerSpirit;
+    
 
 public:
-    Player::Player(int playerID, int teamId, const permutation_t &spirit, int gamesPlayed, int ability, int cards, bool goalKeeper);
+    Player(int playerID, int teamId, const permutation_t &spirit, int gamesPlayed, int ability, int cards, bool goalKeeper);
     ~Player();
     int getPlayerID();
     int getPlayerAbility();

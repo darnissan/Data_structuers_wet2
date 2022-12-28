@@ -13,6 +13,7 @@ private:
     int gamesPlayed=0;
     permutation_t teamSpirit;
     int teamStrength;
+
 public:
     Team(int teamID);
     ~Team();
@@ -33,6 +34,9 @@ public:
     permutation_t getTeamSpirit();
     int getTeamStrength();
     bool operator ==(const Team& team);
+    bool operator >(const Team& team);
+    bool operator <(const Team& team);
+
 };
 
 

@@ -1,5 +1,5 @@
 #include "worldcup23a2.h"
-
+#include "wet2util.h"
 world_cup_t::world_cup_t()
 {
 	// TODO: Your code goes here
@@ -13,16 +13,27 @@ world_cup_t::~world_cup_t()
 StatusType world_cup_t::add_team(int teamId)
 {
 	// TODO: Your code goes here
-	if (teamId <= 0){
-		return StatusType::INVALID_INPUT;}
-	try {
-		if (isTeamExist(teamId)){
+	if (teamId <= 0)
+	{
+		return StatusType::INVALID_INPUT;
+	}
+	try
+	{
+		if (isTeamExist(teamId))
+		{
 			return StatusType::FAILURE;
 		}
 		Team newTeam(teamId);
-		teamsRankTree.root=teamsRankTree.Insert(teamsRankTree.root, newTeam);
+		
+		
+		numberOfActiveTeams++;
+		TeamAndAbilities newTeamAndAbilities(teamId, 0);
+		teamsTree.root = teamsTree.Insert(teamsTree.root, newTeam);
+		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, newTeamAndAbilities);
+		
 	}
-	catch (std::bad_alloc& ba) {
+	catch (std::bad_alloc &ba)
+	{
 		return StatusType::ALLOCATION_ERROR;
 	}
 
@@ -36,8 +47,8 @@ StatusType world_cup_t::remove_team(int teamId)
 }
 
 StatusType world_cup_t::add_player(int playerId, int teamId,
-                                   const permutation_t &spirit, int gamesPlayed,
-                                   int ability, int cards, bool goalKeeper)
+								   const permutation_t &spirit, int gamesPlayed,
+								   int ability, int cards, bool goalKeeper)
 {
 	// TODO: Your code goes here
 	return StatusType::SUCCESS;
@@ -70,16 +81,20 @@ output_t<int> world_cup_t::get_player_cards(int playerId)
 output_t<int> world_cup_t::get_team_points(int teamId)
 {
 	// TODO: Your code goes here
-	if (teamId <= 0){
+	if (teamId <= 0)
+	{
 		return StatusType::INVALID_INPUT;
 	}
-	try {
-		if (!isTeamExist(teamId)){
+	try
+	{
+		if (!isTeamExist(teamId))
+		{
 			return StatusType::FAILURE;
 		}
-		return teamsRankTree.find(teamsRankTree.root, teamId)->GetValue().getPoints();
+		return teamsTree.find(teamsTree.root, teamId)->GetValue().getPoints();
 	}
-	catch (std::bad_alloc& ba) {
+	catch (std::bad_alloc &ba)
+	{
 		return StatusType::ALLOCATION_ERROR;
 	}
 	return StatusType::SUCCESS;
@@ -103,7 +118,7 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
 	return StatusType::SUCCESS;
 }
 
-
-bool world_cup_t::isTeamExist(int teamId){
-	teamsRankTree.isItInTree(teamsRankTree.root, teamId);
+bool world_cup_t::isTeamExist(int teamId)
+{
+	return teamsTree.isItInTree(teamsTree.root, teamId);
 }

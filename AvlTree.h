@@ -63,7 +63,7 @@ void AvlTree<T>::DeleteTree(AVLNode<T> *node)
     node->SetLeft(this->Clear(node->GetLeft()));
     node->SetRight(this->Clear(node->GetRight()));
     delete node;
-    node=NULL;
+    node = NULL;
     return;
 }
 template <class T>
@@ -74,10 +74,9 @@ AvlTree<T>::~AvlTree()
 template <class T>
 void AvlTree<T>::Clear()
 {
-    
-        this->root = this->Clear(this->root);
-        this->root = NULL;
-    
+
+    this->root = this->Clear(this->root);
+    this->root = NULL;
 }
 
 template <class T>
@@ -90,7 +89,7 @@ AVLNode<T> *AvlTree<T>::Clear(AVLNode<T> *node)
     node->SetLeft(this->Clear(node->GetLeft()));
     node->SetRight(this->Clear(node->GetRight()));
     delete node;
-    node=NULL;
+    node = NULL;
     return NULL;
 }
 template <class T>
@@ -255,7 +254,7 @@ AVLNode<T> *AvlTree<T>::Remove(AVLNode<T> *node, const T &value)
                 this->root = NULL;
             }
             delete node;
-            node=NULL;
+            node = NULL;
             return NULL;
         }
         else if (node->GetLeft() == NULL)

@@ -1,5 +1,10 @@
 #include "worldcup23a2.h"
 #include "wet2util.h"
+#define TIE 0
+#define FIRST_TEAM_BY_ABILITY 1
+#define FIRST_TEAM_BY_STRENTH 2
+#define SECOND_TEAM_BY_ABILITY 3
+#define SECOND_TEAM_BY_STRENTH 4
 world_cup_t::world_cup_t()
 {
 	// TODO: Your code goes here
@@ -72,6 +77,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 	{
 		return StatusType::FAILURE;
 	}
+	try {
 	AVLNode<Team> *teamOnTree = teamsTree.find(teamsTree.root, teamId); // the team on the tree ordered by teamId
 
 	ListNode<Set<Player>*> *teamOnHT = TeamsHashTable.FindPointer(teamId); // the team on the Hashtable representing the DisjointSet of UNION - FIND
@@ -95,7 +101,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		newPlayerNode->SetParent(nullptr);
 		newPlayerNode->SetSetOfTree(teamOnHT->GetValue());
 		teamOnHT->GetValue()->setRootOfSet(newPlayerNode);
-		
+		teamOnTree->GetValue().setTeamReversedTreeRoot(newPlayerNode);
 	}
 	else
 	{
@@ -122,12 +128,70 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 	teamOnTree->GetValue().addPlayerAbility(ability);
 	newPlayer.setPlayerReversedTreeNode(newPlayerNode);
 	AllplayersTable.Insert(newPlayer, playerId);
+	}
+	catch (std::bad_alloc &ba)
+	{
+		return StatusType::ALLOCATION_ERROR;
+	}
 	return StatusType::SUCCESS;
 }
 
 output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
 {
 	// TODO: Your code goes here
+	if (teamId1 <= 0 || teamId2 <= 0|| teamId1 == teamId2)
+	{
+		return StatusType::INVALID_INPUT;
+	}
+	if (isTeamExist(teamId1) == false || isTeamExist(teamId2) == false)
+	{
+		return StatusType::FAILURE;
+	}
+	AVLNode<Team> *team1Node = teamsTree.find(teamsTree.root, teamId1);
+	AVLNode<Team> *team2Node = teamsTree.find(teamsTree.root, teamId2);
+	Team team1 = team1Node->GetValue();
+	Team team2 = team2Node->GetValue();
+	if (team1.getNumOfGoalKeepers() == 0 || team2.getNumOfGoalKeepers() == 0)
+	{
+		return StatusType::FAILURE;
+	}
+	team1.getTeamReversedTreeRoot()->GetValue().setGamesFromRootPlayer(team1.getGamesPlayed()+1);
+	team2.getTeamReversedTreeRoot()->GetValue().setGamesFromRootPlayer(team2.getGamesPlayed()+1);
+	int pointsAndAbility1 = team1.getPoints() + team1.getSumPlayersAbility();
+	int pointsAndAbility2 = team2.getPoints() + team2.getSumPlayersAbility();
+	if (pointsAndAbility1 > pointsAndAbility2)
+	{
+		team1Node->GetValue().setPoints(team1.getPoints() + 3);
+		return FIRST_TEAM_BY_ABILITY;
+	}
+	else if (pointsAndAbility1 < pointsAndAbility2)
+	{
+		team2Node->GetValue().setPoints(team2.getPoints() + 3);
+		return SECOND_TEAM_BY_ABILITY;
+	}
+	else
+	{
+		int team1Spirit = team1.getTeamSpirit().strength();
+		int team2Spirit = team2.getTeamSpirit().strength();
+		if (team1Spirit > team2Spirit)
+		{	
+			team1Node->GetValue().setPoints(team1.getPoints() + 3);
+			return FIRST_TEAM_BY_STRENTH;
+		}
+		else if (team1Spirit < team2Spirit)
+		{
+			team2Node->GetValue().setPoints(team2.getPoints() + 3);
+			return SECOND_TEAM_BY_STRENTH;
+		}
+		else
+		{
+			team1Node->GetValue().setPoints(team1.getPoints() + 1);
+			team2Node->GetValue().setPoints(team2.getPoints() + 1);
+			return TIE;
+			
+		}
+	}
+
 	return StatusType::SUCCESS;
 }
 

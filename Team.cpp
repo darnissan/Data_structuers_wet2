@@ -90,3 +90,11 @@ bool Team::operator <(const Team& team)
 {
     return this->teamID<team.teamID;
 }
+void Team::setTeamReversedTreeRoot(ReversedTreeNode<Player> *teamReversedTreeRoot)
+{
+    this->teamReversedTreeRoot=teamReversedTreeRoot;
+}
+ReversedTreeNode<Player> *Team::getTeamReversedTreeRoot()
+{
+    return this->teamReversedTreeRoot;
+}

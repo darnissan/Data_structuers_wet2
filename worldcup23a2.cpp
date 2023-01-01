@@ -403,19 +403,20 @@ ReversedTreeNode<T> *findRootReversedTree(ReversedTreeNode<T> *node)
 
 void world_cup_t::unionSets(int teamId1, int teamId2)
 {
-	Set<Player>* set1 = TeamsHashTable.Find(teamId1);
-	Set<Player>* set2 = TeamsHashTable.Find(teamId2);
-	int sizeSet1 = set1->GetSizeOfSet();
-	int sizeSet2 = set2->GetSizeOfSet();
+	ListNode<Set<Player>> *set1 = TeamsHashTable.FindPointer(teamId1);
+	ListNode<Set<Player>> *set2 = TeamsHashTable.FindPointer(teamId2);
+	int sizeSet1 = set1->GetValue().GetSizeOfSet();
+	int sizeSet2 = set2->GetValue().GetSizeOfSet();
 	int smaller_size = (sizeSet1 < sizeSet2) ? sizeSet1 : sizeSet2;
-	Set<Player>* larger_set = (sizeSet1 >= sizeSet2) ? set1 : set2;
-	Set<Player>* smaller_set = (sizeSet1 < sizeSet2) ? set1 : set2;
+	ListNode<Set<Player>> *larger_set = (sizeSet1 >= sizeSet2) ? set1 : set2;
+	ListNode<Set<Player>> *smaller_set = (sizeSet1 < sizeSet2) ? set1 : set2;
 
-	larger_set->IncreaseSizeOfSetBy(smaller_size);
-	smaller_set->GetRootOfSet()->SetParent(larger_set->GetRootOfSet());
-	smaller_set->GetRootOfSet()->SetSetOfTree(NULL);
-	TeamsHashTable.FindPointer(smaller_set->GetIdOfSet())->SetValue(NULL);
-	delete smaller_set;
+	larger_set->GetValue().IncreaseSizeOfSetBy(smaller_size);
+	smaller_set->GetValue().GetRootOfSet()->SetParent(larger_set->GetValue().GetRootOfSet());
+	smaller_set->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
+	
+	//TeamsHashTable.FindPointer(smaller_set->GetValue().GetIdOfSet())->SetValue(NULL);
+	
 }
 
 Set<Player>* world_cup_t::find(int value)

@@ -281,8 +281,8 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
 		}
 		playerNode->GetValue().addCards(cards);
 		AllplayersTable.Find(playerId).addCards(cards);
-		// pathCompression(playerNode,rootPlayerNode);
-		// find(playerId);
+		//pathCompression(playerNode,rootPlayerNode);
+		findSet(playerId);
 	}
 	catch (std::bad_alloc &ba)
 	{
@@ -416,8 +416,9 @@ void world_cup_t::unionSets(int teamId1, int teamId2)
 	larger_set->GetValue().IncreaseSizeOfSetBy(smaller_size);
 	smaller_set->GetValue().GetRootOfSet()->SetParent(larger_set->GetValue().GetRootOfSet());
 	smaller_set->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
-
-	// TeamsHashTable.FindPointer(smaller_set->GetValue().GetIdOfSet())->SetValue(NULL);
+	TeamsHashTable.Remove(smaller_set->GetValue().GetIdOfSet(), smaller_set);
+	//TeamsHashTable.FindPointer(smaller_set->GetValue().GetIdOfSet())->SetValue(NULL);
+	
 }
 
 Set<Player> *world_cup_t::findSet(int playerId)

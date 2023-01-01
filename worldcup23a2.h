@@ -40,10 +40,11 @@ private:
 	int numberOfActiveTeams=0;
 	int numberOfPlayers=0;
 
-	bool isPlayerExist(const Player &player, int playerId);
+	bool isPlayerExist( int playerId);
 
 	void unionSets(int teamId1, int teamId2);
 	Set<Player>* findSet(int playerId);
+
 
 public:
 	// <DO-NOT-MODIFY> {

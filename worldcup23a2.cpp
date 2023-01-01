@@ -110,9 +110,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		return StatusType::INVALID_INPUT;
 	}
 
-	Player newPlayer(playerId, teamId, spirit, gamesPlayed, ability, cards, goalKeeper);
-
-	if (isPlayerExist(newPlayer, playerId) || isTeamExist(teamId) == false)
+	if (isPlayerExist(playerId) || isTeamExist(teamId) == false)
 	{
 		return StatusType::FAILURE;
 	}
@@ -123,6 +121,14 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		ListNode<Set<Player>> *teamOnHT = TeamsHashTable.FindPointer(teamId); // the team on the Hashtable representing the DisjointSet of UNION - FIND
 
 		ReversedTreeNode<Player> *newPlayerNode; // the player node on the reversed tree
+		Player newplayer = Player(playerId);
+		AllplayersTable.Insert(newplayer, playerId);
+		ListNode<Player> *playerOnHT = AllplayersTable.FindPointer(playerId);
+		playerOnHT->GetValue().setPlayerTeamID(teamId);
+		playerOnHT->GetValue().setPlayerAbility(ability);
+		playerOnHT->GetValue().setPlayerCards(cards);
+		playerOnHT->GetValue().setPlayerSpirit(spirit);
+		playerOnHT->GetValue().setGamesPlayedINIT(gamesPlayed);
 
 		if (teamOnTree == nullptr || teamOnHT == nullptr)
 		{
@@ -131,13 +137,13 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		// updating the player fields
 		if (teamOnTree->GetValue().getNumOfPlayers() == 0) // meaning this is the first player to be added to the team
 		{
-			newPlayer.setIsRootPlayer(true);
-			newPlayer.setIsTeamActive(true);
-			newPlayer.setGamesTeamPlayedBefore(0);
-			newPlayer.setGamesFromRootPlayer(0);
-			newPlayer.setSpiritsBeforeMe(spirit.neutral());
-			newPlayer.setlSpiritFromRootPlayer(spirit.neutral());
-			newPlayerNode = new ReversedTreeNode<Player>(newPlayer);
+			playerOnHT->GetValue().setIsRootPlayer(true);
+			playerOnHT->GetValue().setIsTeamActive(true);
+			playerOnHT->GetValue().setGamesTeamPlayedBefore(0);
+			playerOnHT->GetValue().setGamesFromRootPlayer(0);
+			playerOnHT->GetValue().setSpiritsBeforeMe(spirit.neutral());
+			playerOnHT->GetValue().setlSpiritFromRootPlayer(spirit.neutral());
+			newPlayerNode = new ReversedTreeNode<Player>(playerOnHT->GetValue());
 			newPlayerNode->SetParent(nullptr);
 			// newPlayerNode->SetSetOfTree(teamOnHT->GetValue());
 			teamOnHT->GetValue().setRootOfSet(newPlayerNode);
@@ -145,13 +151,13 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		}
 		else
 		{
-			newPlayer.setIsRootPlayer(false);
-			newPlayer.setIsTeamActive(true);
-			newPlayer.setGamesTeamPlayedBefore(teamOnTree->GetValue().getGamesPlayed());
-			newPlayer.setGamesFromRootPlayer(teamOnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer());
-			newPlayer.setSpiritsBeforeMe(teamOnTree->GetValue().getTeamSpirit());
-			newPlayer.setlSpiritFromRootPlayer(teamOnHT->GetValue().GetRootOfSet()->GetValue().getSpiritFromRootPlayer());
-			newPlayerNode = new ReversedTreeNode<Player>(newPlayer);
+			playerOnHT->GetValue().setIsRootPlayer(false);
+			playerOnHT->GetValue().setIsTeamActive(true);
+			playerOnHT->GetValue().setGamesTeamPlayedBefore(teamOnTree->GetValue().getGamesPlayed());
+			playerOnHT->GetValue().setGamesFromRootPlayer(teamOnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer());
+			playerOnHT->GetValue().setSpiritsBeforeMe(teamOnTree->GetValue().getTeamSpirit());
+			playerOnHT->GetValue().setlSpiritFromRootPlayer(teamOnHT->GetValue().GetRootOfSet()->GetValue().getSpiritFromRootPlayer());
+			newPlayerNode = new ReversedTreeNode<Player>(playerOnHT->GetValue());
 			newPlayerNode->SetSetOfTree(nullptr);
 			newPlayerNode->SetParent(teamOnHT->GetValue().GetRootOfSet());
 		}
@@ -179,12 +185,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		}
 		teamOnTree->GetValue().multiplyNewPlayerToTeamSpirit(spirit);
 		teamOnTree->GetValue().addPlayerAbility(ability);
-		TeamAndAbilities OLDteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility());
-		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, OLDteamAndAbilities);
-		TeamAndAbilities NEWteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility() + ability);
-		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, NEWteamAndAbilities);
-		newPlayer.setPlayerReversedTreeNode(newPlayerNode);
-		AllplayersTable.Insert(newPlayer, playerId);
+
+		playerOnHT->GetValue().setPlayerReversedTreeNode(newPlayerNode);
 	}
 	catch (std::bad_alloc &ba)
 	{
@@ -267,7 +269,7 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
 	try
 	{
 		Player ToFindPlayer(playerId);
-		if (isPlayerExist(ToFindPlayer, playerId) == false)
+		if (isPlayerExist(playerId) == false)
 		{
 			return StatusType::FAILURE;
 		}
@@ -279,8 +281,8 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
 		}
 		playerNode->GetValue().addCards(cards);
 		AllplayersTable.Find(playerId).addCards(cards);
-		//pathCompression(playerNode,rootPlayerNode);
-		find(playerId);
+		// pathCompression(playerNode,rootPlayerNode);
+		// find(playerId);
 	}
 	catch (std::bad_alloc &ba)
 	{
@@ -299,7 +301,7 @@ output_t<int> world_cup_t::get_player_cards(int playerId)
 	try
 	{
 		Player ToFindPlayer(playerId);
-		if (isPlayerExist(ToFindPlayer, playerId) == false)
+		if (isPlayerExist(playerId) == false)
 		{
 			return StatusType::FAILURE;
 		}
@@ -375,9 +377,9 @@ bool world_cup_t::isTeamExist(int teamId)
 {
 	return teamsTree.isItInTree(teamsTree.root, teamId);
 }
-bool world_cup_t::isPlayerExist(const Player &player, int playerId)
+bool world_cup_t::isPlayerExist(int playerId)
 {
-	return AllplayersTable.isIn(player, playerId);
+	return AllplayersTable.isIn(playerId);
 }
 template <class T>
 void pathCompression(ReversedTreeNode<T> *node, ReversedTreeNode<T> *root)
@@ -401,7 +403,6 @@ ReversedTreeNode<T> *findRootReversedTree(ReversedTreeNode<T> *node)
 	}
 }
 
-
 void world_cup_t::unionSets(int teamId1, int teamId2)
 {
 	ListNode<Set<Player>> *set1 = TeamsHashTable.FindPointer(teamId1);
@@ -415,23 +416,22 @@ void world_cup_t::unionSets(int teamId1, int teamId2)
 	larger_set->GetValue().IncreaseSizeOfSetBy(smaller_size);
 	smaller_set->GetValue().GetRootOfSet()->SetParent(larger_set->GetValue().GetRootOfSet());
 	smaller_set->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
-	
-	//TeamsHashTable.FindPointer(smaller_set->GetValue().GetIdOfSet())->SetValue(NULL);
-	
+
+	// TeamsHashTable.FindPointer(smaller_set->GetValue().GetIdOfSet())->SetValue(NULL);
 }
 
-Set<Player>* world_cup_t::findSet(int playerId)
+Set<Player> *world_cup_t::findSet(int playerId)
 {
 	ReversedTreeNode<Player> *current_element = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
 	ReversedTreeNode<Player> *next_element;
 	ReversedTreeNode<Player> *root = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
-	
-	while(root->GetParent() != NULL)
+
+	while (root->GetParent() != NULL)
 	{
 		root = root->GetParent();
 	}
 
-	while(current_element->GetValue() != root->GetValue())
+	while (current_element->GetValue() != root->GetValue())
 	{
 		next_element = current_element->GetParent();
 		current_element->SetParent(root);

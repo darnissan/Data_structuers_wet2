@@ -36,6 +36,7 @@ public:
             HTarray[i]->SetHead(nullptr);
         }
     }
+
     HashTable(int initSize)
     {
         HTarray = new LinkedList<T>[initSize];
@@ -76,6 +77,11 @@ public:
             resize(size / 2);
         }
     }
+    bool isIn(int serial) const
+    {
+        int indexToCheck = HashFunction(serial);
+        return HTarray[indexToCheck]->isInList(serial);
+    }
     bool isIn(const T &value, int serial) 
     {
         int indexToCheck = HashFunction(serial);
@@ -93,7 +99,11 @@ public:
         
         return HTarray[indexToCheck]->GetBySerial(serial);
     }
-   
+    int getSize()
+    {
+        return size;
+    }
+    
     void Remove(int serial,T &value)
     {
         int indexToCheck = HashFunction(serial);

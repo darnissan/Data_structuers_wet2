@@ -51,5 +51,12 @@ public:
     void setlSpiritFromRootPlayer(permutation_t SpiritFromRootPlayer);
     permutation_t getSpiritFromRootPlayer();
     void setTeamUnActive();
+
+
+    void setPlayerAbility(int playerAbility);
+    void setPlayerCards(int playerCards);
+    void setPlayerSpirit(permutation_t playerSpirit);
+    void setGamesPlayedINIT(int gamesPlayedINIT);
+    
 };
 #endif // PLAYER_H_

@@ -149,11 +149,11 @@ int main()
     obj->add_team(2);
     obj->add_team(3);
     obj->remove_team(3);
-    int arr[5] = {2, 3, 4, 5, 1};
+    int arr[5] = {1, 2, 3, 4, 0};
     permutation_t p1=permutation_t(arr);
 
     obj->add_player(1001, 1, p1, 0, 15, 2, true);
-    int arr2[5] = {4, 3, 5, 2, 1};
+    int arr2[5] = {3, 2, 4, 1, 0};
     permutation_t p2=permutation_t(arr2);
     obj->add_player(2001, 2, p2, 0, 17, 1, true);
     obj->play_match(1, 2);

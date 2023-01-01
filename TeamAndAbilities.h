@@ -9,7 +9,7 @@ class TeamAndAbilities
     private:
     int teamID;
     int sumPlayersAbility;
-    RankTree<TeamAndAbilities> teamsAbilitiesRankTree;
+    
 
 
     public:

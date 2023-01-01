@@ -227,6 +227,18 @@ public:
 
         return false;
     }
+    bool isInList(const int &serial)
+    {
+        ListNode<T> *temp;
+        temp = this->head;
+        while (temp != nullptr)
+        {
+            if (temp->GetSerial() == serial)
+                return true;
+        }
+
+        return false;
+    }
 
 private:
     // The head and tail pointers of the linked list

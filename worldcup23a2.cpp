@@ -399,3 +399,42 @@ ReversedTreeNode<T> *findRootReversedTree(ReversedTreeNode<T> *node)
 		return findRootReversedTree(node->GetParent());
 	}
 }
+
+
+void world_cup_t::unionSets(int teamId1, int teamId2)
+{
+	Set<Player>* set1 = TeamsHashTable.Find(teamId1);
+	Set<Player>* set2 = TeamsHashTable.Find(teamId2);
+	int sizeSet1 = set1->GetSizeOfSet();
+	int sizeSet2 = set2->GetSizeOfSet();
+	int smaller_size = (sizeSet1 < sizeSet2) ? sizeSet1 : sizeSet2;
+	Set<Player>* larger_set = (sizeSet1 >= sizeSet2) ? set1 : set2;
+	Set<Player>* smaller_set = (sizeSet1 < sizeSet2) ? set1 : set2;
+
+	larger_set->IncreaseSizeOfSetBy(smaller_size);
+	smaller_set->GetRootOfSet()->SetParent(larger_set->GetRootOfSet());
+	smaller_set->GetRootOfSet()->SetSetOfTree(NULL);
+	TeamsHashTable.FindPointer(smaller_set->GetIdOfSet())->SetValue(NULL);
+	delete smaller_set;
+}
+
+Set<Player>* world_cup_t::find(int value)
+{
+	ReversedTreeNode<Player> *current_element = AllplayersTable.Find(value).getPlayerReversedTreeNode();
+	ReversedTreeNode<Player> *next_element;
+	ReversedTreeNode<Player> *root = AllplayersTable.Find(value).getPlayerReversedTreeNode();
+	
+	while(root->GetParent() != NULL)
+	{
+		root = root->GetParent();
+	}
+
+	while(current_element->GetValue() != root->GetValue())
+	{
+		next_element = current_element->GetParent();
+		current_element->SetParent(root);
+		current_element = next_element;
+	}
+
+	return root->GetSetOfTree();
+}

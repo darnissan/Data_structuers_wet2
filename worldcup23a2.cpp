@@ -279,7 +279,8 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
 		}
 		playerNode->GetValue().addCards(cards);
 		AllplayersTable.Find(playerId).addCards(cards);
-		pathCompression(playerNode, rootPlayerNode);
+		//pathCompression(playerNode,rootPlayerNode);
+		find(playerId);
 	}
 	catch (std::bad_alloc &ba)
 	{
@@ -419,11 +420,11 @@ void world_cup_t::unionSets(int teamId1, int teamId2)
 	
 }
 
-Set<Player>* world_cup_t::find(int value)
+Set<Player>* world_cup_t::findSet(int playerId)
 {
-	ReversedTreeNode<Player> *current_element = AllplayersTable.Find(value).getPlayerReversedTreeNode();
+	ReversedTreeNode<Player> *current_element = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
 	ReversedTreeNode<Player> *next_element;
-	ReversedTreeNode<Player> *root = AllplayersTable.Find(value).getPlayerReversedTreeNode();
+	ReversedTreeNode<Player> *root = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
 	
 	while(root->GetParent() != NULL)
 	{

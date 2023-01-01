@@ -280,7 +280,7 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
 		playerNode->GetValue().addCards(cards);
 		AllplayersTable.Find(playerId).addCards(cards);
 		//pathCompression(playerNode,rootPlayerNode);
-		find(playerId);
+		findSet(playerId);
 	}
 	catch (std::bad_alloc &ba)
 	{

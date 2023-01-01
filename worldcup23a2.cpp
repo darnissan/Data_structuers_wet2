@@ -352,3 +352,24 @@ void world_cup_t::unionSets(int teamId1, int teamId2)
 	TeamsHashTable.FindPointer(smaller_set->GetIdOfSet())->SetValue(NULL);
 	delete smaller_set;
 }
+
+Set<Player>* world_cup_t::find(int value)
+{
+	ReversedTreeNode<Player> *current_element = AllplayersTable.Find(value).getPlayerReversedTreeNode();
+	ReversedTreeNode<Player> *next_element;
+	ReversedTreeNode<Player> *root = AllplayersTable.Find(value).getPlayerReversedTreeNode();
+	
+	while(root->GetParent() != NULL)
+	{
+		root = root->GetParent();
+	}
+
+	while(current_element->GetValue() != root->GetValue())
+	{
+		next_element = current_element->GetParent();
+		current_element->SetParent(root);
+		current_element = next_element;
+	}
+
+	return root->GetSetOfTree();
+}

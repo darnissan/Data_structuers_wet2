@@ -43,7 +43,7 @@ private:
 	bool isPlayerExist(const Player &player, int playerId);
 
 	void unionSets(int teamId1, int teamId2);
-	Set<Player>* find(int value);
+	Set<Player>* findSet(int playerId);
 
 public:
 	// <DO-NOT-MODIFY> {

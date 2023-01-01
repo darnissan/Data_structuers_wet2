@@ -21,7 +21,7 @@
 #include "HashTable.h"
 #include "RankTree.h"
 #include "TeamAndAbilities.h"
-#include "DisjointSet.h"
+
 class world_cup_t
 {
 private:
@@ -32,7 +32,7 @@ private:
 	HashTable<Player> AllplayersTable;
 	RankTree<TeamAndAbilities> teamsAbilitiesRankTree;
 
-	HashTable<Set<Player>*> TeamsHashTable;
+	HashTable<Set<Player>> TeamsHashTable;
 	
 	//DisjointSet<Player> playersByTeamId;
 

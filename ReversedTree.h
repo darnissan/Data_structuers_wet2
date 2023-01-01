@@ -19,7 +19,8 @@ class Set
     void IncreaseSizeOfSetByOne() { sizeOfSet++; }
     void IncreaseSizeOfSetBy(int num) { sizeOfSet += num; }
     void Print() const { std::cout << "Set with ID " << idOfSet << " with size " << sizeOfSet << " and root value " << rootOfSet->GetValue() << std::endl; }
-
+    bool operator==(const Set<T> &other) const { return (idOfSet == other.idOfSet); }
+    bool operator!=(const Set<T> &other) const { return (idOfSet != other.idOfSet); }
     private:
     int idOfSet;
     int sizeOfSet = 1;

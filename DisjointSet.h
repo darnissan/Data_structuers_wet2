@@ -3,7 +3,7 @@
 #include "ReversedTree.h"
 #include "Player.h"
 #include "HashTable.h"
-#include "worldcup23a2.h"
+
 
 
 template <class T>

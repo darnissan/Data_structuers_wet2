@@ -98,3 +98,8 @@ ReversedTreeNode<Player> *Team::getTeamReversedTreeRoot()
 {
     return this->teamReversedTreeRoot;
 }
+void Team::setReversedTreeRootTeamUnActive()
+{
+    if (this->teamReversedTreeRoot!=nullptr)
+    this->teamReversedTreeRoot->GetValue().setTeamUnActive();
+}

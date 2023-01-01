@@ -50,6 +50,6 @@ public:
     permutation_t getSpiritsBeforeMe();
     void setlSpiritFromRootPlayer(permutation_t SpiritFromRootPlayer);
     permutation_t getSpiritFromRootPlayer();
-    
+    void setTeamUnActive();
 };
 #endif // PLAYER_H_

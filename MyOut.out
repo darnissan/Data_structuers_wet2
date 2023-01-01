@@ -1,0 +1,5 @@
+num_played_games_for_player: SUCCESS, 22
+get_player_cards: FAILURE
+get_team_points: SUCCESS, 0
+get_ith_pointless_ability: FAILURE
+get_partial_spirit: SUCCESS, *,*,*,*,*

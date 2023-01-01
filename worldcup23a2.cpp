@@ -11,6 +11,7 @@ template <class T>
 ReversedTreeNode<T> *findRootReversedTree(ReversedTreeNode<T> *node);
 world_cup_t::world_cup_t()
 {
+
 	// TODO: Your code goes here
 }
 
@@ -33,13 +34,10 @@ StatusType world_cup_t::add_team(int teamId)
 			return StatusType::FAILURE;
 		}
 		Team newTeam(teamId);
-
 		numberOfActiveTeams++;
-		TeamAndAbilities newTeamAndAbilities(teamId, 0);
 		teamsTree.root = teamsTree.Insert(teamsTree.root, newTeam);
-		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, newTeamAndAbilities);
 
-		Set<Player> *newTeamSet = new Set<Player>(teamId, nullptr);
+		Set<Player> newTeamSet = Set<Player>(teamId, nullptr);
 
 		TeamsHashTable.Insert(newTeamSet, teamId);
 	}
@@ -53,7 +51,45 @@ StatusType world_cup_t::add_team(int teamId)
 
 StatusType world_cup_t::remove_team(int teamId)
 {
-	// TODO: Your code goes here
+	// remove the team from the teamsTree
+	// remove the team from the teamsAbilitiesRankTree
+	// remove the team from the TeamsHashTable
+	// remove the team from the playersByTeamId
+	if (teamId <= 0)
+	{
+		return StatusType::INVALID_INPUT;
+	}
+	if (isTeamExist(teamId) == false)
+	{
+		return StatusType::FAILURE;
+	}
+	try
+	{
+
+		int ability = teamsTree.find(teamsTree.root, teamId)->GetValue().getSumPlayersAbility();
+		Team teamToBeRemovedFromTree = teamsTree.find(teamsTree.root, teamId)->GetValue();
+		teamToBeRemovedFromTree.setReversedTreeRootTeamUnActive();
+		teamsTree.root = teamsTree.Remove(teamsTree.root, teamToBeRemovedFromTree);
+		TeamAndAbilities teamToBeRemovedRankedTree(teamId, ability);
+		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, teamToBeRemovedRankedTree);
+		Set<Player> teamToBeRemovedFromHT = TeamsHashTable.Find(teamId);
+		if (teamToBeRemovedFromHT.GetRootOfSet() != nullptr)
+		{
+			teamToBeRemovedFromHT.GetRootOfSet()->GetValue().setIsTeamActive(false);
+		}
+
+		TeamsHashTable.Remove(teamId, teamToBeRemovedFromHT);
+		numberOfActiveTeams--;
+	}
+	catch (std::bad_alloc &ba)
+	{
+		return StatusType::ALLOCATION_ERROR;
+	}
+	catch (const std::exception &e)
+	{
+		return StatusType::ALLOCATION_ERROR;
+	}
+
 	return StatusType::FAILURE;
 }
 
@@ -84,7 +120,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 	{
 		AVLNode<Team> *teamOnTree = teamsTree.find(teamsTree.root, teamId); // the team on the tree ordered by teamId
 
-		ListNode<Set<Player> *> *teamOnHT = TeamsHashTable.FindPointer(teamId); // the team on the Hashtable representing the DisjointSet of UNION - FIND
+		ListNode<Set<Player>> *teamOnHT = TeamsHashTable.FindPointer(teamId); // the team on the Hashtable representing the DisjointSet of UNION - FIND
 
 		ReversedTreeNode<Player> *newPlayerNode; // the player node on the reversed tree
 
@@ -103,8 +139,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 			newPlayer.setlSpiritFromRootPlayer(spirit.neutral());
 			newPlayerNode = new ReversedTreeNode<Player>(newPlayer);
 			newPlayerNode->SetParent(nullptr);
-			newPlayerNode->SetSetOfTree(teamOnHT->GetValue());
-			teamOnHT->GetValue()->setRootOfSet(newPlayerNode);
+			// newPlayerNode->SetSetOfTree(teamOnHT->GetValue());
+			teamOnHT->GetValue().setRootOfSet(newPlayerNode);
 			teamOnTree->GetValue().setTeamReversedTreeRoot(newPlayerNode);
 		}
 		else
@@ -112,26 +148,40 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 			newPlayer.setIsRootPlayer(false);
 			newPlayer.setIsTeamActive(true);
 			newPlayer.setGamesTeamPlayedBefore(teamOnTree->GetValue().getGamesPlayed());
-			newPlayer.setGamesFromRootPlayer(teamOnHT->GetValue()->GetRootOfSet()->GetValue().getGamesFromRootPlayer());
+			newPlayer.setGamesFromRootPlayer(teamOnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer());
 			newPlayer.setSpiritsBeforeMe(teamOnTree->GetValue().getTeamSpirit());
-			newPlayer.setlSpiritFromRootPlayer(teamOnHT->GetValue()->GetRootOfSet()->GetValue().getSpiritFromRootPlayer());
+			newPlayer.setlSpiritFromRootPlayer(teamOnHT->GetValue().GetRootOfSet()->GetValue().getSpiritFromRootPlayer());
 			newPlayerNode = new ReversedTreeNode<Player>(newPlayer);
 			newPlayerNode->SetSetOfTree(nullptr);
-			newPlayerNode->SetParent(teamOnHT->GetValue()->GetRootOfSet());
+			newPlayerNode->SetParent(teamOnHT->GetValue().GetRootOfSet());
 		}
 
 		// updating the team fields on the tree
-		teamOnHT->GetValue()->IncreaseSizeOfSetByOne();
+
+		teamOnHT->GetValue().IncreaseSizeOfSetByOne();
 		teamOnTree->GetValue().increaseNumOfPlayers();
 		if (goalKeeper)
 		{
+
 			teamOnTree->GetValue().increaseNumOfGoalKeepers();
+			if (teamOnTree->GetValue().getNumOfGoalKeepers() == 1)
+			{
+				TeamAndAbilities NEWteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility() + ability);
+				teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, NEWteamAndAbilities);
+			}
+			else
+			{
+				TeamAndAbilities OLDteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility());
+				teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, OLDteamAndAbilities);
+				TeamAndAbilities NEWteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility() + ability);
+				teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, NEWteamAndAbilities);
+			}
 		}
 		teamOnTree->GetValue().multiplyNewPlayerToTeamSpirit(spirit);
 		teamOnTree->GetValue().addPlayerAbility(ability);
 		TeamAndAbilities OLDteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility());
-		teamsAbilitiesRankTree.root=teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root,OLDteamAndAbilities);
-		TeamAndAbilities NEWteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility()+ability);
+		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, OLDteamAndAbilities);
+		TeamAndAbilities NEWteamAndAbilities(teamId, teamOnTree->GetValue().getSumPlayersAbility() + ability);
 		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, NEWteamAndAbilities);
 		newPlayer.setPlayerReversedTreeNode(newPlayerNode);
 		AllplayersTable.Insert(newPlayer, playerId);
@@ -229,8 +279,7 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
 		}
 		playerNode->GetValue().addCards(cards);
 		AllplayersTable.Find(playerId).addCards(cards);
-		pathCompression(playerNode,rootPlayerNode);
-		
+		pathCompression(playerNode, rootPlayerNode);
 	}
 	catch (std::bad_alloc &ba)
 	{
@@ -289,8 +338,24 @@ output_t<int> world_cup_t::get_team_points(int teamId)
 
 output_t<int> world_cup_t::get_ith_pointless_ability(int i)
 {
-	// TODO: Your code goes here
-	return 12345;
+	if (i < 0 || i > numberOfActiveTeams)
+	{
+		return StatusType::FAILURE;
+	}
+	try
+	{
+		TeamAndAbilities resultTeam = teamsAbilitiesRankTree.Select(teamsAbilitiesRankTree.root, i + 1);
+		return resultTeam.getTeamID();
+	}
+	catch (std::out_of_range &oor)
+	{
+		return StatusType::FAILURE;
+	}
+	catch (std::bad_alloc &ba)
+	{
+		return StatusType::ALLOCATION_ERROR;
+	}
+	return StatusType::SUCCESS;
 }
 
 output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)

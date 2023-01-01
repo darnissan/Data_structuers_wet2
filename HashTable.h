@@ -50,9 +50,9 @@ public:
     {
         for (int i = 0; i < size; i++)
         {
-            HTarray[i]->Clear();
-            HTarray[i] = nullptr;
+            delete HTarray[i];
         }
+        delete[] HTarray;
     }
     void Insert(const T &value, int serial)
     {
@@ -92,6 +92,21 @@ public:
         int indexToCheck = HashFunction(serial);
         
         return HTarray[indexToCheck]->GetBySerial(serial);
+    }
+   
+    void Remove(int serial,T &value)
+    {
+        int indexToCheck = HashFunction(serial);
+        HTarray[indexToCheck]->Remove(value);
+        numOfElements--;
+        if (numOfSlotsTaken == size - 1)
+        {
+            resize(size * 2);
+        }
+        else if (numOfSlotsTaken == size / 2 && everResized == true)
+        {
+            resize(size / 2);
+        }
     }
 
     void resize(int newSize)
@@ -139,6 +154,15 @@ public:
             std::cout << "index " << i << ": ";
             HTarray[i]->Print();
         }
+    }
+    void DeleteTable()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            HTarray[i]->Clear();
+            HTarray[i] = nullptr;
+        }
+        delete[] HTarray;
     }
 };
 #endif // HASH_TABLE_H

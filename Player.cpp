@@ -114,5 +114,8 @@ permutation_t Player::getSpiritFromRootPlayer()
 {
     return this->SpiritFromRootPlayer;
 }
-
+void Player::setTeamUnActive()
+{
+    this->isTeamActive=false;
+}
 

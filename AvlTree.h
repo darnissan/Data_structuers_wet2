@@ -44,7 +44,7 @@ public:
     AVLNode<T> *RotateRL(AVLNode<T> *root);
     bool isItInTree(AVLNode<T> *root, const T &value) const;
     AVLNode<T> *Insert(AVLNode<T> *root, const T &value);
-    AVLNode<T> *Remove(AVLNode<T> *node, const T &value);
+    AVLNode<T> *Remove(AVLNode<T> *node,  T &value);
     void PrintInOrder(AVLNode<T> *root) const;
     void DeleteTree(AVLNode<T> *root);
     void Clear();
@@ -231,7 +231,7 @@ AVLNode<T> *AvlTree<T>::Insert(AVLNode<T> *node, const T &value)
     return node;
 }
 template <class T>
-AVLNode<T> *AvlTree<T>::Remove(AVLNode<T> *node, const T &value)
+AVLNode<T> *AvlTree<T>::Remove(AVLNode<T> *node,  T &value)
 {
     if (node == NULL) // meaning we've reached a Null
     {

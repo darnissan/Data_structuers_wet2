@@ -40,6 +40,7 @@ public:
     bool operator <(const Team& team);
     void setTeamReversedTreeRoot(ReversedTreeNode<Player> *teamReversedTreeRoot);
     ReversedTreeNode<Player> *getTeamReversedTreeRoot();
+    void setReversedTreeRootTeamUnActive();
 
 };
 

@@ -126,8 +126,16 @@ public:
         if (node != nullptr)
         {
             // If the node is the head of the list, update the head pointer
-            if (node == head)
+            if (node == head && node == tail)
+            {
+                head = nullptr;
+                tail = nullptr;
+            }
+            else if (node == head)
+            {
                 head = node->GetNext();
+            }
+              
             // If the node is the tail of the list, update the tail pointer
             else if (node == tail)
                 tail = Removeprev;

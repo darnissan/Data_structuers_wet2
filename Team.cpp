@@ -66,7 +66,7 @@ void Team::multiplyNewPlayerToTeamSpirit(permutation_t newPlayerSpirit)
     }
     else
     {
-        this->teamSpirit=this->teamSpirit*newPlayerSpirit;
+        this->teamSpirit=this->teamSpirit.operator*(newPlayerSpirit);
     }
     this->teamStrength=this->teamSpirit.strength();
 }

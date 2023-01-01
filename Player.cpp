@@ -13,6 +13,8 @@ Player::Player(int playerID, int teamId, const permutation_t &spirit, int gamesP
     this->isRootPlayer = false;
     this->gamesTeamPlayedBefore = 0;
     this->gamesFromRootPlayer = 0;
+    this->SpiritFromRootPlayer = playerSpirit.neutral();
+    this->WholeTeamSpiritSoFar = playerSpirit.neutral();
 }
 Player::~Player()
 {
@@ -141,5 +143,13 @@ void Player::setPlayerCards(int playerCards)
 void Player::setPlayerSpirit(permutation_t playerSpirit)
 {
     this->playerSpirit = playerSpirit;
+}
+void Player::setWholeTeamSpiritSoFar(permutation_t WholeTeamSpiritSoFar)
+{
+    this->WholeTeamSpiritSoFar=WholeTeamSpiritSoFar;
+}
+permutation_t Player::getWholeTeamSpiritSoFar()
+{
+    return this->WholeTeamSpiritSoFar;
 }
 

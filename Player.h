@@ -12,24 +12,26 @@ private:
     int playerCards;
     int gamesPlayedINIT;
     int gamesTeamPlayedBefore;
-    int gamesFromRootPlayer;
+    int gamesFromRootPlayer = 0;
     bool isGoalKeeper;
     bool isTeamActive = true;
     bool isRootPlayer = false;
+    ReversedTreeNode<Player> *playerReversedTreeNode = nullptr;
     permutation_t playerSpirit;
-    ReversedTreeNode<Player> *playerReversedTreeNode=nullptr;
     permutation_t spiritsBeforeMe;
     permutation_t SpiritFromRootPlayer;
+    permutation_t WholeTeamSpiritSoFar;
+
 public:
-    Player(int playerID):playerID(playerID){};
+    Player(int playerID) : playerID(playerID){};
     Player(int playerID, int teamId, const permutation_t &spirit, int gamesPlayed, int ability, int cards, bool goalKeeper);
     ~Player();
     int getPlayerID();
     int getPlayerAbility();
     int getPlayerTeamID();
     permutation_t getPlayerSpirit();
-    int getPlayerCards() ; 
-    void addCards(int newCards) ;
+    int getPlayerCards();
+    void addCards(int newCards);
     void setPlayerTeamID(int newTeamID);
     int getGamesPlayedINIT();
     int getGamesTeamPlayedBefore();
@@ -41,22 +43,22 @@ public:
     void setIsTeamActive(bool isTeamActive);
     void setGamesTeamPlayedBefore(int gamesTeamPlayedBefore);
     void setGamesFromRootPlayer(int gamesFromRootPlayer);
-    bool operator ==(const Player& player) const;
-    bool operator !=(const Player& player) const;
-    
+    bool operator==(const Player &player) const;
+    bool operator!=(const Player &player) const;
+
     void setPlayerReversedTreeNode(ReversedTreeNode<Player> *playerReversedTreeNode);
-    ReversedTreeNode<Player> *getPlayerReversedTreeNode() ;
+    ReversedTreeNode<Player> *getPlayerReversedTreeNode();
     void setSpiritsBeforeMe(permutation_t spiritsBeforeMe);
     permutation_t getSpiritsBeforeMe();
     void setlSpiritFromRootPlayer(permutation_t SpiritFromRootPlayer);
     permutation_t getSpiritFromRootPlayer();
     void setTeamUnActive();
 
-
     void setPlayerAbility(int playerAbility);
     void setPlayerCards(int playerCards);
     void setPlayerSpirit(permutation_t playerSpirit);
     void setGamesPlayedINIT(int gamesPlayedINIT);
-    
+    void setWholeTeamSpiritSoFar(permutation_t WholeTeamSpiritSoFar);
+    permutation_t getWholeTeamSpiritSoFar();
 };
 #endif // PLAYER_H_

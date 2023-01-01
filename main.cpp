@@ -155,14 +155,14 @@ int main()
     obj->add_player(1001, 1, p1, 0, 15, 2, true);
     int arr2[5] = {3, 2, 4, 1, 0};
     permutation_t p2=permutation_t(arr2);
-    obj->add_player(2001, 2, p2, 0, 17, 1, true);
-    obj->play_match(1, 2);
+    obj->add_player(2001, 1, p2, 0, 17, 1, true);
+    //obj->play_match(1, 2);
  print("num_played_games_for_player", obj->num_played_games_for_player(1001));
     obj->add_player_cards(2001, 2);
     print("get_player_cards", obj->get_player_cards(2001));
     print("get_team_points", obj->get_team_points(1));
     print("get_ith_pointless_ability", obj->get_ith_pointless_ability(0));
-    print("get_partial_spirit", obj->get_partial_spirit(1001));
+    print("get_partial_spirit", obj->get_partial_spirit(2001));
     obj->buy_team(1, 2);
     delete obj;
     return 0;

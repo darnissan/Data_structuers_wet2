@@ -416,7 +416,7 @@ void world_cup_t::unionSets(int teamId1, int teamId2)
 	larger_set->GetValue().IncreaseSizeOfSetBy(smaller_size);
 	smaller_set->GetValue().GetRootOfSet()->SetParent(larger_set->GetValue().GetRootOfSet());
 	smaller_set->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
-	TeamsHashTable.Remove(smaller_set->GetValue().GetIdOfSet(), smaller_set);
+	TeamsHashTable.Remove(smaller_set->GetValue().GetIdOfSet(), smaller_set->GetValue());
 	//TeamsHashTable.FindPointer(smaller_set->GetValue().GetIdOfSet())->SetValue(NULL);
 	
 }

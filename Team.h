@@ -11,7 +11,7 @@ private:
     int numOfGoalKeepers=0;
     int FirstPlayerID;
     int points=0;
-    int sumPlayersAbility;
+    int sumPlayersAbility=0;
     int gamesPlayed=0;
     permutation_t teamSpirit;
     int teamStrength;

@@ -18,11 +18,13 @@ Player::Player(int playerID, int teamId, const permutation_t &spirit, int gamesP
 }
 Player::~Player()
 {
+    /*
     if (playerReversedTreeNode != nullptr)
     {
         delete playerReversedTreeNode;
         playerReversedTreeNode = nullptr;
     }
+    */
 }
 int Player::getPlayerID()
 {
@@ -146,10 +148,17 @@ void Player::setPlayerSpirit(permutation_t playerSpirit)
 }
 void Player::setWholeTeamSpiritSoFar(permutation_t WholeTeamSpiritSoFar)
 {
-    this->WholeTeamSpiritSoFar=WholeTeamSpiritSoFar;
+    this->WholeTeamSpiritSoFar = WholeTeamSpiritSoFar;
 }
 permutation_t Player::getWholeTeamSpiritSoFar()
 {
     return this->WholeTeamSpiritSoFar;
 }
-
+void Player::deletePlayerReversedTreeNode()
+{
+    if (playerReversedTreeNode != nullptr)
+    {
+        delete playerReversedTreeNode;
+        playerReversedTreeNode = nullptr;
+    }
+}

@@ -148,6 +148,12 @@ int main()
     obj->add_team(1);
     obj->add_team(2);
     obj->add_team(3);
+    obj->add_team(4);
+    obj->add_team(5);
+    obj->add_team(6);
+    obj->add_team(7);
+    obj->add_team(8);
+    obj->add_team(9);
     obj->remove_team(3);
     int arr[5] = {1, 2, 3, 4, 0};
     permutation_t p1=permutation_t(arr);

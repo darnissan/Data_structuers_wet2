@@ -60,5 +60,6 @@ public:
     void setGamesPlayedINIT(int gamesPlayedINIT);
     void setWholeTeamSpiritSoFar(permutation_t WholeTeamSpiritSoFar);
     permutation_t getWholeTeamSpiritSoFar();
+    void deletePlayerReversedTreeNode();
 };
 #endif // PLAYER_H_

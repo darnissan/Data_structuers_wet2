@@ -17,7 +17,19 @@ world_cup_t::world_cup_t()
 
 world_cup_t::~world_cup_t()
 {
+	int size = AllplayersTable.getSize();
 	// TODO: Your code goes here
+	LinkedList<Player> **playersList = AllplayersTable.GetArray();
+	ListNode<Player> *temp = nullptr;
+	for (int i = 0; i < size; i++)
+	{
+		temp = playersList[i]->GetHead();
+		while (temp != nullptr)
+		{
+			temp->GetValue().deletePlayerReversedTreeNode();
+			temp = temp->GetNext();
+		}
+	}
 }
 
 StatusType world_cup_t::add_team(int teamId)
@@ -186,7 +198,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 				teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, NEWteamAndAbilities);
 			}
 		}
-		
+
 		teamOnTree->GetValue().addPlayerAbility(ability);
 
 		playerOnHT->GetValue().setPlayerReversedTreeNode(newPlayerNode);
@@ -284,7 +296,7 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
 		}
 		playerNode->GetValue().addCards(cards);
 		AllplayersTable.Find(playerId).addCards(cards);
-		//pathCompression(playerNode,rootPlayerNode);
+		// pathCompression(playerNode,rootPlayerNode);
 		findSet(playerId);
 	}
 	catch (std::bad_alloc &ba)
@@ -374,17 +386,18 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
 	{
 		return StatusType::FAILURE;
 	}
-	try {
-	ReversedTreeNode<Player> *playerNode = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
-	ReversedTreeNode<Player> *rootPlayerNode = findRootReversedTree(playerNode);
-	if (rootPlayerNode->GetValue().getIsTeamActive() == false)
+	try
 	{
-		return StatusType::FAILURE;
-	}
-	permutation_t spiritsBeforeMe = playerNode->GetValue().getSpiritsBeforeMe();
-	permutation_t spiritsFromRoot=playerNode->GetValue().getSpiritFromRootPlayer();
-	permutation_t result=spiritsFromRoot.operator*(spiritsBeforeMe);
-	return result;
+		ReversedTreeNode<Player> *playerNode = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
+		ReversedTreeNode<Player> *rootPlayerNode = findRootReversedTree(playerNode);
+		if (rootPlayerNode->GetValue().getIsTeamActive() == false)
+		{
+			return StatusType::FAILURE;
+		}
+		permutation_t spiritsBeforeMe = playerNode->GetValue().getSpiritsBeforeMe();
+		permutation_t spiritsFromRoot = playerNode->GetValue().getSpiritFromRootPlayer();
+		permutation_t result = spiritsFromRoot.operator*(spiritsBeforeMe);
+		return result;
 	}
 	catch (std::bad_alloc &ba)
 	{
@@ -441,13 +454,11 @@ void world_cup_t::unionSets(int teamId1, int teamId2)
 	permutation_t larger_set_spirit = larger_set->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
 	smaller_set->GetValue().GetRootOfSet()->GetValue().setlSpiritFromRootPlayer((larger_set_spirit));
 
-
 	larger_set->GetValue().IncreaseSizeOfSetBy(smaller_size);
 	smaller_set->GetValue().GetRootOfSet()->SetParent(larger_set->GetValue().GetRootOfSet());
 	smaller_set->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
 	TeamsHashTable.Remove(smaller_set->GetValue().GetIdOfSet(), smaller_set->GetValue());
-	//TeamsHashTable.FindPointer(smaller_set->GetValue().GetIdOfSet())->SetValue(NULL);
-	
+	// TeamsHashTable.FindPointer(smaller_set->GetValue().GetIdOfSet())->SetValue(NULL);
 }
 
 Set<Player> *world_cup_t::findSet(int playerId)
@@ -460,13 +471,12 @@ Set<Player> *world_cup_t::findSet(int playerId)
 	{
 		spiritsUpTheTree = root->GetValue().getWholeTeamSpiritSoFar();
 		root = root->GetParent();
-		
 	}
-	
+
 	while (current_element->GetValue() != root->GetValue())
 	{
-		permutation_t currentSpiritFromRoot= current_element->GetValue().getSpiritFromRootPlayer();
-		permutation_t currentSpiritFromRootInv=currentSpiritFromRoot.inv();
+		permutation_t currentSpiritFromRoot = current_element->GetValue().getSpiritFromRootPlayer();
+		permutation_t currentSpiritFromRootInv = currentSpiritFromRoot.inv();
 		current_element->GetValue().setlSpiritFromRootPlayer(currentSpiritFromRootInv.operator*(spiritsUpTheTree));
 		next_element = current_element->GetParent();
 		current_element->SetParent(root);

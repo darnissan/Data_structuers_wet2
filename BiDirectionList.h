@@ -235,6 +235,7 @@ public:
         {
             if (temp->GetSerial() == serial)
                 return true;
+            temp = temp->GetNext();
         }
 
         return false;

@@ -34,6 +34,8 @@ public:
         {
             HTarray[i] = new LinkedList<T>;
             HTarray[i]->SetHead(nullptr);
+            HTarray[i]->SetTail(nullptr);
+            
         }
     }
 
@@ -57,7 +59,7 @@ public:
     }
     void Insert(const T &value, int serial)
     {
-        if (isIn(value, serial) == false)
+        if (isIn(serial) == false)
         {
             int indexToInsert = HashFunction(serial);
             if (HTarray[indexToInsert]->GetHead() == nullptr)
@@ -80,31 +82,48 @@ public:
     bool isIn(int serial) const
     {
         int indexToCheck = HashFunction(serial);
+        if (HTarray[indexToCheck] == nullptr)
+        {
+            return false;
+        }
+        else
+        {
+            ListNode<T> *node = HTarray[indexToCheck]->GetHead();
+            while (node != nullptr)
+            {
+                if (node->GetSerial() == serial)
+                {
+                    return true;
+                }
+                node = node->GetNext();
+            }
+            return false;
+        }
         return HTarray[indexToCheck]->isInList(serial);
     }
-    bool isIn(const T &value, int serial) 
+    bool isIn(const T &value, int serial)
     {
         int indexToCheck = HashFunction(serial);
         return HTarray[indexToCheck]->isInList(value);
     }
 
-    T  &Find(int serial) 
+    T &Find(int serial)
     {
         int indexToCheck = HashFunction(serial);
         return HTarray[indexToCheck]->GetBySerial(serial)->GetValue();
     }
-   ListNode<T> *FindPointer(int serial) const
+    ListNode<T> *FindPointer(int serial) const
     {
         int indexToCheck = HashFunction(serial);
-        
+
         return HTarray[indexToCheck]->GetBySerial(serial);
     }
     int getSize()
     {
         return size;
     }
-    
-    void Remove(int serial,T &value)
+
+    void Remove(int serial, T &value)
     {
         int indexToCheck = HashFunction(serial);
         HTarray[indexToCheck]->Remove(value);
@@ -149,8 +168,10 @@ public:
         }
         for (int i = 0; i < size; i++)
         {
-            HTarray[i]->Clear();
+            delete HTarray[i];
+        
             HTarray[i] = nullptr;
+            
         }
         delete[] HTarray;
         HTarray = newArray;
@@ -173,6 +194,10 @@ public:
             HTarray[i] = nullptr;
         }
         delete[] HTarray;
+    }
+    LinkedList<T> **GetArray()
+    {
+        return HTarray;
     }
 };
 #endif // HASH_TABLE_H

@@ -518,14 +518,22 @@ Set<Player> *world_cup_t::findSet(int playerId)
 	ReversedTreeNode<Player> *next_element;
 	ReversedTreeNode<Player> *root = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
 	permutation_t spiritsUpTheTree = root->GetValue().getWholeTeamSpiritSoFar().neutral();
+	int gamesPlayedCounter = AllplayersTable.Find(playerId).getGamesFromRootPlayer();
+	int current_gamesFromRootPlayer, next_gamesFromRootPlayer;
 	while (root->GetParent() != NULL)
 	{
+		current_gamesFromRootPlayer = root->GetValue().getGamesFromRootPlayer();
 		spiritsUpTheTree = root->GetValue().getWholeTeamSpiritSoFar().operator*(spiritsUpTheTree);
 		root = root->GetParent();
+		next_gamesFromRootPlayer = root->GetValue().getGamesFromRootPlayer();
+		gamesPlayedCounter = next_gamesFromRootPlayer - current_gamesFromRootPlayer;
 	}
 
+	gamesPlayedCounter += AllplayersTable.Find(playerId).getGamesFromRootPlayer();
+	
 	while (current_element->GetValue() != root->GetValue())
 	{
+		current_element->GetValue().setGamesFromRootPlayer(gamesPlayedCounter);
 		permutation_t currentSpiritFromRoot = current_element->GetValue().getSpiritFromRootPlayer();
 		permutation_t currentSpiritFromRootInv = currentSpiritFromRoot.inv();
 		current_element->GetValue().setlSpiritFromRootPlayer(currentSpiritFromRootInv.operator*(spiritsUpTheTree));

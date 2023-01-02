@@ -360,10 +360,7 @@ output_t<int> world_cup_t::get_ith_pointless_ability(int i)
 	try
 	{
 		TeamAndAbilities resultTeam = teamsAbilitiesRankTree.Select(teamsAbilitiesRankTree.root, i+1 );
-		std::cout <<"right now the ith result is"<<resultTeam.getTeamID()<<std::endl;
-		std::cout << "team id for i+1 is " << teamsAbilitiesRankTree.Select(teamsAbilitiesRankTree.root, i + 2).getTeamID() << std::endl;
-		std::cout << "team id for i-1 is " << teamsAbilitiesRankTree.Select(teamsAbilitiesRankTree.root, i ).getTeamID() << std::endl;
-		teamsAbilitiesRankTree.PrintInOrder(teamsAbilitiesRankTree.root);
+		
 		return resultTeam.getTeamID();
 	}
 	catch (std::out_of_range &oor)
@@ -441,9 +438,9 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
 
 		//update rank tree
 		
-		TeamAndAbilities OLDSmallTeamAndAbilities(teamId1, smallerTeamOnTree->GetValue().getSumPlayersAbility());
+		TeamAndAbilities OLDSmallTeamAndAbilities(smallerTeamOnTree->GetValue().getTeamID(), smallerTeamOnTree->GetValue().getSumPlayersAbility());
 		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, OLDSmallTeamAndAbilities);
-		TeamAndAbilities OLDBigTeamAndAbilities(teamId1, biggerTeamOnTree->GetValue().getSumPlayersAbility());
+		TeamAndAbilities OLDBigTeamAndAbilities(biggerTeamOnTree->GetValue().getTeamID(), biggerTeamOnTree->GetValue().getSumPlayersAbility());
 		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, OLDBigTeamAndAbilities);
 		TeamAndAbilities NEWteamAndAbilities(biggerTeamOnTree->GetValue().getTeamID(), biggerTeamOnTree->GetValue().getSumPlayersAbility() + smallTeamAbility);
 		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, NEWteamAndAbilities);

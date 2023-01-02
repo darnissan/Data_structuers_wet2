@@ -79,12 +79,12 @@ StatusType world_cup_t::remove_team(int teamId)
 	try
 	{
 
-		// int ability = teamsTree.find(teamsTree.root, teamId)->GetValue().getSumPlayersAbility();
+		 int ability = teamsTree.find(teamsTree.root, teamId)->GetValue().getSumPlayersAbility();
 		Team teamToBeRemovedFromTree = teamsTree.find(teamsTree.root, teamId)->GetValue();
 		teamToBeRemovedFromTree.setReversedTreeRootTeamUnActive();
 		teamsTree.root = teamsTree.Remove(teamsTree.root, teamToBeRemovedFromTree);
-		// TeamAndAbilities teamToBeRemovedRankedTree(teamId, ability);
-		// teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, teamToBeRemovedRankedTree);
+		 TeamAndAbilities teamToBeRemovedRankedTree(teamId, ability);
+		 teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, teamToBeRemovedRankedTree);
 		Set<Player> teamToBeRemovedFromHT = TeamsHashTable.Find(teamId);
 		if (teamToBeRemovedFromHT.GetRootOfSet() != nullptr)
 		{
@@ -356,7 +356,7 @@ output_t<int> world_cup_t::get_ith_pointless_ability(int i)
 	try
 	{
 		TeamAndAbilities resultTeam = teamsAbilitiesRankTree.Select(teamsAbilitiesRankTree.root, i + 1);
-
+		//teamsAbilitiesRankTree.PrintInOrder(teamsAbilitiesRankTree.root);
 		return resultTeam.getTeamID();
 	}
 	catch (std::out_of_range &oor)

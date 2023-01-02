@@ -33,19 +33,19 @@ private:
 	RankTree<TeamAndAbilities> teamsAbilitiesRankTree;
 
 	HashTable<Set<Player>> TeamsHashTable;
-	
-	//DisjointSet<Player> playersByTeamId;
+
+	// DisjointSet<Player> playersByTeamId;
 
 	bool isTeamExist(int teamId);
-	int numberOfActiveTeams=0;
-	int numberOfPlayers=0;
+	int numberOfActiveTeams = 0;
+	int numberOfPlayers = 0;
 
-	bool isPlayerExist( int playerId);
+	bool isPlayerExist(int playerId);
 
 	void unionSets(int teamId1, int teamId2);
-	Set<Player>* findSet(int playerId);
-
-
+	Set<Player> *findSet(int playerId);
+	void unionSetsBoughtBigger(int teamId1, int teamId2);
+	void unionEmptySet(int buyerId, int boughtId);
 public:
 	// <DO-NOT-MODIFY> {
 

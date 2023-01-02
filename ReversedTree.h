@@ -23,7 +23,7 @@ class Set
     bool operator!=(const Set<T> &other) const { return (idOfSet != other.idOfSet); }
     private:
     int idOfSet;
-    int sizeOfSet = 1;
+    int sizeOfSet = 0;
     ReversedTreeNode<T> *rootOfSet;
 };
 

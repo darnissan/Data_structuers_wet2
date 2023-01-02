@@ -103,3 +103,19 @@ void Team::setReversedTreeRootTeamUnActive()
     if (this->teamReversedTreeRoot!=nullptr)
     this->teamReversedTreeRoot->GetValue().setTeamUnActive();
 }
+void Team::addPoints(int points)
+{
+    this->points+=points;
+}
+void Team::addnumOfPlayers(int numOfPlayers)
+{
+    this->numOfPlayers+=numOfPlayers;
+}
+void Team::addnumOfGoalKeepers(int numOfGoalKeepers)
+{
+    this->numOfGoalKeepers+=numOfGoalKeepers;
+}
+void Team::addSumPlayersAbility(int sumPlayersAbility)
+{
+    this->sumPlayersAbility+=sumPlayersAbility;
+}

@@ -8,7 +8,7 @@ class TeamAndAbilities
 {
     private:
     int teamID;
-    int sumPlayersAbility;
+    int sumPlayersAbility=0;
     
 
 
@@ -20,5 +20,11 @@ class TeamAndAbilities
     bool operator ==(const TeamAndAbilities& team)const;
     bool operator >(const TeamAndAbilities& team)const;
     bool operator <(const TeamAndAbilities& team)const;
+    friend std::ostream &operator<<(std::ostream &os, const TeamAndAbilities &team)
+    {
+        os << team.teamID << "," << team.sumPlayersAbility;
+        return os;
+    }
 };
+
 #endif // TEAM_AND_ABILITIES_H_

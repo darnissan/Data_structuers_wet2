@@ -370,7 +370,7 @@ void RankTree<T>::PrintInOrder(RankNode<T> *root) const
         return;
     }
     PrintInOrder(root->GetLeft());
-    std::cout << root->GetValue() << " ";
+    std::cout << root->GetValue() << " "<<std::endl;
     PrintInOrder(root->GetRight());
 }
 template <class T>

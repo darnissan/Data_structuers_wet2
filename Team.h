@@ -41,6 +41,10 @@ public:
     void setTeamReversedTreeRoot(ReversedTreeNode<Player> *teamReversedTreeRoot);
     ReversedTreeNode<Player> *getTeamReversedTreeRoot();
     void setReversedTreeRootTeamUnActive();
+    void addPoints(int points);
+    void addnumOfPlayers(int numOfPlayers);
+    void addnumOfGoalKeepers(int numOfGoalKeepers);
+    void addSumPlayersAbility(int sumPlayersAbility);
 
 };
 

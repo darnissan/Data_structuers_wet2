@@ -201,6 +201,7 @@ add_player: SUCCESS
 add_player: SUCCESS
 add_player_cards: SUCCESS
 get_team_points: SUCCESS, 0
+playerId: 91
 get_partial_spirit: SUCCESS, 5,2,1,3,4
 add_player_cards: SUCCESS
 num_played_games_for_player: SUCCESS, 22
@@ -215,6 +216,7 @@ add_player_cards: SUCCESS
 add_player: SUCCESS
 add_player_cards: SUCCESS
 add_player: SUCCESS
+playerId: 42
 get_partial_spirit: SUCCESS, 4,1,3,2,5
 get_player_cards: SUCCESS, 355
 get_team_points: SUCCESS, 0
@@ -246,9 +248,12 @@ play_match: FAILURE
 play_match: FAILURE
 buy_team: SUCCESS
 buy_team: SUCCESS
+playerId: 6
 get_partial_spirit: SUCCESS, 4,1,5,3,2
+playerId: 46
 get_partial_spirit: SUCCESS, 2,5,4,1,3
 add_player: SUCCESS
+playerId: 58
 get_partial_spirit: SUCCESS, 2,4,1,3,5
 remove_team: SUCCESS
 add_player: SUCCESS
@@ -269,6 +274,7 @@ add_player_cards: SUCCESS
 num_played_games_for_player: SUCCESS, 22
 get_player_cards: SUCCESS, 157
 remove_team: SUCCESS
+playerId: 77
 get_partial_spirit: SUCCESS, 3,1,2,4,5
 add_team: FAILURE
 add_player: SUCCESS
@@ -283,6 +289,7 @@ add_team: FAILURE
 buy_team: SUCCESS
 remove_team: SUCCESS
 add_player: SUCCESS
+playerId: 11
 get_partial_spirit: SUCCESS, 3,5,4,1,2
 remove_team: SUCCESS
 get_player_cards: SUCCESS, 158
@@ -302,6 +309,7 @@ play_match: FAILURE
 add_team: FAILURE
 add_player: FAILURE
 num_played_games_for_player: SUCCESS, 22
+playerId: 86
 get_partial_spirit: SUCCESS, 2,4,5,3,1
 num_played_games_for_player: SUCCESS, 22
 add_team: FAILURE
@@ -329,15 +337,21 @@ get_team_points: SUCCESS, 0
 get_ith_pointless_ability: SUCCESS, 72
 buy_team: SUCCESS
 get_team_points: SUCCESS, 0
+playerId: 20
 get_partial_spirit: SUCCESS, 3,1,2,5,4
 get_team_points: SUCCESS, 0
 buy_team: SUCCESS
 add_player: SUCCESS
+playerId: 2
 get_partial_spirit: SUCCESS, 3,4,5,2,1
+playerId: 76
 get_partial_spirit: SUCCESS, 5,2,1,4,3
+playerId: 67
 get_partial_spirit: SUCCESS, 1,3,4,2,5
+playerId: 70
 get_partial_spirit: SUCCESS, 5,3,1,4,2
 add_player: SUCCESS
+playerId: 11
 get_partial_spirit: SUCCESS, 3,5,4,1,2
 get_player_cards: SUCCESS, 183
 get_team_points: SUCCESS, 0
@@ -365,6 +379,7 @@ get_player_cards: SUCCESS, 81
 num_played_games_for_player: SUCCESS, 22
 get_ith_pointless_ability: SUCCESS, 21
 num_played_games_for_player: SUCCESS, 22
+playerId: 83
 get_partial_spirit: SUCCESS, 4,5,3,2,1
 play_match: FAILURE
 get_team_points: SUCCESS, 0
@@ -377,6 +392,7 @@ num_played_games_for_player: SUCCESS, 22
 play_match: SUCCESS, 3
 num_played_games_for_player: SUCCESS, 22
 num_played_games_for_player: SUCCESS, 22
+playerId: 87
 get_partial_spirit: SUCCESS, 1,2,3,5,4
 play_match: FAILURE
 get_team_points: SUCCESS, 0
@@ -386,6 +402,7 @@ add_player: SUCCESS
 buy_team: FAILURE
 remove_team: SUCCESS
 add_player_cards: SUCCESS
+playerId: 124
 get_partial_spirit: SUCCESS, 5,3,1,4,2
 get_ith_pointless_ability: SUCCESS, 17
 buy_team: SUCCESS
@@ -406,12 +423,15 @@ num_played_games_for_player: SUCCESS, 22
 add_team: FAILURE
 add_team: FAILURE
 play_match: FAILURE
+playerId: 107
 get_partial_spirit: SUCCESS, 1,2,3,5,4
 add_player: SUCCESS
 remove_team: SUCCESS
+playerId: 125
 get_partial_spirit: SUCCESS, 3,1,5,2,4
 add_player: FAILURE
 add_player_cards: SUCCESS
+playerId: 113
 get_partial_spirit: SUCCESS, 3,4,5,1,2
 add_player: SUCCESS
 get_player_cards: SUCCESS, 265
@@ -432,6 +452,7 @@ remove_team: FAILURE
 add_player_cards: SUCCESS
 add_player: FAILURE
 get_player_cards: SUCCESS, 242
+playerId: 113
 get_partial_spirit: SUCCESS, 3,4,5,1,2
 remove_team: FAILURE
 get_player_cards: SUCCESS, 140
@@ -455,6 +476,7 @@ remove_team: SUCCESS
 buy_team: FAILURE
 get_team_points: SUCCESS, 0
 get_player_cards: SUCCESS, 53
+playerId: 108
 get_partial_spirit: SUCCESS, 4,3,2,1,5
 add_player: FAILURE
 play_match: FAILURE
@@ -465,6 +487,7 @@ num_played_games_for_player: SUCCESS, 22
 add_player: SUCCESS
 add_player_cards: SUCCESS
 get_team_points: SUCCESS, 0
+playerId: 81
 get_partial_spirit: SUCCESS, 1,3,4,5,2
 get_ith_pointless_ability: SUCCESS, 99
 play_match: FAILURE
@@ -472,11 +495,14 @@ get_team_points: SUCCESS, 0
 num_played_games_for_player: SUCCESS, 22
 add_player_cards: SUCCESS
 add_player: SUCCESS
+playerId: 134
 get_partial_spirit: SUCCESS, 4,3,2,1,5
 add_team: FAILURE
+playerId: 48
 get_partial_spirit: SUCCESS, 1,3,5,4,2
 add_player: SUCCESS
 add_player: SUCCESS
+playerId: 40
 get_partial_spirit: SUCCESS, 4,3,5,1,2
 add_team: FAILURE
 get_team_points: SUCCESS, 0
@@ -530,11 +556,13 @@ buy_team: SUCCESS
 get_ith_pointless_ability: SUCCESS, 81
 add_player: SUCCESS
 num_played_games_for_player: SUCCESS, 22
+playerId: 37
 get_partial_spirit: SUCCESS, 5,2,1,3,4
 get_player_cards: SUCCESS, 228
 get_team_points: SUCCESS, 0
 num_played_games_for_player: SUCCESS, 22
 remove_team: SUCCESS
+playerId: 97
 get_partial_spirit: SUCCESS, 1,4,5,3,2
 num_played_games_for_player: SUCCESS, 22
 get_team_points: SUCCESS, 0
@@ -565,6 +593,7 @@ remove_team: SUCCESS
 get_ith_pointless_ability: SUCCESS, 94
 num_played_games_for_player: SUCCESS, 22
 remove_team: SUCCESS
+playerId: 85
 get_partial_spirit: SUCCESS, 2,4,1,5,3
 remove_team: SUCCESS
 add_player: FAILURE
@@ -595,6 +624,7 @@ buy_team: SUCCESS
 get_ith_pointless_ability: FAILURE
 buy_team: SUCCESS
 remove_team: SUCCESS
+playerId: 53
 get_partial_spirit: SUCCESS, 4,1,2,5,3
 num_played_games_for_player: SUCCESS, 22
 get_ith_pointless_ability: SUCCESS, 90
@@ -604,6 +634,7 @@ buy_team: FAILURE
 get_team_points: FAILURE
 get_team_points: SUCCESS, 0
 add_player: FAILURE
+playerId: 77
 get_partial_spirit: SUCCESS, 3,1,2,4,5
 buy_team: FAILURE
 add_player: FAILURE
@@ -611,6 +642,7 @@ play_match: FAILURE
 add_player_cards: SUCCESS
 add_team: FAILURE
 buy_team: FAILURE
+playerId: 53
 get_partial_spirit: SUCCESS, 4,1,2,5,3
 get_team_points: FAILURE
 get_player_cards: SUCCESS, 103
@@ -623,6 +655,7 @@ play_match: FAILURE
 add_player: FAILURE
 get_ith_pointless_ability: SUCCESS, 70
 get_ith_pointless_ability: SUCCESS, 48
+playerId: 23
 get_partial_spirit: SUCCESS, 2,5,4,1,3
 add_player: FAILURE
 add_player: FAILURE
@@ -636,6 +669,7 @@ play_match: FAILURE
 add_player: FAILURE
 add_player: FAILURE
 num_played_games_for_player: SUCCESS, 22
+playerId: 59
 get_partial_spirit: SUCCESS, 3,4,5,1,2
 num_played_games_for_player: SUCCESS, 22
 add_player: FAILURE
@@ -661,6 +695,7 @@ add_team: FAILURE
 remove_team: FAILURE
 add_player_cards: SUCCESS
 get_player_cards: SUCCESS, 274
+playerId: 26
 get_partial_spirit: SUCCESS, 3,4,5,1,2
 add_team: FAILURE
 num_played_games_for_player: SUCCESS, 22
@@ -702,6 +737,7 @@ remove_team: SUCCESS
 num_played_games_for_player: SUCCESS, 22
 get_player_cards: SUCCESS, 123
 get_ith_pointless_ability: FAILURE
+playerId: 135
 get_partial_spirit: SUCCESS, 5,1,3,2,4
 add_team: FAILURE
 add_player: FAILURE
@@ -711,6 +747,7 @@ get_team_points: SUCCESS, 0
 add_player: FAILURE
 get_player_cards: SUCCESS, 53
 get_player_cards: SUCCESS, 192
+playerId: 127
 get_partial_spirit: SUCCESS, 4,3,5,2,1
 buy_team: FAILURE
 add_team: FAILURE
@@ -757,6 +794,7 @@ remove_team: FAILURE
 add_player: FAILURE
 add_player_cards: SUCCESS
 add_team: FAILURE
+playerId: 30
 get_partial_spirit: SUCCESS, 2,4,5,1,3
 num_played_games_for_player: SUCCESS, 22
 play_match: FAILURE
@@ -766,10 +804,12 @@ add_player: FAILURE
 num_played_games_for_player: SUCCESS, 22
 remove_team: FAILURE
 get_player_cards: SUCCESS, 228
+playerId: 21
 get_partial_spirit: SUCCESS, 3,4,1,2,5
 add_player_cards: SUCCESS
 add_player: FAILURE
 remove_team: SUCCESS
+playerId: 47
 get_partial_spirit: SUCCESS, 1,2,3,5,4
 get_player_cards: SUCCESS, 17
 num_played_games_for_player: SUCCESS, 22
@@ -783,10 +823,12 @@ add_player: FAILURE
 add_player_cards: SUCCESS
 get_ith_pointless_ability: SUCCESS, 12
 buy_team: SUCCESS
+playerId: 128
 get_partial_spirit: SUCCESS, 1,5,4,2,3
 remove_team: SUCCESS
 get_player_cards: SUCCESS, 6
 play_match: FAILURE
+playerId: 139
 get_partial_spirit: SUCCESS, 2,1,4,5,3
 buy_team: SUCCESS
 remove_team: SUCCESS
@@ -796,6 +838,7 @@ get_ith_pointless_ability: SUCCESS, 74
 add_player: FAILURE
 buy_team: FAILURE
 get_team_points: FAILURE
+playerId: 62
 get_partial_spirit: SUCCESS, 2,3,1,4,5
 get_player_cards: SUCCESS, 681
 add_player_cards: SUCCESS
@@ -822,7 +865,9 @@ add_team: FAILURE
 get_ith_pointless_ability: FAILURE
 add_player: FAILURE
 add_player: FAILURE
+playerId: 29
 get_partial_spirit: SUCCESS, 3,5,2,1,4
+playerId: 74
 get_partial_spirit: SUCCESS, 1,2,5,3,4
 get_ith_pointless_ability: FAILURE
 add_player: FAILURE
@@ -836,6 +881,7 @@ add_player: FAILURE
 add_player: FAILURE
 add_player: FAILURE
 buy_team: FAILURE
+playerId: 118
 get_partial_spirit: SUCCESS, 5,4,2,3,1
 get_ith_pointless_ability: FAILURE
 get_ith_pointless_ability: SUCCESS, 74
@@ -844,6 +890,7 @@ add_player: FAILURE
 add_player: FAILURE
 get_team_points: SUCCESS, 3
 get_player_cards: SUCCESS, 205
+playerId: 127
 get_partial_spirit: SUCCESS, 4,3,5,2,1
 play_match: SUCCESS, 1
 add_team: FAILURE
@@ -873,6 +920,7 @@ add_team: FAILURE
 get_team_points: FAILURE
 add_player: FAILURE
 get_player_cards: SUCCESS, 122
+playerId: 63
 get_partial_spirit: SUCCESS, 3,4,1,2,5
 get_ith_pointless_ability: SUCCESS, 81
 get_team_points: SUCCESS, 0
@@ -885,6 +933,7 @@ get_team_points: FAILURE
 add_player: FAILURE
 remove_team: FAILURE
 add_player: FAILURE
+playerId: 147
 get_partial_spirit: SUCCESS, 5,4,1,2,3
 remove_team: SUCCESS
 get_ith_pointless_ability: SUCCESS, 82
@@ -915,7 +964,9 @@ get_player_cards: SUCCESS, 292
 remove_team: FAILURE
 add_player: FAILURE
 get_ith_pointless_ability: SUCCESS, 14
+playerId: 6
 get_partial_spirit: SUCCESS, 4,1,5,3,2
+playerId: 16
 get_partial_spirit: FAILURE
 get_ith_pointless_ability: FAILURE
 add_player: FAILURE
@@ -925,11 +976,13 @@ get_ith_pointless_ability: SUCCESS, 8
 buy_team: FAILURE
 add_player_cards: SUCCESS
 num_played_games_for_player: SUCCESS, 22
+playerId: 17
 get_partial_spirit: SUCCESS, 1,4,3,5,2
 add_player: FAILURE
 add_player: FAILURE
 add_team: FAILURE
 add_player: FAILURE
+playerId: 81
 get_partial_spirit: SUCCESS, 1,3,4,5,2
 add_player: FAILURE
 play_match: FAILURE
@@ -947,6 +1000,7 @@ play_match: FAILURE
 add_player: FAILURE
 get_team_points: SUCCESS, 0
 add_player: FAILURE
+playerId: 100
 get_partial_spirit: SUCCESS, 5,2,4,1,3
 add_team: FAILURE
 get_team_points: FAILURE
@@ -969,6 +1023,7 @@ add_team: FAILURE
 add_player: FAILURE
 num_played_games_for_player: SUCCESS, 22
 add_player: FAILURE
+playerId: 106
 get_partial_spirit: FAILURE
 add_player_cards: SUCCESS
 add_player: FAILURE
@@ -989,6 +1044,7 @@ add_player: FAILURE
 play_match: FAILURE
 play_match: FAILURE
 get_team_points: SUCCESS, 0
+playerId: 19
 get_partial_spirit: SUCCESS, 4,3,1,5,2
 num_played_games_for_player: SUCCESS, 22
 get_player_cards: SUCCESS, 201
@@ -1000,6 +1056,7 @@ add_player: FAILURE
 play_match: FAILURE
 get_player_cards: SUCCESS, 170
 add_player: FAILURE
+playerId: 77
 get_partial_spirit: SUCCESS, 3,1,2,4,5
 play_match: FAILURE
 add_player: FAILURE
@@ -1020,17 +1077,21 @@ get_ith_pointless_ability: SUCCESS, 2
 add_player: FAILURE
 get_player_cards: SUCCESS, 17
 num_played_games_for_player: SUCCESS, 22
+playerId: 77
 get_partial_spirit: SUCCESS, 3,1,2,4,5
 num_played_games_for_player: SUCCESS, 22
+playerId: 16
 get_partial_spirit: FAILURE
 get_team_points: SUCCESS, 0
 get_player_cards: SUCCESS, 155
 get_player_cards: SUCCESS, 228
 add_player: FAILURE
 add_player_cards: SUCCESS
+playerId: 90
 get_partial_spirit: FAILURE
 num_played_games_for_player: SUCCESS, 22
 buy_team: FAILURE
+playerId: 23
 get_partial_spirit: SUCCESS, *,*,*,*,*
 play_match: FAILURE
 play_match: FAILURE
@@ -1075,6 +1136,7 @@ add_player: FAILURE
 buy_team: FAILURE
 num_played_games_for_player: SUCCESS, 22
 add_team: FAILURE
+playerId: 129
 get_partial_spirit: SUCCESS, 3,5,4,2,1
 get_team_points: FAILURE
 add_player_cards: SUCCESS
@@ -1082,6 +1144,7 @@ get_ith_pointless_ability: SUCCESS, 65
 add_player: FAILURE
 get_player_cards: SUCCESS, 110
 num_played_games_for_player: SUCCESS, 22
+playerId: 139
 get_partial_spirit: SUCCESS, 2,1,4,5,3
 add_player: FAILURE
 add_player_cards: SUCCESS
@@ -1091,11 +1154,13 @@ add_player: FAILURE
 add_player: FAILURE
 get_player_cards: SUCCESS, 228
 add_player: FAILURE
+playerId: 144
 get_partial_spirit: SUCCESS, 4,1,5,3,2
 get_team_points: FAILURE
 add_player_cards: SUCCESS
 get_player_cards: SUCCESS, 96
 remove_team: SUCCESS
+playerId: 53
 get_partial_spirit: SUCCESS, 4,1,2,5,3
 add_player: FAILURE
 remove_team: SUCCESS
@@ -1110,6 +1175,7 @@ add_player: FAILURE
 play_match: FAILURE
 add_player: FAILURE
 add_player_cards: FAILURE
+playerId: 74
 get_partial_spirit: SUCCESS, 5,2,3,1,4
 add_team: FAILURE
 play_match: FAILURE
@@ -1124,16 +1190,19 @@ buy_team: FAILURE
 num_played_games_for_player: SUCCESS, 22
 play_match: SUCCESS, 1
 get_ith_pointless_ability: SUCCESS, 13
+playerId: 68
 get_partial_spirit: SUCCESS, 3,1,4,5,2
 add_player: FAILURE
 add_team: FAILURE
 remove_team: FAILURE
 play_match: FAILURE
+playerId: 105
 get_partial_spirit: SUCCESS, 4,5,3,1,2
 get_player_cards: SUCCESS, 434
 add_player: FAILURE
 get_team_points: FAILURE
 add_player_cards: SUCCESS
+playerId: 146
 get_partial_spirit: SUCCESS, 2,4,1,3,5
 num_played_games_for_player: SUCCESS, 22
 add_player_cards: SUCCESS
@@ -1158,11 +1227,13 @@ buy_team: FAILURE
 buy_team: FAILURE
 get_player_cards: SUCCESS, 134
 add_player: FAILURE
+playerId: 107
 get_partial_spirit: SUCCESS, 1,2,3,5,4
 remove_team: SUCCESS
 add_player_cards: FAILURE
 buy_team: INVALID_INPUT
 get_player_cards: SUCCESS, 261
+playerId: 53
 get_partial_spirit: SUCCESS, 4,1,2,5,3
 add_player: FAILURE
 remove_team: SUCCESS
@@ -1170,10 +1241,12 @@ buy_team: SUCCESS
 get_player_cards: SUCCESS, 349
 get_ith_pointless_ability: FAILURE
 add_player: FAILURE
+playerId: 24
 get_partial_spirit: SUCCESS, 3,2,4,5,1
 buy_team: FAILURE
 add_player: FAILURE
 add_team: FAILURE
+playerId: 59
 get_partial_spirit: SUCCESS, 3,4,5,1,2
 get_ith_pointless_ability: FAILURE
 get_player_cards: SUCCESS, 20
@@ -1189,6 +1262,7 @@ add_player: FAILURE
 add_team: FAILURE
 remove_team: SUCCESS
 num_played_games_for_player: SUCCESS, 22
+playerId: 146
 get_partial_spirit: SUCCESS, 2,4,1,3,5
 buy_team: FAILURE
 remove_team: SUCCESS

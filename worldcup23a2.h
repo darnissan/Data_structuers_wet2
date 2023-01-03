@@ -46,6 +46,7 @@ private:
 	Set<Player> *findSet(int playerId);
 	void unionSetsBoughtBigger(int teamId1, int teamId2);
 	void unionEmptySet(int buyerId, int boughtId);
+	int getGamesPlayedFromMasterRoot(int playerId);
 public:
 	// <DO-NOT-MODIFY> {
 

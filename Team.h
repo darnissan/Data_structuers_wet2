@@ -13,7 +13,7 @@ private:
     int points=0;
     int sumPlayersAbility=0;
     int gamesPlayed=0;
-    permutation_t teamSpirit;
+    permutation_t teamSpirit=permutation_t().neutral();
     int teamStrength;
     ReversedTreeNode<Player> *teamReversedTreeRoot=nullptr;
 public:

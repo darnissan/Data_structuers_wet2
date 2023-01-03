@@ -1,1354 +1,414 @@
 
-// // #include "iostream"
-// // #include "wet2util.h"
-// // #include "vector"
-// // #include "worldcup23a2.h"
-// // using namespace std;
-
-// // #define N 5 // (the size of each permutation in Wet2Util.h)
-// // // Choose the maximal amount of permutations that you want to create and use:
-// // #define M 10
-
-// // // Print the array that present the permutation:
-// // // Important - move the field "a" in class "permutation_t" (the array. look there, in "wet2util.h") to public!
-// // void print(const permutation_t &permut);
-
-// // // Multiply chosen permutations from the vector:
-// // permutation_t mult_permutations(const vector<permutation_t> &permutations, int array_of_indexes[], int num_of_permutations);
-
-
-
-
-// // int main()
-// // {
-// //     // Here you choose the permutations (the spirits):
-// //     int array[M][N] = {{0, 1, 2, 3, 4},
-// //                        {1, 0, 3, 4, 2},
-// //                        {0, 1, 3, 4, 2},
-// //                        {1, 0, 2, 3, 4},
-// //                        {4, 1, 2, 3, 0},
-// //                        {2, 4, 1, 3, 0},
-// //                        {0, 4, 3, 1, 2},
-// //                        {0, 1, 2, 4, 3},
-// //                        {4, 3, 2, 1, 0},
-// //                        {3, 0, 4, 2, 1}};
-// //     // Now the code create the permutations and insert them to the voector:
-// //     vector<permutation_t> spirits;
-// //     for (int i = 0; i < M; i++)
-// //     {
-// //         permutation_t to_pust(array[i]);
-// //         if (to_pust.isvalid())
-// //             spirits.push_back(permutation_t(array[i]));
-// //         else
-// //         {
-// //             cout << "spirit " << i << " is not valid: ";
-// //             print(to_pust);
-// //             cout << "valid permutation is all the numbers from 0 to 4" << endl;
-// //         }
-// //     }
-
-// //     /*------------------------
-// //      * Enter your code here:
-// //      * (create teams and players, buy teams... use the spirits that yuo created, from the vector "spirits",
-// //      * and then, choose one spirit (spirit of team or partial-spirit of player that you want to check,
-// //      * and print it in the function "print".)
-// //      */
-// //     world_cup_t *obj = new world_cup_t();
-// //     obj->add_team(1);
-// //     obj->add_team(2);
-// //     obj->add_player(1, 1, permutation_t(array[0]), 1, 1, 1, true);
-// //     obj->add_player(2, 1, permutation_t(array[1]), 1, 1, 1, true);
-// //     obj->add_player(3, 2, permutation_t(array[2]), 1, 1, 1, true);
-
-
-// //     //print(/* Enter here spirit (e.g.: with the function "get_partial_spirit", or another method)*/ tmp_player39_->getSpirit());
-    
-// //     /*----------------------
-// //      * Choose the permutations that you want to multiply and compare with the spirit that you chose before:
-// //      * (e.g.: if in team 2 the first player has spirit[3] (the 4 spirit in the array and in the vector),
-// //      * and the second player has spirit[7], and you entered to the function "print" above "get_partial_spirit" of player2,
-// //      * enter to the array "indexes_array" {3, 7}, and 2 to the last argument of the function "mult_permutations").
-// //      * Now, check if the 2 permutations that printed to are equal.
-// //      */
-// //     int indexes_array[M] = {/*the indexes (in vector "spirits") of the spirits that you want to multiply*/ 2, 3};
-// //     permutation_t expected_spirit = mult_permutations(spirits, indexes_array, /*num of the permutations to multiply*/ 2);
-// //     print(expected_spirit);
-
-// //     return 0;
-// // }
-
-// // void print(const permutation_t &permut)
-// // {
-// //     for (int i = 0; i < 5; i++)
-// //     {
-// //         std::cout << permut.a[i] << ", ";
-// //     }
-// //     std::cout << std::endl;
-// // }
-
-// // permutation_t mult_permutations(const vector<permutation_t> &permutations, int array_of_indexes[], int num_of_permutations)
-// // {
-// //     permutation_t result = permutation_t::neutral();
-// //     for (int i = 0; i < num_of_permutations; i++)
-// //     {
-// //         result = result * permutations[array_of_indexes[i]];
-// //     }
-// //     return result;
-// // }
-// // */
-
 // #include "iostream"
 // #include "wet2util.h"
 // #include "vector"
 // #include "worldcup23a2.h"
 // using namespace std;
 
-// //     add_team 1
-// // add_team 2
-// // add_team 3
-// // remove_team 3
-// // add_player 1001 1 2,3,4,5,1 0 15 2 true
-// // add_player 2001 2 4,3,5,2,1 0 17 1 true
-// // play_match 1 2
-// // num_played_games_for_player 1001
-// // add_player_cards 2001 2
-// // get_player_cards 2001
-// // get_team_points 1
-// // get_ith_pointless_ability 0
-// // get_partial_spirit 1001
-// // buy_team 1 2
-// static const char *StatusTypeStr[] =
-//     {
-//         "SUCCESS",
-//         "ALLOCATION_ERROR",
-//         "INVALID_INPUT",
-//         "FAILURE"};
+// #define N 5 // (the size of each permutation in Wet2Util.h)
+// // Choose the maximal amount of permutations that you want to create and use:
+// #define M 10
 
-// void print(string cmd, StatusType res)
-// {
-//     cout << cmd << ": " << StatusTypeStr[(int)res] << endl;
-// }
+// // Print the array that present the permutation:
+// // Important - move the field "a" in class "permutation_t" (the array. look there, in "wet2util.h") to public!
+// void print(const permutation_t &permut);
 
-// template <typename T>
-// void print(string cmd, output_t<T> res)
-// {
-//     if (res.status() == StatusType::SUCCESS)
-//     {
-//         cout << cmd << ": " << StatusTypeStr[(int)res.status()] << ", " << res.ans() << endl;
-//     }
-//     else
-//     {
-//         cout << cmd << ": " << StatusTypeStr[(int)res.status()] << endl;
-//     }
-// }
+// // Multiply chosen permutations from the vector:
+// permutation_t mult_permutations(const vector<permutation_t> &permutations, int array_of_indexes[], int num_of_permutations);
 
 // int main()
 // {
-//     world_cup_t *wc = new world_cup_t();
-//      wc->add_team(1);
-//      wc->add_team(2);
-//      wc->add_team(3);
-//      wc->add_team(4);
-//      wc->add_team(5);
-//      wc->add_team(6);
-//      wc->add_team(7);
-//      wc->add_team(8);
-//      wc->add_team(9);
-//      wc->add_team(10);
-//      wc->add_team(11);
-//      wc->add_team(12);
-//      wc->add_team(13);
-//      wc->add_team(14);
-//      wc->add_team(15);
-//      wc->add_team(16);
-//      wc->add_team(17);
-//      wc->add_team(18);
-//      wc->add_team(19);
-//      wc->add_team(20);
-//      wc->add_team(21);
-//      wc->add_team(22);
-//      wc->add_team(23);
-//      wc->add_team(24);
-//      wc->add_team(25);
-//      wc->add_team(26);
-//      wc->add_team(27);
-//      wc->add_team(28);
-//      wc->add_team(29);
-//      wc->add_team(30);
-//      wc->add_team(31);
-//      wc->add_team(32);
-//      wc->add_team(33);
-//      wc->add_team(34);
-//      wc->add_team(35);
-//      wc->add_team(36);
-//      wc->add_team(37);
-//      wc->add_team(38);
-//      wc->add_team(39);
-//      wc->add_team(40);
-//      wc->add_team(41);
-//      wc->add_team(42);
-//      wc->add_team(43);
-//      wc->add_team(44);
-//      wc->add_team(45);
-//      wc->add_team(46);
-//      wc->add_team(47);
-//      wc->add_team(48);
-//      wc->add_team(49);
-//      wc->add_team(50);
-//      wc->add_team(51);
-//      wc->add_team(52);
-//      wc->add_team(53);
-//      wc->add_team(54);
-//      wc->add_team(55);
-//      wc->add_team(56);
-//      wc->add_team(57);
-//      wc->add_team(58);
-//      wc->add_team(59);
-//      wc->add_team(60);
-//      wc->add_team(61);
-//      wc->add_team(62);
-//      wc->add_team(63);
-//      wc->add_team(64);
-//      wc->add_team(65);
-//      wc->add_team(66);
-//      wc->add_team(67);
-//      wc->add_team(68);
-//      wc->add_team(69);
-//      wc->add_team(70);
-//      wc->add_team(71);
-//      wc->add_team(72);
-//      wc->add_team(73);
-//      wc->add_team(74);
-//      wc->add_team(75);
-//      wc->add_team(76);
-//      wc->add_team(77);
-//      wc->add_team(78);
-//      wc->add_team(79);
-//      wc->add_team(80);
-//      wc->add_team(81);
-//      wc->add_team(82);
-//      wc->add_team(83);
-//      wc->add_team(84);
-//      wc->add_team(85);
-//      wc->add_team(86);
-//      wc->add_team(87);
-//      wc->add_team(88);
-//      wc->add_team(89);
-//      wc->add_team(90);
-//      wc->add_team(91);
-//      wc->add_team(92);
-//      wc->add_team(93);
-//      wc->add_team(94);
-//      wc->add_team(95);
-//      wc->add_team(96);
-//      wc->add_team(97);
-//      wc->add_team(98);
-//      wc->add_team(99);
-//      wc->add_team(100);
-//      wc->add_player(1, 45, permutation_t::read("5,4,3,1,2"), 109, 203, 228, true);
-//      wc->add_player(2, 37, permutation_t::read("3,4,5,2,1"), 229, 85, 22, false);
-//      wc->add_player(3, 38, permutation_t::read("4,3,2,5,1"), 144, 233, 166, false);
-//      wc->add_player(4, 64, permutation_t::read("4,5,1,2,3"), 177, 36, 78, true);
-//      wc->add_player(5, 73, permutation_t::read("3,4,1,5,2"), 194, 297, 157, true);
-//      wc->add_player(6, 74, permutation_t::read("4,1,5,3,2"), 170, 230, 229, true);
-//      wc->add_player(7, 67, permutation_t::read("2,3,1,5,4"), 165, 201, 15, false);
-//      wc->add_player(8, 88, permutation_t::read("2,5,1,4,3"), 266, 100, 104, true);
-//      wc->add_player(9, 25, permutation_t::read("5,1,3,2,4"), 64, 183, 67, true);
-//      wc->add_player(10, 83, permutation_t::read("5,1,4,3,2"), 232, 111, 205, false);
-//      wc->add_player(11, 85, permutation_t::read("3,5,4,1,2"), 1, 227, 75, true);
-//      wc->add_player(12, 43, permutation_t::read("1,2,5,4,3"), 159, 238, 175, true);
-//      wc->add_player(13, 40, permutation_t::read("2,1,5,4,3"), 292, 126, 294, false);
-//      wc->add_player(14, 75, permutation_t::read("4,1,3,2,5"), 31, 157, 82, true);
-//      wc->add_player(15, 26, permutation_t::read("5,3,2,4,1"), 243, 51, 203, false);
-//      wc->add_player(16, 49, permutation_t::read("4,2,1,5,3"), 181, 250, 84, true);
-//      wc->add_player(17, 97, permutation_t::read("1,2,4,5,3"), 230, 229, 131, true);
-//      wc->add_player(18, 88, permutation_t::read("1,5,4,2,3"), 146, 203, 108, true);
-//      wc->add_player(19, 87, permutation_t::read("4,3,1,5,2"), 280, 172, 71, true);
-//      wc->add_player(20, 35, permutation_t::read("3,1,2,5,4"), 84, 215, 28, true);
-//      wc->add_player(21, 70, permutation_t::read("3,4,1,2,5"), 248, 11, 204, false);
-//      wc->add_player(22, 18, permutation_t::read("5,4,1,3,2"), 182, 31, 140, true);
-//      wc->add_player(23, 100, permutation_t::read("2,5,4,1,3"), 6, 212, 81, true);
-//      wc->add_player(24, 34, permutation_t::read("3,2,4,5,1"), 79, 94, 132, true);
-//      wc->add_player(25, 9, permutation_t::read("1,5,2,3,4"), 120, 176, 298, false);
-//      wc->add_player(26, 87, permutation_t::read("2,1,4,3,5"), 9, 84, 56, false);
-//      wc->add_player(27, 78, permutation_t::read("2,3,4,5,1"), 209, 278, 248, false);
-//      wc->add_player(28, 89, permutation_t::read("5,2,4,3,1"), 119, 161, 152, true);
-//      wc->add_player(29, 29, permutation_t::read("5,2,1,4,3"), 262, 249, 8, true);
-//      wc->add_player(30, 70, permutation_t::read("4,2,5,3,1"), 164, 245, 280, true);
-//      wc->add_player(31, 56, permutation_t::read("3,5,1,4,2"), 112, 91, 8, true);
-//      wc->add_player(32, 78, permutation_t::read("3,4,5,1,2"), 198, 99, 148, true);
-//      wc->add_player(33, 89, permutation_t::read("2,4,1,3,5"), 64, 157, 110, true);
-//      wc->add_player(34, 64, permutation_t::read("5,1,3,2,4"), 97, 300, 31, true);
-//      wc->add_player(35, 38, permutation_t::read("5,3,4,2,1"), 194, 208, 101, false);
-//      wc->add_player(36, 81, permutation_t::read("3,5,2,1,4"), 248, 22, 288, true);
-//      wc->add_player(37, 70, permutation_t::read("3,1,4,5,2"), 299, 92, 53, true);
-//      wc->add_player(38, 40, permutation_t::read("3,2,1,4,5"), 45, 121, 199, true);
-//      wc->add_player(39, 18, permutation_t::read("4,1,5,3,2"), 20, 99, 6, false);
-//      wc->add_player(40, 84, permutation_t::read("4,3,5,1,2"), 130, 243, 136, true);
-//      wc->add_player(41, 19, permutation_t::read("4,1,5,2,3"), 59, 135, 96, true);
-//      wc->add_player(42, 36, permutation_t::read("4,1,3,2,5"), 238, 148, 199, false);
-//      wc->add_player(43, 37, permutation_t::read("2,4,3,5,1"), 114, 135, 228, false);
-//      wc->add_player(44, 53, permutation_t::read("3,5,2,1,4"), 185, 22, 157, true);
-//      wc->add_player(45, 72, permutation_t::read("2,1,4,3,5"), 35, 176, 67, false);
-//      wc->add_player(46, 34, permutation_t::read("2,4,3,5,1"), 23, 68, 192, true);
-//      wc->add_player(47, 1, permutation_t::read("1,2,3,5,4"), 291, 133, 81, true);
-//      wc->add_player(48, 98, permutation_t::read("1,3,5,4,2"), 229, 267, 230, false);
-//      wc->add_player(49, 52, permutation_t::read("5,3,2,1,4"), 233, 244, 104, false);
-//      wc->add_player(50, 75, permutation_t::read("4,3,2,1,5"), 183, 105, 87, false);
-//      wc->add_player(51, 70, permutation_t::read("4,3,2,1,5"), 223, 61, 24, true);
-//      wc->add_player(52, 2, permutation_t::read("1,5,2,3,4"), 292, 180, 174, true);
-//      wc->add_player(53, 13, permutation_t::read("4,1,2,5,3"), 300, 157, 190, false);
-//      wc->add_player(54, 36, permutation_t::read("3,5,2,4,1"), 232, 47, 232, false);
-//      wc->add_player(55, 55, permutation_t::read("2,1,4,3,5"), 117, 12, 97, true);
-//      wc->add_player(56, 65, permutation_t::read("5,1,2,3,4"), 168, 89, 191, true);
-//      wc->add_player(57, 60, permutation_t::read("4,2,5,3,1"), 132, 62, 194, false);
-//      wc->add_player(58, 23, permutation_t::read("2,4,1,3,5"), 173, 159, 89, false);
-//      wc->add_player(59, 34, permutation_t::read("5,3,2,4,1"), 205, 297, 123, true);
-//      wc->add_player(60, 35, permutation_t::read("5,2,1,4,3"), 96, 102, 122, true);
-//      wc->add_player(61, 2, permutation_t::read("5,3,2,1,4"), 56, 153, 142, false);
-//      wc->add_player(62, 96, permutation_t::read("2,4,3,1,5"), 159, 97, 155, false);
-//      wc->add_player(63, 86, permutation_t::read("3,4,1,2,5"), 66, 106, 294, true);
-//      wc->add_player(64, 52, permutation_t::read("1,2,3,4,5"), 285, 24, 188, true);
-//      wc->add_player(65, 100, permutation_t::read("3,4,2,5,1"), 2, 38, 193, true);
-//      wc->add_player(66, 69, permutation_t::read("2,1,5,3,4"), 84, 76, 25, true);
-//      wc->add_player(67, 18, permutation_t::read("4,1,5,3,2"), 109, 79, 15, false);
-//      wc->add_player(68, 69, permutation_t::read("3,4,5,2,1"), 25, 251, 182, true);
-//      wc->add_player(69, 1, permutation_t::read("1,2,4,3,5"), 156, 139, 102, false);
-//      wc->add_player(70, 44, permutation_t::read("5,3,1,4,2"), 231, 28, 86, true);
-//      wc->add_player(71, 81, permutation_t::read("5,3,2,1,4"), 175, 211, 169, true);
-//      wc->add_player(72, 40, permutation_t::read("4,2,3,5,1"), 139, 300, 241, true);
-//      wc->add_player(73, 61, permutation_t::read("2,1,3,5,4"), 10, 279, 158, false);
-//      wc->add_player(74, 69, permutation_t::read("4,5,1,2,3"), 83, 271, 220, true);
-//      wc->add_player(75, 94, permutation_t::read("4,1,5,2,3"), 121, 265, 81, false);
-//      wc->add_player(76, 31, permutation_t::read("5,2,1,4,3"), 288, 142, 177, true);
-//      wc->add_player(77, 87, permutation_t::read("1,4,5,2,3"), 241, 20, 84, false);
-//      wc->add_player(78, 40, permutation_t::read("5,1,4,3,2"), 248, 25, 103, true);
-//      wc->add_player(79, 6, permutation_t::read("5,1,4,3,2"), 285, 110, 31, false);
-//      wc->add_player(80, 48, permutation_t::read("5,2,1,4,3"), 31, 202, 132, false);
-//      wc->add_player(81, 81, permutation_t::read("5,4,1,3,2"), 139, 98, 213, true);
-//      wc->add_player(82, 75, permutation_t::read("5,3,2,1,4"), 110, 154, 82, false);
-//      wc->add_player(83, 37, permutation_t::read("1,3,5,2,4"), 45, 45, 28, false);
-//      wc->add_player(84, 2, permutation_t::read("2,1,3,4,5"), 73, 230, 60, true);
-//      wc->add_player(85, 31, permutation_t::read("2,4,3,1,5"), 10, 170, 231, false);
-//      wc->add_player(86, 54, permutation_t::read("2,4,5,3,1"), 42, 268, 144, false);
-//      wc->add_player(87, 59, permutation_t::read("1,2,3,5,4"), 99, 215, 196, true);
-//      wc->add_player(88, 57, permutation_t::read("4,3,2,5,1"), 41, 21, 229, true);
-//      wc->add_player(89, 88, permutation_t::read("1,3,2,5,4"), 122, 159, 299, true);
-//      wc->add_player(90, 16, permutation_t::read("4,5,1,2,3"), 81, 24, 189, true);
-//      wc->add_player(91, 20, permutation_t::read("5,2,1,3,4"), 278, 97, 229, false);
-//      wc->add_player(92, 68, permutation_t::read("1,4,2,5,3"), 268, 165, 61, true);
-//      wc->add_player(93, 69, permutation_t::read("3,2,5,4,1"), 14, 198, 14, false);
-//      wc->add_player(94, 36, permutation_t::read("2,1,5,4,3"), 269, 254, 147, false);
-//      wc->add_player(95, 13, permutation_t::read("2,1,4,3,5"), 24, 300, 175, true);
-//      wc->add_player(96, 11, permutation_t::read("5,1,2,4,3"), 132, 169, 297, false);
-//      wc->add_player(97, 92, permutation_t::read("1,4,5,3,2"), 127, 145, 237, true);
-//      wc->add_player(98, 100, permutation_t::read("3,2,5,4,1"), 184, 26, 188, true);
-//      wc->add_player(99, 65, permutation_t::read("1,3,2,5,4"), 200, 164, 28, false);
-//      wc->add_player(100, 15, permutation_t::read("5,1,4,3,2"), 150, 90, 17, false);
-//      wc->add_player(101, 69, permutation_t::read("1,2,5,3,4"), 291, 189, 264, false);
-//      wc->add_player_cards(5, 198);
-//      wc->get_team_points(74);
-//      wc->get_partial_spirit(91);
-//      wc->add_player_cards(29, 20);
-//      wc->num_played_games_for_player(2);
-//      wc->get_player_cards(56);
-//      wc->get_team_points(57);
-//      wc->buy_team(51, 62);
-//      wc->add_team(101);
-//      wc->num_played_games_for_player(7);
-//      wc->buy_team(45, 80);
-//      wc->num_played_games_for_player(78);
-//      wc->add_player_cards(26, 180);
-//      wc->add_player(102, 71, permutation_t::read("3,1,5,4,2"), 283, 228, 242, true);
-//      wc->add_player_cards(38, 147);
-//      wc->add_player(103, 57, permutation_t::read("4,2,1,3,5"), 153, 237, 190, true);
-//      wc->get_partial_spirit(42);
-//      wc->get_player_cards(5);
-//      wc->get_team_points(63);
-//      wc->get_player_cards(81);
-//      wc->play_match(35, 99);
-//      wc->add_player(104, 35, permutation_t::read("3,5,1,4,2"), 179, 92, 120, true);
-//      wc->get_player_cards(28);
-//      wc->add_player_cards(45, 134);
-//      wc->add_team(101);
-//      wc->play_match(85, 14);
-//      wc->get_player_cards(37);
-//      wc->num_played_games_for_player(45);
-//      wc->num_played_games_for_player(66);
-//      wc->buy_team(33, 4);
-//      wc->play_match(23, 30);
-//      wc->num_played_games_for_player(34);
-//      wc->get_team_points(43);
-//      wc->add_team(101);
-//      wc->play_match(13, 3);
-//      wc->add_player(105, 22, permutation_t::read("4,5,3,1,2"), 239, 164, 249, true);
-//      wc->num_played_games_for_player(70);
-//      wc->add_player_cards(38, 276);
-//      wc->add_team(101);
-//      wc->add_player_cards(53, 183);
-//      wc->add_player(106, 32, permutation_t::read("4,5,2,1,3"), 275, 241, 183, false);
-//      wc->add_player(107, 66, permutation_t::read("1,2,3,5,4"), 92, 123, 165, false);
-//      wc->get_ith_pointless_ability(54);
-//      wc->play_match(96, 73);
-//      wc->play_match(22, 95);
-//      wc->buy_team(17, 68);
-//      wc->buy_team(49, 54);
-//      wc->get_partial_spirit(6);
-//      wc->get_partial_spirit(46);
-//      wc->add_player(108, 10, permutation_t::read("4,3,2,1,5"), 142, 211, 190, false);
-//      wc->get_partial_spirit(58);
-//      wc->remove_team(7);
-//      wc->add_player(109, 39, permutation_t::read("5,1,2,3,4"), 90, 24, 227, true);
-//      wc->add_player(110, 26, permutation_t::read("4,5,2,3,1"), 57, 170, 296, true);
-//      wc->play_match(45, 2);
-//      wc->play_match(37, 2);
-//      wc->add_player_cards(84, 74);
-//      wc->add_team(101);
-//      wc->remove_team(45);
-//      wc->add_player(111, 40, permutation_t::read("3,4,5,1,2"), 63, 276, 274, true);
-//      wc->get_player_cards(77);
-//      wc->play_match(4, 69);
-//      wc->play_match(19, 68);
-//      wc->get_team_points(66);
-//      wc->add_team(101);
-//      wc->num_played_games_for_player(15);
-//      wc->add_player_cards(94, 153);
-//      wc->num_played_games_for_player(29);
-//      wc->get_player_cards(44);
-//      wc->remove_team(52);
-//      wc->get_partial_spirit(77);
-//      wc->add_team(101);
-//      wc->add_player(112, 40, permutation_t::read("2,5,4,3,1"), 44, 194, 265, true);
-//      wc->remove_team(38);
-//      wc->add_player(113, 3, permutation_t::read("3,4,5,1,2"), 208, 123, 214, false);
-//      wc->play_match(10, 16);
-//      wc->add_player(114, 78, permutation_t::read("5,2,1,3,4"), 202, 244, 170, true);
-//      wc->get_ith_pointless_ability(7);
-//      wc->get_ith_pointless_ability(78);
-//      wc->add_player(115, 61, permutation_t::read("3,5,2,4,1"), 38, 10, 20, false);
-//      wc->add_team(101);
-//      wc->buy_team(40, 19);
-//      wc->remove_team(64);
-//      wc->add_player(116, 91, permutation_t::read("3,5,1,2,4"), 174, 33, 192, false);
-//      wc->get_partial_spirit(11);
-//      wc->remove_team(43);
-//      wc->get_player_cards(73);
-//      wc->add_player(117, 42, permutation_t::read("1,2,5,4,3"), 94, 246, 156, true);
-//      wc->get_team_points(16);
-//      wc->add_player(118, 72, permutation_t::read("5,3,1,4,2"), 110, 233, 169, false);
-//      wc->remove_team(78);
-//      wc->get_player_cards(28);
-//      wc->buy_team(87, 58);
-//      wc->num_played_games_for_player(118);
-//      wc->remove_team(56);
-//      wc->add_player_cards(38, 59);
-//      wc->add_player(119, 68, permutation_t::read("5,3,4,1,2"), 38, 48, 8, false);
-//      wc->get_player_cards(37);
-//      wc->remove_team(89);
-//      wc->play_match(41, 30);
-//      wc->add_team(101);
-//      wc->add_player(119, 54, permutation_t::read("4,5,1,3,2"), 66, 296, 29, false);
-//      wc->num_played_games_for_player(4);
-//      wc->get_partial_spirit(86);
-//      wc->num_played_games_for_player(6);
-//      wc->add_team(101);
-//      wc->add_player_cards(86, 58);
-//      wc->add_player_cards(57, 108);
-//      wc->remove_team(51);
-//      wc->add_team(101);
-//      wc->get_team_points(16);
-//      wc->add_player_cards(68, 188);
-//      wc->buy_team(95, 27);
-//      wc->num_played_games_for_player(54);
-//      wc->num_played_games_for_player(58);
-//      wc->add_player(119, 95, permutation_t::read("5,1,4,3,2"), 52, 41, 242, true);
-//      wc->add_player_cards(105, 139);
-//      wc->add_player_cards(19, 54);
-//      wc->buy_team(19, 8);
-//      wc->get_ith_pointless_ability(17);
-//      wc->num_played_games_for_player(108);
-//      wc->add_player_cards(42, 128);
-//      wc->add_player(120, 82, permutation_t::read("1,3,2,4,5"), 2, 145, 291, true);
-//      wc->get_player_cards(82);
-//      wc->get_player_cards(105);
-//      wc->get_ith_pointless_ability(83);
-//      wc->get_team_points(79);
-//      wc->get_ith_pointless_ability(73);
-//      wc->buy_team(26, 32);
-//      wc->get_team_points(65);
-//      wc->get_partial_spirit(20);
-//      wc->get_team_points(92);
-//      wc->buy_team(36, 93);
-//      wc->add_player(121, 67, permutation_t::read("3,4,5,1,2"), 112, 242, 180, false);
-//      wc->get_partial_spirit(2);
-//      wc->get_partial_spirit(76);
-//      wc->get_partial_spirit(67);
-//      wc->get_partial_spirit(70);
-//      wc->add_player(122, 65, permutation_t::read("4,3,5,2,1"), 194, 164, 246, true);
-//      wc->get_partial_spirit(11);
-//      wc->get_player_cards(106);
-//      wc->get_team_points(87);
-//      wc->add_player(123, 85, permutation_t::read("1,2,5,3,4"), 93, 249, 91, true);
-//      wc->get_team_points(62);
-//      wc->play_match(8, 66);
-//      wc->add_player_cards(97, 146);
-//      wc->get_player_cards(13);
-//      wc->add_player(124, 41, permutation_t::read("5,3,1,4,2"), 163, 113, 11, false);
-//      wc->get_ith_pointless_ability(50);
-//      wc->add_player(125, 71, permutation_t::read("1,2,3,5,4"), 108, 50, 101, true);
-//      wc->add_player(126, 57, permutation_t::read("1,5,2,4,3"), 204, 82, 209, false);
-//      wc->add_player(127, 3, permutation_t::read("2,1,3,5,4"), 59, 257, 72, false);
-//      wc->buy_team(23, 41);
-//      wc->get_player_cards(38);
-//      wc->add_player(128, 98, permutation_t::read("1,3,4,5,2"), 201, 276, 244, true);
-//      wc->num_played_games_for_player(106);
-//      wc->remove_team(80);
-//      wc->play_match(97, 8);
-//      wc->get_player_cards(12);
-//      wc->play_match(47, 42);
-//      wc->get_team_points(14);
-//      wc->get_team_points(32);
-//      wc->get_player_cards(75);
-//      wc->num_played_games_for_player(12);
-//      wc->get_ith_pointless_ability(4);
-//      wc->num_played_games_for_player(118);
-//      wc->get_partial_spirit(83);
-//      wc->play_match(6, 87);
-//      wc->get_team_points(48);
-//      wc->play_match(87, 91);
-//      wc->remove_team(61);
-//      wc->num_played_games_for_player(25);
-//      wc->add_player(129, 33, permutation_t::read("3,5,4,2,1"), 76, 259, 174, false);
-//      wc->buy_team(96, 86);
-//      wc->num_played_games_for_player(91);
-//      wc->play_match(92, 59);
-//      wc->num_played_games_for_player(123);
-//      wc->num_played_games_for_player(26);
-//      wc->get_partial_spirit(87);
-//      wc->play_match(3, 70);
-//      wc->get_team_points(44);
-//      wc->num_played_games_for_player(43);
-//      wc->get_team_points(53);
-//      wc->add_player(130, 71, permutation_t::read("3,1,4,5,2"), 227, 201, 80, true);
-//      wc->buy_team(81, 19);
-//      wc->remove_team(83);
-//      wc->add_player_cards(48, 220);
-//      wc->get_partial_spirit(124);
-//      wc->get_ith_pointless_ability(33);
-//      wc->buy_team(72, 63);
-//      wc->add_player(131, 75, permutation_t::read("3,2,4,5,1"), 64, 135, 39, true);
-//      wc->play_match(80, 82);
-//      wc->buy_team(13, 97);
-//      wc->add_player_cards(42, 139);
-//      wc->add_player(132, 54, permutation_t::read("2,5,1,4,3"), 38, 130, 279, true);
-//      wc->add_team(101);
-//      wc->buy_team(6, 49);
-//      wc->add_player(132, 49, permutation_t::read("4,5,2,3,1"), 260, 18, 267, true);
-//      wc->add_team(101);
-//      wc->add_player(132, 47, permutation_t::read("3,1,4,5,2"), 137, 229, 261, false);
-//      wc->get_ith_pointless_ability(6);
-//      wc->add_player(133, 20, permutation_t::read("2,1,4,5,3"), 297, 119, 236, false);
-//      wc->play_match(81, 91);
-//      wc->num_played_games_for_player(29);
-//      wc->add_team(101);
-//      wc->add_team(101);
-//      wc->play_match(99, 71);
-//      wc->get_partial_spirit(107);
-//      wc->add_player(134, 5, permutation_t::read("4,3,2,1,5"), 270, 135, 78, false);
-//      wc->remove_team(26);
-//      wc->get_partial_spirit(125);
-//      wc->add_player(135, 93, permutation_t::read("4,1,5,3,2"), 270, 200, 140, false);
-//      wc->add_player_cards(16, 108);
-//      wc->get_partial_spirit(113);
-//      wc->add_player(135, 18, permutation_t::read("5,1,2,4,3"), 199, 24, 292, true);
-//      wc->get_player_cards(112);
-//      wc->num_played_games_for_player(127);
-//      wc->num_played_games_for_player(116);
-//      wc->add_player(136, 87, permutation_t::read("4,5,1,2,3"), 143, 71, 203, false);
-//      wc->add_player(137, 75, permutation_t::read("5,2,1,4,3"), 166, 208, 101, false);
-//      wc->get_ith_pointless_ability(21);
-//      wc->add_team(101);
-//      wc->remove_team(42);
-//      wc->get_ith_pointless_ability(30);
-//      wc->get_team_points(35);
-//      wc->buy_team(14, 77);
-//      wc->remove_team(36);
-//      wc->num_played_games_for_player(46);
-//      wc->play_match(82, 28);
-//      wc->remove_team(41);
-//      wc->add_player_cards(61, 174);
-//      wc->add_player(138, 86, permutation_t::read("2,5,4,1,3"), 189, 212, 127, true);
-//      wc->get_player_cards(119);
-//      wc->get_partial_spirit(113);
-//      wc->remove_team(4);
-//      wc->get_player_cards(22);
-//      wc->get_team_points(70);
-//      wc->get_team_points(65);
-//      wc->play_match(53, 17);
-//      wc->get_team_points(19);
-//      wc->add_team(101);
-//      wc->add_team(101);
-//      wc->play_match(34, 55);
-//      wc->buy_team(18, 39);
-//      wc->get_player_cards(124);
-//      wc->remove_team(71);
-//      wc->buy_team(82, 41);
-//      wc->get_team_points(8);
-//      wc->add_player(138, 40, permutation_t::read("4,5,2,3,1"), 268, 186, 91, false);
-//      wc->buy_team(84, 32);
-//      wc->add_player(139, 15, permutation_t::read("5,2,3,1,4"), 233, 116, 261, true);
-//      wc->play_match(79, 90);
-//      wc->remove_team(79);
-//      wc->buy_team(41, 34);
-//      wc->get_team_points(5);
-//      wc->get_player_cards(37);
-//      wc->get_partial_spirit(108);
-//      wc->add_player(140, 32, permutation_t::read("2,3,1,4,5"), 232, 51, 283, true);
-//      wc->play_match(39, 6);
-//      wc->buy_team(77, 28);
-//      wc->get_team_points(37);
-//      wc->add_player(140, 49, permutation_t::read("4,3,2,1,5"), 232, 293, 53, true);
-//      wc->num_played_games_for_player(45);
-//      wc->add_player(140, 70, permutation_t::read("3,5,2,1,4"), 251, 130, 110, true);
-//      wc->add_player_cards(86, 29);
-//      wc->get_team_points(15);
-//      wc->get_partial_spirit(81);
-//      wc->get_ith_pointless_ability(11);
-//      wc->play_match(35, 20);
-//      wc->get_team_points(70);
-//      wc->num_played_games_for_player(75);
-//      wc->add_player_cards(138, 169);
-//      wc->add_player(141, 2, permutation_t::read("5,3,2,1,4"), 91, 12, 127, false);
-//      wc->get_partial_spirit(134);
-//      wc->add_team(101);
-//      wc->get_partial_spirit(48);
-//      wc->add_player(142, 11, permutation_t::read("3,5,2,4,1"), 174, 281, 131, true);
-//      wc->add_player(143, 3, permutation_t::read("4,1,5,2,3"), 23, 56, 97, false);
-//      wc->get_partial_spirit(40);
-//      wc->add_team(101);
-//      wc->get_team_points(35);
-//      wc->play_match(59, 33);
-//      wc->get_ith_pointless_ability(0);
-//      wc->add_player_cards(107, 167);
-//      wc->get_team_points(40);
-//      wc->play_match(58, 46);
-//      wc->add_player_cards(55, 162);
-//      wc->play_match(100, 15);
-//      wc->num_played_games_for_player(48);
-//      wc->add_player(144, 91, permutation_t::read("2,1,3,4,5"), 49, 278, 130, true);
-//      wc->play_match(41, 40);
-//      wc->get_ith_pointless_ability(22);
-//      wc->remove_team(84);
-//      wc->add_team(101);
-//      wc->play_match(5, 32);
-//      wc->add_team(101);
-//      wc->get_player_cards(135);
-//      wc->buy_team(21, 50);
-//      wc->add_player_cards(141, 111);
-//      wc->add_team(101);
-//      wc->buy_team(5, 16);
-//      wc->add_player_cards(99, 106);
-//      wc->get_team_points(70);
-//      wc->add_player(145, 65, permutation_t::read("5,3,2,1,4"), 98, 9, 27, false);
-//      wc->get_player_cards(95);
-//      wc->get_ith_pointless_ability(39);
-//      wc->play_match(48, 8);
-//      wc->add_player_cards(119, 222);
-//      wc->buy_team(17, 9);
-//      wc->remove_team(16);
-//      wc->add_player(146, 49, permutation_t::read("4,1,3,2,5"), 185, 273, 109, false);
-//      wc->add_player(146, 18, permutation_t::read("5,1,3,4,2"), 101, 182, 169, true);
-//      wc->num_played_games_for_player(117);
-//      wc->get_team_points(35);
-//      wc->num_played_games_for_player(17);
-//      wc->num_played_games_for_player(14);
-//      wc->add_player_cards(136, 25);
-//      wc->add_player(147, 55, permutation_t::read("5,3,2,1,4"), 249, 169, 215, false);
-//      wc->get_ith_pointless_ability(3);
-//      wc->add_player(148, 24, permutation_t::read("4,1,5,2,3"), 71, 173, 211, false);
-//      wc->get_team_points(94);
-//      wc->add_player(149, 12, permutation_t::read("2,5,1,3,4"), 292, 3, 31, false);
-//      wc->buy_team(48, 30);
-//      wc->buy_team(6, 6);
-//      wc->play_match(62, 32);
-//      wc->num_played_games_for_player(104);
-//      wc->get_player_cards(51);
-//      wc->buy_team(70, 91);
-//      wc->get_ith_pointless_ability(39);
-//      wc->add_player(150, 57, permutation_t::read("4,5,1,3,2"), 124, 233, 224, true);
-//      wc->num_played_games_for_player(13);
-//      wc->get_partial_spirit(37);
-//      wc->get_player_cards(1);
-//      wc->get_team_points(95);
-//      wc->num_played_games_for_player(87);
-//      wc->remove_team(53);
-//      wc->get_partial_spirit(97);
-//      wc->num_played_games_for_player(29);
-//      wc->get_team_points(10);
-//      wc->remove_team(57);
-//      wc->add_player_cards(26, 285);
-//      wc->add_player(150, 32, permutation_t::read("5,2,1,3,4"), 247, 108, 269, false);
-//      wc->get_player_cards(130);
-//      wc->add_player(150, 88, permutation_t::read("3,1,5,4,2"), 282, 154, 175, true);
-//      wc->add_player(150, 21, permutation_t::read("2,4,5,1,3"), 12, 1, 95, false);
-//      wc->add_player(150, 22, permutation_t::read("3,2,1,4,5"), 188, 2, 106, true);
-//      wc->add_player(150, 32, permutation_t::read("5,2,4,3,1"), 28, 257, 115, true);
-//      wc->add_player(150, 48, permutation_t::read("4,2,1,5,3"), 159, 212, 31, true);
-//      wc->get_player_cards(146);
-//      wc->play_match(50, 2);
-//      wc->num_played_games_for_player(58);
-//      wc->add_player_cards(142, 64);
-//      wc->add_player_cards(145, 167);
-//      wc->add_player_cards(138, 26);
-//      wc->add_player(150, 39, permutation_t::read("5,3,1,2,4"), 29, 149, 171, true);
-//      wc->add_team(101);
-//      wc->play_match(48, 16);
-//      wc->add_player(150, 77, permutation_t::read("1,5,4,2,3"), 135, 69, 296, true);
-//      wc->play_match(85, 18);
-//      wc->play_match(70, 31);
-//      wc->remove_team(95);
-//      wc->add_team(101);
-//      wc->remove_team(88);
-//      wc->get_ith_pointless_ability(31);
-//      wc->num_played_games_for_player(90);
-//      wc->remove_team(75);
-//      wc->get_partial_spirit(85);
-//      wc->remove_team(92);
-//      wc->add_player(150, 25, permutation_t::read("3,1,4,2,5"), 156, 273, 287, true);
-//      wc->play_match(4, 50);
-//      wc->add_player(150, 27, permutation_t::read("5,3,2,1,4"), 247, 193, 183, false);
-//      wc->add_player_cards(118, 71);
-//      wc->add_player(150, 66, permutation_t::read("2,3,1,5,4"), 213, 40, 133, false);
-//      wc->add_player(150, 22, permutation_t::read("5,2,1,4,3"), 197, 265, 251, true);
-//      wc->get_team_points(68);
-//      wc->add_player(150, 48, permutation_t::read("4,1,5,3,2"), 67, 142, 253, true);
-//      wc->buy_team(41, 47);
-//      wc->get_player_cards(111);
-//      wc->add_player(150, 96, permutation_t::read("2,3,4,1,5"), 260, 243, 158, false);
-//      wc->remove_team(23);
-//      wc->buy_team(29, 22);
-//      wc->get_ith_pointless_ability(24);
-//      wc->num_played_games_for_player(96);
-//      wc->add_player(150, 50, permutation_t::read("1,2,4,5,3"), 259, 159, 38, true);
-//      wc->add_player(150, 25, permutation_t::read("1,4,5,3,2"), 154, 81, 148, false);
-//      wc->add_player(150, 69, permutation_t::read("1,5,3,4,2"), 228, 27, 78, true);
-//      wc->add_player(150, 9, permutation_t::read("5,2,4,3,1"), 290, 95, 134, false);
-//      wc->add_player_cards(90, 160);
-//      wc->add_player(150, 97, permutation_t::read("4,2,3,1,5"), 100, 171, 82, false);
-//      wc->add_player_cards(120, 179);
-//      wc->add_player(150, 2, permutation_t::read("1,4,3,2,5"), 63, 111, 196, false);
-//      wc->get_team_points(16);
-//      wc->buy_team(21, 60);
-//      wc->get_ith_pointless_ability(67);
-//      wc->buy_team(59, 3);
-//      wc->remove_team(24);
-//      wc->get_partial_spirit(53);
-//      wc->num_played_games_for_player(113);
-//      wc->get_ith_pointless_ability(5);
-//      wc->num_played_games_for_player(30);
-//      wc->add_player(150, 5, permutation_t::read("5,4,2,3,1"), 109, 175, 193, true);
-//      wc->buy_team(16, 59);
-//      wc->get_team_points(19);
-//      wc->get_team_points(81);
-//      wc->add_player(150, 67, permutation_t::read("4,1,5,3,2"), 204, 125, 222, false);
-//      wc->get_partial_spirit(77);
-//      wc->buy_team(41, 21);
-//      wc->add_player(150, 10, permutation_t::read("5,1,3,2,4"), 11, 57, 206, false);
-//      wc->play_match(9, 6);
-//      wc->add_player_cards(91, 139);
-//      wc->add_team(101);
-//      wc->buy_team(19, 12);
-//      wc->get_partial_spirit(53);
-//      wc->get_team_points(39);
-//      wc->get_player_cards(78);
-//      wc->remove_team(46);
-//      wc->buy_team(40, 60);
-//      wc->get_ith_pointless_ability(34);
-//      wc->add_player(150, 12, permutation_t::read("4,3,1,5,2"), 198, 152, 125, false);
-//      wc->add_player(150, 39, permutation_t::read("1,4,2,5,3"), 247, 137, 274, false);
-//      wc->play_match(49, 99);
-//      wc->add_player(150, 54, permutation_t::read("1,4,3,2,5"), 257, 213, 233, false);
-//      wc->get_ith_pointless_ability(46);
-//      wc->get_ith_pointless_ability(15);
-//      wc->get_partial_spirit(23);
-//      wc->add_player(150, 81, permutation_t::read("3,2,5,4,1"), 166, 144, 176, false);
-//      wc->add_player(150, 70, permutation_t::read("1,4,5,2,3"), 293, 67, 245, false);
-//      wc->get_team_points(18);
-//      wc->get_player_cards(130);
-//      wc->num_played_games_for_player(1);
-//      wc->add_team(101);
-//      wc->add_team(101);
-//      wc->buy_team(72, 73);
-//      wc->play_match(4, 40);
-//      wc->add_player(150, 27, permutation_t::read("1,3,2,4,5"), 249, 226, 104, true);
-//      wc->add_player(150, 77, permutation_t::read("4,3,2,1,5"), 110, 23, 278, false);
-//      wc->num_played_games_for_player(54);
-//      wc->get_partial_spirit(59);
-//      wc->num_played_games_for_player(100);
-//      wc->add_player(150, 85, permutation_t::read("4,3,1,5,2"), 286, 124, 129, true);
-//      wc->play_match(91, 86);
-//      wc->add_player(150, 63, permutation_t::read("2,3,4,1,5"), 159, 61, 155, true);
-//      wc->buy_team(25, 11);
-//      wc->add_player(150, 87, permutation_t::read("4,3,1,2,5"), 125, 192, 264, false);
-//      wc->add_player(150, 47, permutation_t::read("5,1,2,4,3"), 278, 127, 115, true);
-//      wc->get_team_points(12);
-//      wc->add_team(101);
-//      wc->remove_team(40);
-//      wc->add_player(150, 74, permutation_t::read("2,4,3,5,1"), 95, 287, 281, true);
-//      wc->add_player(150, 55, permutation_t::read("1,5,2,3,4"), 226, 197, 247, true);
-//      wc->add_player(150, 81, permutation_t::read("5,2,4,1,3"), 148, 17, 222, true);
-//      wc->num_played_games_for_player(137);
-//      wc->num_played_games_for_player(118);
-//      wc->get_ith_pointless_ability(51);
-//      wc->num_played_games_for_player(126);
-//      wc->num_played_games_for_player(60);
-//      wc->add_team(101);
-//      wc->play_match(99, 72);
-//      wc->add_team(101);
-//      wc->remove_team(30);
-//      wc->add_player_cards(134, 63);
-//      wc->get_player_cards(111);
-//      wc->get_partial_spirit(26);
-//      wc->add_team(101);
-//      wc->num_played_games_for_player(104);
-//      wc->get_team_points(97);
-//      wc->add_player(150, 28, permutation_t::read("5,2,3,1,4"), 11, 230, 92, true);
-//      wc->add_player(150, 17, permutation_t::read("5,4,1,3,2"), 228, 101, 171, false);
-//      wc->num_played_games_for_player(123);
-//      wc->get_ith_pointless_ability(41);
-//      wc->get_team_points(37);
-//      wc->get_player_cards(105);
-//      wc->get_team_points(62);
-//      wc->add_player(150, 67, permutation_t::read("1,3,2,5,4"), 56, 87, 277, true);
-//      wc->get_player_cards(101);
-//      wc->add_player(150, 96, permutation_t::read("1,5,4,2,3"), 63, 171, 242, true);
-//      wc->add_player(150, 65, permutation_t::read("1,4,2,3,5"), 278, 166, 55, false);
-//      wc->add_team(101);
-//      wc->play_match(48, 87);
-//      wc->add_player(150, 94, permutation_t::read("5,1,2,4,3"), 179, 115, 55, false);
-//      wc->add_player(150, 47, permutation_t::read("5,4,3,2,1"), 288, 228, 80, true);
-//      wc->num_played_games_for_player(56);
-//      wc->get_team_points(29);
-//      wc->num_played_games_for_player(56);
-//      wc->get_player_cards(60);
-//      wc->add_team(101);
-//      wc->add_player(150, 85, permutation_t::read("1,2,4,5,3"), 267, 166, 152, false);
-//      wc->add_player(150, 98, permutation_t::read("3,4,1,5,2"), 284, 282, 173, true);
-//      wc->add_player(150, 11, permutation_t::read("4,1,2,3,5"), 62, 107, 80, false);
-//      wc->add_team(101);
-//      wc->add_player(150, 81, permutation_t::read("5,2,3,1,4"), 158, 41, 104, true);
-//      wc->add_player_cards(51, 46);
-//      wc->get_ith_pointless_ability(12);
-//      wc->play_match(90, 3);
-//      wc->add_player(150, 60, permutation_t::read("3,1,5,4,2"), 259, 51, 119, false);
-//      wc->add_player(150, 90, permutation_t::read("1,5,4,3,2"), 136, 64, 194, true);
-//      wc->get_ith_pointless_ability(56);
-//      wc->add_player(150, 17, permutation_t::read("3,1,2,5,4"), 277, 103, 35, true);
-//      wc->get_ith_pointless_ability(36);
-//      wc->remove_team(37);
-//      wc->num_played_games_for_player(77);
-//      wc->get_player_cards(59);
-//      wc->get_ith_pointless_ability(65);
-//      wc->get_partial_spirit(135);
-//      wc->add_team(101);
-//      wc->add_player(150, 8, permutation_t::read("2,1,4,3,5"), 9, 91, 101, true);
-//      wc->get_ith_pointless_ability(45);
-//      wc->add_player(150, 13, permutation_t::read("3,1,2,5,4"), 42, 95, 217, true);
-//      wc->get_team_points(69);
-//      wc->add_player(150, 66, permutation_t::read("5,1,3,2,4"), 209, 65, 177, false);
-//      wc->get_player_cards(37);
-//      wc->get_player_cards(46);
-//      wc->get_partial_spirit(127);
-//      wc->buy_team(58, 74);
-//      wc->add_team(101);
-//      wc->add_player_cards(69, 141);
-//      wc->add_team(101);
-//      wc->get_team_points(15);
-//      wc->add_player(150, 41, permutation_t::read("4,3,5,1,2"), 195, 88, 223, false);
-//      wc->num_played_games_for_player(95);
-//      wc->buy_team(25, 15);
-//      wc->play_match(6, 58);
-//      wc->add_player(150, 65, permutation_t::read("5,1,3,4,2"), 282, 107, 107, false);
-//      wc->add_team(101);
-//      wc->add_player(150, 39, permutation_t::read("5,2,4,3,1"), 247, 263, 273, false);
-//      wc->play_match(21, 27);
-//      wc->buy_team(3, 68);
-//      wc->remove_team(5);
-//      wc->get_team_points(76);
-//      wc->num_played_games_for_player(31);
-//      wc->get_player_cards(70);
-//      wc->play_match(2, 59);
-//      wc->add_team(101);
-//      wc->remove_team(28);
-//      wc->add_player(150, 85, permutation_t::read("5,3,4,2,1"), 166, 143, 140, false);
-//      wc->add_player(150, 60, permutation_t::read("2,3,4,1,5"), 135, 4, 96, false);
-//      wc->num_played_games_for_player(133);
-//      wc->buy_team(11, 50);
-//      wc->add_player(150, 13, permutation_t::read("5,2,3,1,4"), 53, 99, 93, true);
-//      wc->get_ith_pointless_ability(63);
-//      wc->num_played_games_for_player(60);
-//      wc->get_ith_pointless_ability(2);
-//      wc->add_team(101);
-//      wc->add_player(150, 50, permutation_t::read("3,2,5,1,4"), 100, 255, 73, true);
-//      wc->buy_team(39, 10);
-//      wc->get_team_points(39);
-//      wc->get_ith_pointless_ability(67);
-//      wc->add_player(150, 96, permutation_t::read("1,4,2,3,5"), 223, 74, 202, false);
-//      wc->add_team(101);
-//      wc->buy_team(35, 59);
-//      wc->buy_team(32, 30);
-//      wc->add_player_cards(21, 200);
-//      wc->get_team_points(90);
-//      wc->add_player(150, 21, permutation_t::read("1,4,2,3,5"), 42, 211, 33, true);
-//      wc->remove_team(15);
-//      wc->add_player(150, 9, permutation_t::read("4,3,2,5,1"), 1, 249, 141, false);
-//      wc->add_player_cards(53, 38);
-//      wc->add_team(101);
-//      wc->get_partial_spirit(30);
-//      wc->num_played_games_for_player(2);
-//      wc->play_match(76, 82);
-//      wc->play_match(73, 66);
-//      wc->add_player_cards(90, 63);
-//      wc->add_player(150, 1, permutation_t::read("4,3,1,2,5"), 205, 124, 283, true);
-//      wc->num_played_games_for_player(129);
-//      wc->remove_team(77);
-//      wc->get_player_cards(136);
-//      wc->get_partial_spirit(21);
-//      wc->add_player_cards(70, 218);
-//      wc->add_player(150, 6, permutation_t::read("2,4,5,3,1"), 173, 80, 62, true);
-//      wc->remove_team(47);
-//      wc->get_partial_spirit(47);
-//      wc->get_player_cards(100);
-//      wc->num_played_games_for_player(16);
-//      wc->add_player_cards(79, 256);
-//      wc->add_player(150, 49, permutation_t::read("5,3,1,2,4"), 146, 84, 206, true);
-//      wc->add_player(150, 15, permutation_t::read("3,4,1,2,5"), 87, 291, 170, false);
-//      wc->add_team(101);
-//      wc->add_player(150, 69, permutation_t::read("4,1,5,2,3"), 169, 217, 113, false);
-//      wc->add_player(150, 68, permutation_t::read("4,5,3,2,1"), 91, 197, 58, false);
-//      wc->add_player(150, 41, permutation_t::read("1,5,2,4,3"), 55, 128, 250, true);
-//      wc->add_player_cards(143, 48);
-//      wc->get_ith_pointless_ability(6);
-//      wc->buy_team(69, 70);
-//      wc->get_partial_spirit(128);
-//      wc->remove_team(20);
-//      wc->get_player_cards(39);
-//      wc->play_match(63, 70);
-//      wc->get_partial_spirit(139);
-//      wc->buy_team(29, 76);
-//      wc->remove_team(10);
-//      wc->play_match(63, 11);
-//      wc->play_match(8, 98);
-//      wc->get_ith_pointless_ability(13);
-//      wc->add_player(150, 30, permutation_t::read("1,5,4,2,3"), 147, 218, 192, true);
-//      wc->buy_team(16, 19);
-//      wc->get_team_points(3);
-//      wc->get_partial_spirit(62);
-//      wc->get_player_cards(38);
-//      wc->add_player_cards(123, 145);
-//      wc->get_team_points(82);
-//      wc->num_played_games_for_player(67);
-//      wc->play_match(17, 80);
-//      wc->get_team_points(58);
-//      wc->add_player_cards(144, 122);
-//      wc->get_team_points(63);
-//      wc->play_match(55, 65);
-//      wc->add_player(150, 99, permutation_t::read("2,3,5,1,4"), 17, 136, 7, true);
-//      wc->remove_team(6);
-//      wc->get_player_cards(59);
-//      wc->get_team_points(99);
-//      wc->get_player_cards(95);
-//      wc->num_played_games_for_player(28);
-//      wc->get_team_points(63);
-//      wc->get_player_cards(66);
-//      wc->num_played_games_for_player(126);
-//      wc->num_played_games_for_player(114);
-//      wc->get_ith_pointless_ability(60);
-//      wc->get_team_points(34);
-//      wc->add_team(101);
-//      wc->get_ith_pointless_ability(38);
-//      wc->add_player(150, 62, permutation_t::read("4,2,3,1,5"), 80, 148, 295, true);
-//      wc->add_player(150, 22, permutation_t::read("3,2,4,1,5"), 266, 283, 205, false);
-//      wc->get_partial_spirit(29);
-//      wc->get_partial_spirit(74);
-//      wc->get_ith_pointless_ability(41);
-//      wc->add_player(150, 11, permutation_t::read("1,5,2,4,3"), 112, 167, 148, false);
-//      wc->get_player_cards(124);
-//      wc->add_player_cards(84, 92);
-//      wc->remove_team(63);
-//      wc->get_player_cards(90);
-//      wc->get_player_cards(140);
-//      wc->get_player_cards(29);
-//      wc->add_player(150, 80, permutation_t::read("2,4,3,5,1"), 64, 84, 145, false);
-//      wc->add_player(150, 62, permutation_t::read("4,2,1,5,3"), 83, 219, 61, false);
-//      wc->add_player(150, 2, permutation_t::read("4,3,2,1,5"), 174, 67, 53, true);
-//      wc->buy_team(81, 80);
-//      wc->get_partial_spirit(118);
-//      wc->get_ith_pointless_ability(36);
-//      wc->get_ith_pointless_ability(13);
-//      wc->add_team(101);
-//      wc->add_player(150, 41, permutation_t::read("1,5,4,2,3"), 44, 186, 170, false);
-//      wc->add_player(150, 2, permutation_t::read("3,2,5,4,1"), 207, 93, 77, false);
-//      wc->get_team_points(17);
-//      wc->get_player_cards(10);
-//      wc->get_partial_spirit(127);
-//      wc->play_match(29, 17);
-//      wc->add_team(101);
-//      wc->num_played_games_for_player(96);
-//      wc->add_player_cards(17, 171);
-//      wc->num_played_games_for_player(95);
-//      wc->add_team(101);
-//      wc->add_player(150, 74, permutation_t::read("1,4,5,2,3"), 212, 45, 172, true);
-//      wc->remove_team(54);
-//      wc->play_match(96, 62);
-//      wc->add_player(150, 81, permutation_t::read("5,3,2,1,4"), 223, 148, 160, false);
-//      wc->add_player(150, 2, permutation_t::read("5,3,4,2,1"), 229, 154, 135, true);
-//      wc->add_player(150, 69, permutation_t::read("5,1,3,4,2"), 289, 76, 230, false);
-//      wc->add_player(150, 97, permutation_t::read("2,3,5,1,4"), 203, 53, 241, true);
-//      wc->remove_team(93);
-//      wc->add_team(101);
-//      wc->add_player(150, 14, permutation_t::read("3,4,5,1,2"), 144, 117, 267, false);
-//      wc->add_player_cards(86, 135);
-//      wc->num_played_games_for_player(129);
-//      wc->add_player_cards(7, 102);
-//      wc->remove_team(3);
-//      wc->add_player(150, 31, permutation_t::read("5,4,2,3,1"), 53, 143, 13, false);
-//      wc->add_team(101);
-//      wc->add_player_cards(59, 236);
-//      wc->buy_team(9, 58);
-//      wc->add_team(101);
-//      wc->get_team_points(62);
-//      wc->add_player(150, 77, permutation_t::read("1,3,2,5,4"), 211, 31, 237, true);
-//      wc->get_player_cards(60);
-//      wc->get_partial_spirit(63);
-//      wc->get_ith_pointless_ability(19);
-//      wc->get_team_points(87);
-//      wc->num_played_games_for_player(124);
-//      wc->remove_team(90);
-//      wc->remove_team(63);
-//      wc->num_played_games_for_player(140);
-//      wc->get_team_points(82);
-//      wc->get_team_points(70);
-//      wc->add_player(150, 94, permutation_t::read("3,4,1,5,2"), 198, 111, 36, true);
-//      wc->remove_team(3);
-//      wc->add_player(150, 74, permutation_t::read("5,4,3,1,2"), 234, 47, 2, false);
-//      wc->get_partial_spirit(147);
-//      wc->remove_team(99);
-//      wc->get_ith_pointless_ability(7);
-//      wc->play_match(73, 87);
-//      wc->add_player(150, 21, permutation_t::read("5,4,3,2,1"), 293, 126, 65, true);
-//      wc->num_played_games_for_player(118);
-//      wc->add_player(150, 4, permutation_t::read("4,5,3,1,2"), 111, 27, 207, true);
-//      wc->buy_team(1, 11);
-//      wc->get_team_points(91);
-//      wc->add_player(150, 16, permutation_t::read("5,4,2,3,1"), 47, 96, 37, false);
-//      wc->get_team_points(11);
-//      wc->add_player(150, 96, permutation_t::read("5,2,1,3,4"), 230, 19, 300, true);
-//      wc->add_player(150, 15, permutation_t::read("1,3,2,4,5"), 44, 116, 260, true);
-//      wc->play_match(16, 65);
-//      wc->num_played_games_for_player(116);
-//      wc->add_player(150, 94, permutation_t::read("3,2,1,4,5"), 207, 266, 90, false);
-//      wc->add_player(150, 69, permutation_t::read("1,3,5,4,2"), 29, 48, 124, true);
-//      wc->add_team(101);
-//      wc->buy_team(80, 31);
-//      wc->get_team_points(4);
-//      wc->play_match(32, 22);
-//      wc->buy_team(69, 72);
-//      wc->get_player_cards(121);
-//      wc->add_player(150, 97, permutation_t::read("4,3,5,1,2"), 229, 263, 10, false);
-//      wc->get_player_cards(22);
-//      wc->play_match(77, 13);
-//      wc->get_player_cards(135);
-//      wc->remove_team(27);
-//      wc->add_player(150, 73, permutation_t::read("3,5,2,1,4"), 246, 253, 11, false);
-//      wc->get_ith_pointless_ability(1);
-//      wc->get_partial_spirit(6);
-//      wc->get_partial_spirit(16);
-//      wc->get_ith_pointless_ability(42);
-//      wc->add_player(150, 30, permutation_t::read("4,3,1,5,2"), 22, 89, 298, true);
-//      wc->add_player(150, 12, permutation_t::read("4,5,3,2,1"), 170, 74, 40, true);
-//      wc->add_player(150, 9, permutation_t::read("4,2,3,1,5"), 164, 218, 222, false);
-//      wc->get_ith_pointless_ability(0);
-//      wc->buy_team(72, 44);
-//      wc->add_player_cards(68, 165);
-//      wc->num_played_games_for_player(70);
-//      wc->get_partial_spirit(17);
-//      wc->add_player(150, 74, permutation_t::read("3,5,1,2,4"), 143, 231, 32, true);
-//      wc->add_player(150, 27, permutation_t::read("2,4,3,5,1"), 133, 141, 193, false);
-//      wc->add_team(101);
-//      wc->add_player(150, 94, permutation_t::read("4,3,1,5,2"), 242, 228, 141, false);
-//      wc->get_partial_spirit(81);
-//      wc->add_player(150, 14, permutation_t::read("2,1,5,4,3"), 52, 103, 89, false);
-//      wc->play_match(85, 41);
-//      wc->add_player(150, 80, permutation_t::read("2,4,3,5,1"), 211, 189, 59, false);
-//      wc->add_team(101);
-//      wc->add_team(101);
-//      wc->get_team_points(44);
-//      wc->get_player_cards(12);
-//      wc->add_team(101);
-//      wc->buy_team(13, 8);
-//      wc->buy_team(91, 67);
-//      wc->get_ith_pointless_ability(33);
-//      wc->add_player_cards(96, 259);
-//      wc->play_match(48, 85);
-//      wc->add_player(150, 8, permutation_t::read("4,3,2,1,5"), 154, 277, 128, true);
-//      wc->get_team_points(13);
-//      wc->add_player(150, 19, permutation_t::read("1,5,3,2,4"), 15, 234, 127, false);
-//      wc->get_partial_spirit(100);
-//      wc->add_team(101);
-//      wc->get_team_points(8);
-//      wc->get_ith_pointless_ability(29);
-//      wc->add_player(150, 35, permutation_t::read("5,2,1,4,3"), 20, 197, 180, false);
-//      wc->play_match(34, 94);
-//      wc->get_team_points(15);
-//      wc->num_played_games_for_player(50);
-//      wc->play_match(18, 85);
-//      wc->add_player(150, 22, permutation_t::read("3,2,4,1,5"), 12, 221, 287, false);
-//      wc->buy_team(32, 54);
-//      wc->get_ith_pointless_ability(18);
-//      wc->add_player_cards(121, 254);
-//      wc->remove_team(11);
-//      wc->get_ith_pointless_ability(44);
-//      wc->get_team_points(76);
-//      wc->get_team_points(21);
-//      wc->add_team(101);
-//      wc->add_team(101);
-//      wc->add_player(150, 62, permutation_t::read("1,5,3,4,2"), 172, 287, 258, true);
-//      wc->num_played_games_for_player(126);
-//      wc->add_player(150, 93, permutation_t::read("1,2,3,4,5"), 183, 167, 154, false);
-//      wc->get_partial_spirit(106);
-//      wc->add_player_cards(120, 158);
-//      wc->add_player(150, 69, permutation_t::read("4,2,1,3,5"), 217, 282, 242, true);
-//      wc->buy_team(39, 68);
-//      wc->play_match(39, 70);
-//      wc->get_player_cards(122);
-//      wc->add_team(101);
-//      wc->num_played_games_for_player(65);
-//      wc->add_player(150, 8, permutation_t::read("2,4,3,1,5"), 135, 60, 167, false);
-//      wc->play_match(33, 11);
-//      wc->get_ith_pointless_ability(42);
-//      wc->play_match(49, 73);
-//      wc->play_match(30, 18);
-//      wc->remove_team(4);
-//      wc->get_ith_pointless_ability(20);
-//      wc->get_ith_pointless_ability(48);
-//      wc->add_player(150, 68, permutation_t::read("4,3,5,1,2"), 1, 209, 141, true);
-//      wc->play_match(2, 3);
-//      wc->play_match(77, 80);
-//      wc->get_team_points(44);
-//      wc->get_partial_spirit(19);
-//      wc->num_played_games_for_player(61);
-//      wc->get_player_cards(45);
-//      wc->add_team(101);
-//      wc->add_team(101);
-//      wc->get_player_cards(11);
-//      wc->add_team(101);
-//      wc->add_player(150, 8, permutation_t::read("2,3,4,5,1"), 237, 64, 276, false);
-//      wc->play_match(39, 17);
-//      wc->get_player_cards(114);
-//      wc->add_player(150, 55, permutation_t::read("4,3,2,1,5"), 89, 40, 156, true);
-//      wc->get_partial_spirit(77);
-//      wc->play_match(44, 16);
-//      wc->add_player(150, 93, permutation_t::read("4,2,5,3,1"), 71, 102, 177, false);
-//      wc->remove_team(1);
-//      wc->buy_team(100, 87);
-//      wc->add_player(150, 91, permutation_t::read("2,3,5,4,1"), 294, 270, 12, true);
-//      wc->add_player(150, 55, permutation_t::read("1,4,2,5,3"), 70, 211, 108, true);
-//      wc->play_match(98, 31);
-//      wc->num_played_games_for_player(25);
-//      wc->remove_team(17);
-//      wc->get_team_points(67);
-//      wc->add_player(150, 68, permutation_t::read("3,1,5,4,2"), 213, 168, 123, true);
-//      wc->add_team(101);
-//      wc->add_player_cards(60, 249);
-//      wc->add_player(150, 15, permutation_t::read("2,5,3,1,4"), 115, 107, 240, true);
-//      wc->play_match(80, 67);
-//      wc->get_ith_pointless_ability(22);
-//      wc->add_player(150, 14, permutation_t::read("3,5,4,1,2"), 79, 165, 169, true);
-//      wc->get_player_cards(100);
-//      wc->num_played_games_for_player(142);
-//      wc->get_partial_spirit(77);
-//      wc->num_played_games_for_player(144);
-//      wc->get_partial_spirit(16);
-//      wc->get_team_points(81);
-//      wc->get_player_cards(62);
-//      wc->get_player_cards(1);
-//      wc->add_player(150, 8, permutation_t::read("5,2,4,3,1"), 151, 34, 10, true);
-//      wc->add_player_cards(105, 89);
-//      wc->get_partial_spirit(90);
-//      wc->num_played_games_for_player(43);
-//      wc->buy_team(49, 82);
-//      wc->get_partial_spirit(23);
-//      wc->play_match(94, 41);
-//      wc->play_match(87, 85);
-//      wc->get_player_cards(126);
-//      wc->add_player(150, 94, permutation_t::read("1,5,3,2,4"), 271, 158, 280, true);
-//      wc->add_player_cards(74, 67);
-//      wc->add_player_cards(41, 300);
-//      wc->get_player_cards(12);
-//      wc->add_player(150, 97, permutation_t::read("3,5,2,1,4"), 290, 129, 88, true);
-//      wc->get_player_cards(138);
-//      wc->add_player(150, 74, permutation_t::read("5,4,3,1,2"), 62, 16, 238, false);
-//      wc->play_match(81, 100);
-//      wc->play_match(3, 98);
-//      wc->play_match(54, 41);
-//      wc->num_played_games_for_player(104);
-//      wc->get_player_cards(109);
-//      wc->num_played_games_for_player(62);
-//      wc->play_match(62, 12);
-//      wc->play_match(33, 85);
-//      wc->add_player_cards(48, 290);
-//      wc->play_match(2, 100);
-//      wc->add_player_cards(146, 152);
-//      wc->add_team(101);
-//      wc->add_player_cards(39, 285);
-//      wc->buy_team(87, 41);
-//      wc->num_played_games_for_player(51);
-//      wc->buy_team(87, 87);
-//      wc->add_player_cards(56, 9);
-//      wc->add_player(150, 63, permutation_t::read("1,4,2,3,5"), 271, 178, 32, true);
-//      wc->get_player_cards(2);
-//      wc->play_match(65, 8);
-//      wc->add_player(150, 81, permutation_t::read("4,5,2,1,3"), 114, 176, 255, true);
-//      wc->get_team_points(50);
-//      wc->play_match(63, 85);
-//      wc->add_player(150, 70, permutation_t::read("1,2,3,4,5"), 218, 275, 128, false);
-//      wc->get_ith_pointless_ability(12);
-//      wc->get_player_cards(68);
-//      wc->add_player(150, 3, permutation_t::read("4,5,2,1,3"), 268, 206, 263, false);
-//      wc->add_player_cards(70, 196);
-//      wc->add_player(150, 81, permutation_t::read("5,4,1,2,3"), 30, 147, 253, true);
-//      wc->add_player(150, 39, permutation_t::read("4,1,3,2,5"), 196, 295, 164, true);
-//      wc->buy_team(70, 27);
-//      wc->num_played_games_for_player(58);
-//      wc->add_team(101);
-//      wc->get_partial_spirit(129);
-//      wc->get_team_points(41);
-//      wc->add_player_cards(98, 69);
-//      wc->get_ith_pointless_ability(16);
-//      wc->add_player(150, 73, permutation_t::read("5,3,2,1,4"), 211, 114, 86, false);
-//      wc->get_player_cards(140);
-//      wc->num_played_games_for_player(65);
-//      wc->get_partial_spirit(139);
-//      wc->add_player(150, 13, permutation_t::read("3,5,4,1,2"), 127, 243, 103, false);
-//      wc->add_player_cards(136, 218);
-//      wc->get_player_cards(116);
-//      wc->add_player(150, 59, permutation_t::read("4,3,5,1,2"), 266, 159, 139, false);
-//      wc->add_player(150, 19, permutation_t::read("3,5,1,2,4"), 79, 228, 291, false);
-//      wc->add_player(150, 30, permutation_t::read("3,5,2,1,4"), 173, 222, 239, false);
-//      wc->get_player_cards(1);
-//      wc->add_player(150, 13, permutation_t::read("2,3,5,1,4"), 281, 87, 83, true);
-//      wc->get_partial_spirit(144);
-//      wc->get_team_points(58);
-//      wc->add_player_cards(84, 194);
-//      wc->get_player_cards(41);
-//      wc->remove_team(14);
-//      wc->get_partial_spirit(53);
-//      wc->add_player(150, 39, permutation_t::read("3,1,5,4,2"), 12, 21, 65, true);
-//      wc->remove_team(55);
-//      wc->add_player(150, 68, permutation_t::read("2,1,5,3,4"), 118, 206, 191, false);
-//      wc->num_played_games_for_player(4);
-//      wc->buy_team(18, 16);
-//      wc->get_ith_pointless_ability(28);
-//      wc->add_team(101);
-//      wc->play_match(80, 66);
-//      wc->get_player_cards(3);
-//      wc->add_player(150, 91, permutation_t::read("2,3,1,4,5"), 288, 86, 164, true);
-//      wc->play_match(86, 4);
-//      wc->add_player(150, 4, permutation_t::read("5,2,1,3,4"), 273, 202, 87, true);
-//      wc->add_player_cards(41, 48);
-//      wc->get_partial_spirit(74);
-//      wc->add_team(101);
-//      wc->play_match(59, 49);
-//      wc->get_player_cards(77);
-//      wc->get_ith_pointless_ability(1);
-//      wc->play_match(77, 19);
-//      wc->add_player_cards(70, 216);
-//      wc->num_played_games_for_player(112);
-//      wc->get_team_points(68);
-//      wc->remove_team(50);
-//      wc->buy_team(22, 58);
-//      wc->num_played_games_for_player(65);
-//      wc->play_match(98, 74);
-//      wc->get_ith_pointless_ability(22);
-//      wc->get_partial_spirit(68);
-//      wc->add_player(150, 60, permutation_t::read("5,2,3,1,4"), 55, 16, 40, false);
-//      wc->add_team(101);
-//      wc->remove_team(58);
-//      wc->play_match(44, 8);
-//      wc->get_partial_spirit(105);
-//      wc->get_player_cards(121);
-//      wc->add_player(150, 12, permutation_t::read("2,4,1,3,5"), 98, 171, 214, false);
-//      wc->get_team_points(4);
-//      wc->add_player_cards(76, 91);
-//      wc->get_partial_spirit(146);
-//      wc->num_played_games_for_player(4);
-//      wc->add_player_cards(107, 246);
-//      wc->get_ith_pointless_ability(27);
-//      wc->add_player(150, 30, permutation_t::read("3,5,4,1,2"), 118, 110, 136, true);
-//      wc->play_match(44, 70);
-//      wc->add_team(101);
-//      wc->play_match(33, 13);
-//      wc->buy_team(62, 65);
-//      wc->get_player_cards(114);
-//      wc->play_match(69, 44);
-//      wc->add_player(150, 87, permutation_t::read("1,2,5,4,3"), 261, 278, 286, false);
-//      wc->num_played_games_for_player(132);
-//      wc->get_player_cards(77);
-//      wc->get_ith_pointless_ability(51);
-//      wc->add_player(150, 67, permutation_t::read("4,2,3,5,1"), 154, 244, 82, false);
-//      wc->num_played_games_for_player(114);
-//      wc->get_team_points(62);
-//      wc->buy_team(15, 85);
-//      wc->add_team(101);
-//      wc->buy_team(19, 63);
-//      wc->buy_team(59, 44);
-//      wc->get_player_cards(99);
-//      wc->add_player(150, 63, permutation_t::read("4,1,3,2,5"), 231, 1, 281, true);
-//      wc->get_partial_spirit(107);
-//      wc->remove_team(48);
-//      wc->add_player_cards(41, 251);
-//      wc->buy_team(97, 97);
-//      wc->get_player_cards(139);
-//      wc->get_partial_spirit(53);
-//      wc->add_player(150, 54, permutation_t::read("3,2,5,4,1"), 56, 113, 266, false);
-//      wc->remove_team(85);
-//      wc->buy_team(2, 25);
-//      wc->get_player_cards(90);
-//      wc->get_ith_pointless_ability(25);
-//      wc->add_player(150, 18, permutation_t::read("5,3,2,4,1"), 227, 115, 126, true);
-//      wc->get_partial_spirit(24);
-//      wc->buy_team(8, 63);
-//      wc->add_player(150, 34, permutation_t::read("3,4,5,1,2"), 281, 78, 272, true);
-//      wc->add_team(101);
-//      wc->get_partial_spirit(59);
-//      wc->get_ith_pointless_ability(56);
-//      wc->get_player_cards(115);
-//      wc->num_played_games_for_player(17);
-//      wc->buy_team(59, 100);
-//      wc->add_team(101);
-//      wc->add_team(101);
-//      wc->buy_team(15, 87);
-//      wc->add_player(150, 86, permutation_t::read("3,2,4,5,1"), 172, 278, 14, false);
-//      wc->add_team(101);
-//      wc->get_player_cards(76);
-//      wc->add_player(150, 76, permutation_t::read("2,3,5,4,1"), 201, 136, 209, false);
-//      wc->add_team(101);
-//      wc->remove_team(66);
-//      wc->num_played_games_for_player(149);
-//      wc->get_partial_spirit(146);
-//      wc->buy_team(93, 58);
-//      wc->remove_team(34);
-//      wc->add_player_cards(136, 110);
-//      wc->remove_team(98);
-//      wc->num_played_games_for_player(23);
-//      wc->get_player_cards(90);
-//      wc->get_player_cards(24);
-//      wc->get_ith_pointless_ability(5);
+//     // Here you choose the permutations (the spirits):
+//     int array[M][N] = {{0, 1, 2, 3, 4},
+//                        {1, 0, 3, 4, 2},
+//                        {0, 1, 3, 4, 2},
+//                        {1, 0, 2, 3, 4},
+//                        {4, 1, 2, 3, 0},
+//                        {2, 4, 1, 3, 0},
+//                        {0, 4, 3, 1, 2},
+//                        {0, 1, 2, 4, 3},
+//                        {4, 3, 2, 1, 0},
+//                        {3, 0, 4, 2, 1}};
+//     // Now the code create the permutations and insert them to the voector:
+//     vector<permutation_t> spirits;
+//     for (int i = 0; i < M; i++)
+//     {
+//         permutation_t to_pust(array[i]);
+//         if (to_pust.isvalid())
+//             spirits.push_back(permutation_t(array[i]));
+//         else
+//         {
+//             cout << "spirit " << i << " is not valid: ";
+//             print(to_pust);
+//             cout << "valid permutation is all the numbers from 0 to 4" << endl;
+//         }
+//     }
 
-//     delete wc;
+//     /*------------------------
+//      * Enter your code here:
+//      * (create teams and players, buy teams... use the spirits that yuo created, from the vector "spirits",
+//      * and then, choose one spirit (spirit of team or partial-spirit of player that you want to check,
+//      * and print it in the function "print".)
+//      */
+//     world_cup_t *obj = new world_cup_t();
+//     obj->add_team(1);
+//     obj->add_team(2);
+//     obj->add_player(1, 1, permutation_t(array[0]), 1, 1, 1, true);
+//     obj->add_player(2, 1, permutation_t(array[1]), 1, 1, 1, true);
+//     obj->add_player(3, 2, permutation_t(array[2]), 1, 1, 1, true);
+
+//     //print(/* Enter here spirit (e.g.: with the function "get_partial_spirit", or another method)*/ tmp_player39_->getSpirit());
+
+//     /*----------------------
+//      * Choose the permutations that you want to multiply and compare with the spirit that you chose before:
+//      * (e.g.: if in team 2 the first player has spirit[3] (the 4 spirit in the array and in the vector),
+//      * and the second player has spirit[7], and you entered to the function "print" above "get_partial_spirit" of player2,
+//      * enter to the array "indexes_array" {3, 7}, and 2 to the last argument of the function "mult_permutations").
+//      * Now, check if the 2 permutations that printed to are equal.
+//      */
+//     int indexes_array[M] = {/*the indexes (in vector "spirits") of the spirits that you want to multiply*/ 2, 3};
+//     permutation_t expected_spirit = mult_permutations(spirits, indexes_array, /*num of the permutations to multiply*/ 2);
+//     print(expected_spirit);
+
 //     return 0;
-
-
-
 // }
+
+// void print(const permutation_t &permut)
+// {
+//     for (int i = 0; i < 5; i++)
+//     {
+//         std::cout << permut.a[i] << ", ";
+//     }
+//     std::cout << std::endl;
+// }
+
+// permutation_t mult_permutations(const vector<permutation_t> &permutations, int array_of_indexes[], int num_of_permutations)
+// {
+//     permutation_t result = permutation_t::neutral();
+//     for (int i = 0; i < num_of_permutations; i++)
+//     {
+//         result = result * permutations[array_of_indexes[i]];
+//     }
+//     return result;
+// }
+// */
+#include <stdio.h>
+#include <string.h>
+#include <sstream>
+#include "iostream"
+#include "wet2util.h"
+#include "vector"
+#include "worldcup23a2.h"
+using namespace std;
+
+//     add_team 1
+// add_team 2
+// add_team 3
+// remove_team 3
+// add_player 1001 1 2,3,4,5,1 0 15 2 true
+// add_player 2001 2 4,3,5,2,1 0 17 1 true
+// play_match 1 2
+// num_played_games_for_player 1001
+// add_player_cards 2001 2
+// get_player_cards 2001
+// get_team_points 1
+// get_ith_pointless_ability 0
+// get_partial_spirit 1001
+// buy_team 1 2
+static const char *StatusTypeStr[] =
+    {
+        "SUCCESS",
+        "ALLOCATION_ERROR",
+        "INVALID_INPUT",
+        "FAILURE"};
+
+void print(string cmd, StatusType res)
+{
+    cout << cmd << ": " << StatusTypeStr[(int)res] << endl;
+}
+
+template <typename T>
+void print(string cmd, output_t<T> res)
+{
+    if (res.status() != StatusType::SUCCESS)
+    {
+        cout << cmd << ": " << StatusTypeStr[(int)res.status()] << ", " << res.ans() << endl;
+    }
+    else
+    {
+        cout << cmd << ": " << StatusTypeStr[(int)res.status()] << endl;
+    }
+}
+template <typename T>
+void foo(output_t<T> res)
+{
+    return;
+}
+void foo1(StatusType res)
+{
+    return;
+}
+std::string str(const permutation_t &perm1)
+{
+    std::stringstream p1;
+    p1 << perm1;
+    return p1.str();
+}
+
+int main()
+{
+    world_cup_t wc;
+    wc.add_team(56198);
+    wc.add_team(6);
+    wc.play_match(56198, 56198);
+    wc.num_played_games_for_player(37692);
+    wc.get_ith_pointless_ability(1);
+    wc.add_team(15362);
+    wc.get_partial_spirit(1531);
+    wc.add_team(74209);
+    wc.add_team(19511);
+    wc.get_partial_spirit(23499);
+    wc.add_player(97385, 56198, permutation_t::read("1,4,5,2,3"), 4, 2, 22, true);
+    wc.add_player(62910, 19511, permutation_t::read("4,2,3,1,5"), 24, 27, 22, false);
+    wc.add_player(61672, 74209, permutation_t::read("4,5,1,3,2"), 27, 16, 12, false);
+    wc.play_match(15362, 56198);
+    wc.get_ith_pointless_ability(1);
+    wc.get_partial_spirit(97385);
+    wc.add_team(10168);
+    wc.add_player(12306, 74209, permutation_t::read("3,5,1,2,4"), 21, 1, 21, true);
+    wc.add_team(79671);
+    wc.get_ith_pointless_ability(6);
+    wc.add_player(94190, 79671, permutation_t::read("5,4,2,1,3"), 10, 12, 8, false);
+    wc.play_match(10168, 10168);
+    wc.num_played_games_for_player(94190);
+    wc.play_match(56198, 79671);
+    wc.add_team(7452);
+    wc.buy_team(56198, 6);
+    wc.remove_team(7452);
+    wc.add_player(98155, 6, permutation_t::read("2,1,5,3,4"), 22, 29, 28, true);
+    wc.num_played_games_for_player(12306);
+    wc.add_player(62384, 19511, permutation_t::read("1,3,5,4,2"), 24, 16, 17, false);
+    wc.add_player_cards(62910, 14);
+    wc.add_player_cards(62384, 29);
+    wc.add_player(83903, 15362, permutation_t::read("4,3,5,2,1"), 12, 13, 9, false);
+    wc.play_match(56198, 74209);
+    wc.num_played_games_for_player(97385);
+    wc.get_ith_pointless_ability(5);
+    wc.add_player(21538, 15362, permutation_t::read("1,5,4,3,2"), 10, -2, 14, true);
+    wc.add_player(27206, 10168, permutation_t::read("3,2,5,1,4"), 6, 5, 22, false);
+    wc.add_player(80701, 7452, permutation_t::read("3,2,5,4,1"), 0, 9, 42, false);
+    wc.add_player(25109, 7452, permutation_t::read("2,3,5,1,4"), 2, 19, 23, false);
+    wc.add_player(56, 56198, permutation_t::read("4,1,3,5,2"), 18, 8, 22, false);
+    wc.add_player(78, 10168, permutation_t::read("2,1,4,3,5"), 13, 11, 24, false);
+    wc.get_ith_pointless_ability(4);
+    wc.add_player(65716, 7452, permutation_t::read("3,2,5,1,4"), 16, 6, 11, false);
+    wc.add_team(7198);
+    wc.add_player(5230, 7452, permutation_t::read("5,4,3,1,2"), 0, 27, 13, true);
+    wc.get_partial_spirit(12306);
+    wc.add_team(20512);
+    wc.add_player(3882, 10168, permutation_t::read("4,3,1,5,2"), 26, 15, 16, true);
+    wc.add_team(60123);
+    wc.get_team_points(74209);
+    wc.num_played_games_for_player(94190);
+    wc.add_player(77882, 20512, permutation_t::read("4,1,2,3,5"), 15, 83, 19, true);
+    wc.get_ith_pointless_ability(7);
+    wc.add_team(85448);
+    wc.get_partial_spirit(62384);
+    wc.get_ith_pointless_ability(3);
+    wc.add_player(92072, 7452, permutation_t::read("3,2,1,4,5"), 21, 22, 30, false);
+    wc.add_player(23, 74209, permutation_t::read("4,3,5,1,2"), 16, 18, 22, true);
+    wc.add_player(63810, 49, permutation_t::read("2,5,1,3,4"), 8, 5, 28, false);
+    wc.buy_team(7198, 56198);
+    wc.add_player(58463, 10168, permutation_t::read("3,1,2,5,4"), 10, 22, 28, true);
+    wc.add_team(95814);
+    wc.add_player(61022, 7452, permutation_t::read("2,3,4,5,1"), 30, 6, 13, false);
+    wc.add_player(48519, 56198, permutation_t::read("4,5,3,2,1"), 2, 30, 25, true);
+    wc.get_partial_spirit(23);
+    wc.num_played_games_for_player(3882);
+    wc.play_match(10168, 32);
+    wc.add_player(85635, 19511, permutation_t::read("5,1,3,4,2"), 2, 16, 30, true);
+    wc.get_partial_spirit(62384);
+    wc.add_team(9);
+    wc.add_player(27017, 20512, permutation_t::read("1,4,2,3,5"), 13, 28, 13, false);
+    wc.add_player(82013, 6, permutation_t::read("2,1,5,3,4"), 17, 19, 22, false);
+    wc.num_played_games_for_player(77882);
+    wc.get_team_points(60123);
+    wc.get_team_points(7198);
+    wc.add_player(52886, 56198, permutation_t::read("3,1,4,5,2"), 11, 2, 18, false);
+    wc.add_team(23610);
+    wc.get_team_points(7198);
+    wc.play_match(60123, 56198);
+    wc.add_player(19535, 6, permutation_t::read("1,2,4,3,5"), 11, 21, 0, false);
+    wc.add_player(85722, 20512, permutation_t::read("1,5,4,3,2"), 9, 13, 20, true);
+    wc.get_team_points(15362);
+    wc.add_player(89666, 7452, permutation_t::read("3,4,1,2,5"), 0, 19, 28, true);
+    wc.add_player(420, 20512, permutation_t::read("5,4,1,3,2"), 14, 13, 22, false);
+    wc.num_played_games_for_player(85635);
+    wc.play_match(6, 23610);
+    wc.add_team(22468);
+    wc.add_player(75990, 85448, permutation_t::read("1,3,4,5,2"), 28, 20, 2, false);
+    wc.num_played_games_for_player(82013);
+    wc.add_player(98025, 56198, permutation_t::read("3,1,5,4,2"), 10, 25, 11, false);
+    wc.add_player(34028, 6, permutation_t::read("2,3,5,1,4"), 17, 28, 27, false);
+    wc.add_team(15608);
+    wc.add_team(30059);
+    wc.add_player(3520, 15608, permutation_t::read("3,4,1,5,2"), 19, 6, 7, false);
+    wc.add_player(50452, 6, permutation_t::read("5,4,1,3,2"), 5, 19, 26, false);
+    wc.num_played_games_for_player(58463);
+    wc.num_played_games_for_player(62384);
+    wc.num_played_games_for_player(11);
+    wc.add_player(64501, 23610, permutation_t::read("4,3,1,2,5"), 24, 27, 29, false);
+    wc.play_match(85448, 7198);
+    wc.get_team_points(9);
+    wc.num_played_games_for_player(52886);
+    wc.add_player(45019, 19511, permutation_t::read("1,3,2,5,4"), 4, 8, 19, false);
+    wc.add_team(46721);
+    wc.get_partial_spirit(89666);
+    wc.play_match(7198, 9);
+    wc.add_team(6);
+    wc.add_player_cards(89666, 8);
+    wc.add_player(54660, 95814, permutation_t::read("4,2,1,5,3"), 3, 12, 34, false);
+    wc.add_team(12763);
+    wc.get_partial_spirit(83903);
+    wc.add_player(2661, 46721, permutation_t::read("3,2,1,5,4"), 26, 24, 3, false);
+    wc.add_player(29687, 15362, permutation_t::read("5,2,1,4,3"), 17, 30, 10, true);
+    wc.add_player(70038, 95814, permutation_t::read("5,1,2,3,4"), 20, 10, 2, false);
+    wc.add_player(70829, 23610, permutation_t::read("3,1,5,4,2"), 8, 20, 13, false);
+    wc.get_team_points(10168);
+    wc.play_match(15362, 85448);
+    wc.buy_team(6, 20512);
+    wc.add_player(74344, 19511, permutation_t::read("4,3,5,1,2"), 28, 20, 15, false);
+    wc.add_player(26750, 79671, permutation_t::read("5,2,1,3,4"), 28, 23, 13, false);
+    wc.add_player(86029, 12763, permutation_t::read("4,3,1,5,2"), 21, 30, 5, false);
+    wc.add_player(78607, 20512, permutation_t::read("1,5,3,2,4"), 3, 20, 27, false);
+    wc.play_match(6, 9);
+    wc.add_team(39413);
+    wc.get_ith_pointless_ability(18);
+    wc.add_player(92457, 39413, permutation_t::read("1,2,5,4,3"), 0, 22, 17, false);
+    wc.num_played_games_for_player(3520);
+    wc.add_player(94796, 30059, permutation_t::read("1,2,5,3,4"), 16, 4, 30, false);
+    wc.get_partial_spirit(85635);
+    wc.get_ith_pointless_ability(2);
+    wc.remove_team(9);
+    wc.add_player(33701, 23610, permutation_t::read("4,2,1,3,5"), 22, 22, 8, false);
+    wc.add_team(65910);
+    wc.num_played_games_for_player(75990);
+    wc.add_team(1);
+    wc.buy_team(60123, 95814);
+    wc.get_ith_pointless_ability(22);
+    wc.get_partial_spirit(83903);
+    wc.add_player(70431, 20512, permutation_t::read("2,1,3,4,5"), 11, 25, 7, false);
+    wc.add_player(24989, 7198, permutation_t::read("1,5,3,4,2"), 9, 21, 6, false);
+    wc.add_player(80260, 6, permutation_t::read("4,3,2,1,5"), 22, 11, 29, true);
+    wc.get_partial_spirit(86029);
+    wc.play_match(15608, 7452);
+    wc.get_team_points(30059);
+    wc.get_ith_pointless_ability(11);
+    wc.num_played_games_for_player(98025);
+    wc.get_team_points(7452);
+    wc.get_partial_spirit(74344);
+    wc.add_team(95394);
+    wc.get_partial_spirit(83903);
+    wc.add_player(39730, 7198, permutation_t::read("4,3,2,5,1"), 72, 0, 29, false);
+    wc.add_player(52183, 95394, permutation_t::read("1,5,2,3,4"), 4, 26, 3, false);
+    wc.add_player(47552, 23610, permutation_t::read("5,1,2,4,3"), 5, 28, 10, false);
+    wc.play_match(22468, 95394);
+    wc.add_team(4);
+    wc.get_ith_pointless_ability(5);
+    wc.play_match(10168, 95814);
+    wc.add_player(73829, 23610, permutation_t::read("5,2,1,4,3"), 18, 10, 4, true);
+    wc.add_player(13503, 23610, permutation_t::read("5,2,1,4,3"), 10, 65, 7, false);
+    wc.add_player_cards(78607, 18);
+    wc.get_partial_spirit(78607);
+    wc.num_played_games_for_player(58463);
+    wc.add_player(43892, 42, permutation_t::read("3,2,5,1,4"), 3, 12, 0, false);
+    wc.play_match(95814, 15362);
+    wc.add_team(7);
+    wc.get_team_points(56198);
+    wc.add_player_cards(3882, 3);
+    wc.add_player(71907, 95814, permutation_t::read("5,3,1,2,4"), 17, 18, 18, false);
+    wc.num_played_games_for_player(82013);
+    wc.play_match(7198, 7198);
+    wc.add_player(39392, 7, permutation_t::read("5,4,1,3,2"), 1, 13, 13, false);
+    wc.add_team(3);
+    wc.add_team(2);
+    wc.add_player(10166, 46721, permutation_t::read("1,3,4,2,5"), 5, 13, 17, false);
+    wc.remove_team(15362);
+    wc.play_match(7452, 79671);
+    wc.num_played_games_for_player(83903);
+    wc.add_player(50646, 15362, permutation_t::read("4,3,5,1,2"), 10, 9, 29, true);
+    wc.get_ith_pointless_ability(11);
+    wc.add_player(61589, 20512, permutation_t::read("5,3,4,2,1"), 29, 7, 2, false);
+    wc.add_player(34414, 9, permutation_t::read("4,5,3,1,2"), 7, 13, 7, false);
+    wc.add_player(69478, 95394, permutation_t::read("5,2,4,3,1"), 15, 29, 10, false);
+    wc.add_team(10);
+    wc.add_player(7256, 1, permutation_t::read("4,2,1,3,5"), 30, 14, 5, false);
+    wc.add_player(28278, 19511, permutation_t::read("3,2,1,4,5"), 15, 13, 1, false);
+    wc.add_player(89357, 4, permutation_t::read("3,4,5,1,2"), 9, 14, 13, false);
+    wc.add_team(29272);
+    wc.add_player(54110, 95394, permutation_t::read("3,2,4,5,1"), 18, 29, 5, false);
+    wc.add_team(43167);
+    wc.get_ith_pointless_ability(3);
+    wc.add_player(17952, 15608, permutation_t::read("1,4,2,3,5"), 11, 16, 24, false);
+    wc.get_team_points(46721);
+    wc.remove_team(6);
+    wc.add_player(92049, 2, permutation_t::read("2,5,3,1,4"), 26, 3, 6, false);
+    wc.get_ith_pointless_ability(5);
+    wc.remove_team(74209);
+    wc.add_player_cards(98155, 2);
+    wc.add_team(8);
+    wc.play_match(9, 100);
+    wc.get_team_points(4);
+    wc.get_team_points(2);
+    wc.add_team(51469);
+    wc.add_team(7);
+    wc.get_partial_spirit(24989);
+    wc.get_ith_pointless_ability(32);
+    wc.add_player(96490, 2, permutation_t::read("3,5,2,4,1"), 2, 8, 15, false);
+    wc.add_player(93105, 1, permutation_t::read("4,2,3,1,5"), 13, 13, 1, false);
+    wc.add_player(30918, 7, permutation_t::read("4,3,2,5,1"), 18, 13, 22, false);
+    wc.add_team(64814);
+    wc.add_team(57);
+    wc.add_team(70071);
+    wc.add_player(87084, 9, permutation_t::read("3,5,2,4,1"), 25, 23, 15, false);
+    wc.add_player(34457, 39413, permutation_t::read("2,5,3,1,4"), 15, 24, 18, false);
+    wc.add_player_cards(77882, 23);
+    wc.get_partial_spirit(80701);
+    wc.add_player(41086, 60123, permutation_t::read("3,2,4,5,1"), 20, 0, 27, false);
+    wc.num_played_games_for_player(27017);
+    wc.add_player(55756, 7452, permutation_t::read("1,2,3,5,4"), 27, 23, 14, false);
+    wc.add_player(31251, -12, permutation_t::read("3,1,5,4,2"), 27, 14, 5, false);
+    wc.add_team(69236);
+    wc.add_player(67071, 8, permutation_t::read("3,4,1,2,5"), 15, 17, 18, false);
+    wc.get_partial_spirit(61589);
+    wc.play_match(4, 22468);
+    wc.add_player(22700, 8, permutation_t::read("4,5,1,3,2"), 23, 28, 1, false);
+    wc.add_player(26702, 8, permutation_t::read("1,4,2,3,5"), 6, 21, 15, false);
+    wc.remove_team(4);
+    wc.add_player(7698, 4, permutation_t::read("1,4,5,3,2"), 22, 17, 12, false);
+    wc.add_player(27770, 6, permutation_t::read("5,3,2,4,1"), 15, 11, 10, false);
+    wc.add_player(67394, 46721, permutation_t::read("2,1,4,5,3"), 20, 17, 10, false);
+    wc.get_ith_pointless_ability(15);
+    wc.add_player(3048, 2, permutation_t::read("1,5,2,4,3"), 0, 30, 25, false);
+    wc.get_team_points(20512);
+    wc.add_team(25136);
+    wc.play_match(95394, 9);
+    wc.add_team(41568);
+    wc.add_player(3062, 70071, permutation_t::read("2,5,3,4,1"), 27, 30, 18, false);
+    wc.get_partial_spirit(30918);
+    wc.add_team(6);
+    wc.add_player(11166, 10, permutation_t::read("4,5,3,1,2"), 28, 4, 8, true);
+    wc.remove_team(9);
+    wc.add_team(2);
+    wc.num_played_games_for_player(89666);
+    wc.get_team_points(22468);
+    wc.num_played_games_for_player(80260);
+    wc.add_player(92376, 29272, permutation_t::read("4,1,3,5,2"), 10, 10, 7, false);
+    wc.add_player(70107, 57, permutation_t::read("5,1,3,4,2"), 19, 15, 17, false);
+    wc.get_team_points(69236);
+    wc.get_ith_pointless_ability(7);
+    wc.add_player(5791, 10, permutation_t::read("3,2,4,1,5"), 1, 3, 27, false);
+    wc.add_player(30537, 60123, permutation_t::read("4,3,1,5,2"), 28, 24, 24, false);
+
+    return 0;
+}

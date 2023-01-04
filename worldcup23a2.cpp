@@ -132,8 +132,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		AVLNode<Team> *teamOnTree = teamsTree.find(teamsTree.root, teamId); // the team on the tree ordered by teamId
 
 		ListNode<Set<Player>> *teamOnHT = TeamsHashTable.FindPointer(teamId); // the team on the Hashtable representing the DisjointSet of UNION - FIND
-		 // the team on the reversed tree
-		ReversedTreeNode<Player> *newPlayerNode; // the player node on the reversed tree
+																			  // the team on the reversed tree
+		ReversedTreeNode<Player> *newPlayerNode;							  // the player node on the reversed tree
 		Player newplayer = Player(playerId);
 		AllplayersTable.Insert(newplayer, playerId);
 		ListNode<Player> *playerOnHT = AllplayersTable.FindPointer(playerId);
@@ -180,9 +180,9 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 		}
 
 		// updating the team fields on the tree
-		//teamOnTree->GetValue().multiplyNewPlayerToTeamSpirit(spirit);
-		
-		//teamOnTree->GetValue().getTeamReversedTreeRoot()->GetValue().setWholeTeamSpiritSoFar(teamOnTree->GetValue().getTeamSpirit());
+		// teamOnTree->GetValue().multiplyNewPlayerToTeamSpirit(spirit);
+
+		// teamOnTree->GetValue().getTeamReversedTreeRoot()->GetValue().setWholeTeamSpiritSoFar(teamOnTree->GetValue().getTeamSpirit());
 		teamOnHT->GetValue().IncreaseSizeOfSetByOne();
 		teamOnTree->GetValue().increaseNumOfPlayers();
 		if (goalKeeper)
@@ -291,14 +291,14 @@ output_t<int> world_cup_t::num_played_games_for_player(int playerId)
 		// ReversedTreeNode<Player> *rootPlayerNode = findRootReversedTree(playerNode);
 
 		findSet(playerId);
-		int GamesfromMaster=0;
+		int GamesfromMaster = 0;
 		int gamesBeforeMe = playerNode->GetValue().getGamesTeamPlayedBefore();
 		int gamesFromRoot = playerNode->GetValue().getGamesFromRootPlayer();
 		if (playerNode->GetParent() != NULL)
 		{
-			 GamesfromMaster = getGamesPlayedFromMasterRoot(playerId);
+			GamesfromMaster = getGamesPlayedFromMasterRoot(playerId);
 		}
-		
+
 		int result = gamesFromRoot - gamesBeforeMe + GamesfromMaster;
 		result = result + playerNode->GetValue().getGamesPlayedINIT();
 		return result;
@@ -427,14 +427,14 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
 	}
 	try
 	{
-		//std::cout << "playerId: " << playerId << std::endl;
+		// std::cout << "playerId: " << playerId << std::endl;
 		ReversedTreeNode<Player> *playerNode = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
 		ReversedTreeNode<Player> *rootPlayerNode = findRootReversedTree(playerNode);
 		if (rootPlayerNode->GetValue().getIsTeamActive() == false)
 		{
 			return StatusType::FAILURE;
 		}
-		findSet(playerId); // taking care of the path compression 
+		findSet(playerId); // taking care of the path compression
 		permutation_t spiritsBeforeMe = playerNode->GetValue().getSpiritsBeforeMe();
 		permutation_t spiritsFromRoot = playerNode->GetValue().getSpiritFromRootPlayer();
 		permutation_t result = spiritsFromRoot.operator*(spiritsBeforeMe);
@@ -477,8 +477,8 @@ StatusType world_cup_t::buy_team(int buyerId, int boughtId)
 		}
 		AVLNode<Team> *buyerOnTree = teamsTree.find(teamsTree.root, buyerId);
 		AVLNode<Team> *boughtOnTree = teamsTree.find(teamsTree.root, boughtId);
-		//ListNode<Set<Player>> *BoughtteamOnHT = TeamsHashTable.FindPointer(boughtId);
-		//ListNode<Set<Player>> *BuyerTeamOnHT = TeamsHashTable.FindPointer(buyerId);
+		// ListNode<Set<Player>> *BoughtteamOnHT = TeamsHashTable.FindPointer(boughtId);
+		// ListNode<Set<Player>> *BuyerTeamOnHT = TeamsHashTable.FindPointer(buyerId);
 		int boughtTeamAbility = boughtOnTree->GetValue().getSumPlayersAbility();
 		buyerOnTree->GetValue().addPoints(boughtOnTree->GetValue().getPoints());
 		buyerOnTree->GetValue().addnumOfPlayers(boughtOnTree->GetValue().getNumOfPlayers());
@@ -486,10 +486,9 @@ StatusType world_cup_t::buy_team(int buyerId, int boughtId)
 		//-------------------------------------------
 		// TAKE CARE IN UNION SET!!!!
 		//------------------------------------------
-		//buyerOnTree->GetValue().multiplyNewPlayerToTeamSpirit(boughtOnTree->GetValue().getTeamSpirit());
+		// buyerOnTree->GetValue().multiplyNewPlayerToTeamSpirit(boughtOnTree->GetValue().getTeamSpirit());
 		//
 		// takning care of the the games played
-		
 
 		TeamAndAbilities OldbuyerTeamAndAbilities(buyerOnTree->GetValue().getTeamID(), buyerOnTree->GetValue().getSumPlayersAbility());
 		TeamAndAbilities boughtTeamAndAbilities(boughtOnTree->GetValue().getTeamID(), boughtOnTree->GetValue().getSumPlayersAbility());
@@ -500,31 +499,7 @@ StatusType world_cup_t::buy_team(int buyerId, int boughtId)
 
 		buyerOnTree->GetValue().addSumPlayersAbility(boughtTeamAbility);
 		teamsTree.root = teamsTree.Remove(teamsTree.root, boughtOnTree->GetValue());
-		/*
-		AVLNode<Team> *smallerTeamOnTree = buyerSize < boughtSize ? team1onTree : team2onTree;
-		AVLNode<Team> *biggerTeamOnTree = buyerSize < boughtSize ? team2onTree : team1onTree;
 
-		//update the team fields
-		int smallTeamAbility = smallerTeamOnTree->GetValue().getSumPlayersAbility();
-		biggerTeamOnTree->GetValue().addPoints(smallerTeamOnTree->GetValue().getPoints());
-		biggerTeamOnTree->GetValue().addnumOfPlayers(smallerTeamOnTree->GetValue().getNumOfPlayers());
-		biggerTeamOnTree->GetValue().addnumOfGoalKeepers(smallerTeamOnTree->GetValue().getNumOfGoalKeepers());
-
-		biggerTeamOnTree->GetValue().multiplyNewPlayerToTeamSpirit(smallerTeamOnTree->GetValue().getTeamSpirit());
-
-		//update rank tree
-
-		TeamAndAbilities OLDSmallTeamAndAbilities(smallerTeamOnTree->GetValue().getTeamID(), smallerTeamOnTree->GetValue().getSumPlayersAbility());
-		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, OLDSmallTeamAndAbilities);
-		TeamAndAbilities OLDBigTeamAndAbilities(biggerTeamOnTree->GetValue().getTeamID(), biggerTeamOnTree->GetValue().getSumPlayersAbility());
-		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Remove(teamsAbilitiesRankTree.root, OLDBigTeamAndAbilities);
-		TeamAndAbilities NEWteamAndAbilities(biggerTeamOnTree->GetValue().getTeamID(), biggerTeamOnTree->GetValue().getSumPlayersAbility() + smallTeamAbility);
-		teamsAbilitiesRankTree.root = teamsAbilitiesRankTree.Insert(teamsAbilitiesRankTree.root, NEWteamAndAbilities);
-
-		biggerTeamOnTree->GetValue().addSumPlayersAbility(smallTeamAbility);
-
-		teamsTree.root=teamsTree.Remove(teamsTree.root, smallerTeamOnTree->GetValue());
-		*/
 		numberOfActiveTeams--;
 	}
 	catch (std::bad_alloc &ba)
@@ -588,17 +563,18 @@ void world_cup_t::unionSets(int teamId1, int teamId2)
 	ListNode<Set<Player>> *larger_set = set1;
 	ListNode<Set<Player>> *smaller_set = set2;
 	permutation_t larger_set_spirit = permutation_t().neutral();
-	//permutation_t smaller_set_spirit = smaller_set->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
-	
-		larger_set_spirit = larger_set->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
-	
+	 permutation_t smaller_set_spirit = smaller_set->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
+
+	larger_set_spirit = larger_set->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
+
 	ReversedTreeNode<Player> *boughtRootPlayerNode = smaller_set->GetValue().GetRootOfSet();
 	ReversedTreeNode<Player> *buyerRootPlayerNode = larger_set->GetValue().GetRootOfSet();
 	int boughtGames = boughtRootPlayerNode->GetValue().getGamesFromRootPlayer();
 	int buyerGames = buyerRootPlayerNode->GetValue().getGamesFromRootPlayer();
 	boughtRootPlayerNode->GetValue().setGamesFromRootPlayer(boughtGames - buyerGames);
-	//buyerRootPlayerNode->GetValue().multiplayPlayerSpiritToWholeTeamSpiritSoFar(smaller_set_spirit);
+	// buyerRootPlayerNode->GetValue().multiplayPlayerSpiritToWholeTeamSpiritSoFar(smaller_set_spirit);
 	smaller_set->GetValue().GetRootOfSet()->GetValue().setlSpiritFromRootPlayer((larger_set_spirit));
+	larger_set->GetValue().GetRootOfSet()->GetValue().setWholeTeamSpiritSoFar(larger_set_spirit.operator*(smaller_set_spirit));
 	larger_set->GetValue().IncreaseSizeOfSetBy(smaller_size);
 	smaller_set->GetValue().GetRootOfSet()->SetParent(larger_set->GetValue().GetRootOfSet());
 	smaller_set->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
@@ -617,11 +593,11 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 	{
 		AVLNode<Team> *buyerOnTree = teamsTree.find(teamsTree.root, buyerId);
 		buyerOnTree->GetValue().setTeamReversedTreeRoot(boughtSet->GetValue().GetRootOfSet());
-		//permutation_t bought_set_spirit = boughtSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
+		// permutation_t bought_set_spirit = boughtSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
 		buyerSet->GetValue().IncreaseSizeOfSetBy(buyer_size);
 		buyerSet->GetValue().setRootOfSet(boughtSet->GetValue().GetRootOfSet());
-		//buyerSet->GetValue().GetRootOfSet()->GetValue().setlSpiritFromRootPlayer(bought_set_spirit);
-		
+		// buyerSet->GetValue().GetRootOfSet()->GetValue().setlSpiritFromRootPlayer(bought_set_spirit);
+
 		boughtSet->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
 		TeamsHashTable.Remove(boughtSet->GetValue().GetIdOfSet(), boughtSet->GetValue());
 		return;
@@ -635,7 +611,7 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 
 	AVLNode<Team> *buyerOnTree = teamsTree.find(teamsTree.root, buyerId);
 	buyerOnTree->GetValue().setTeamReversedTreeRoot(boughtSet->GetValue().GetRootOfSet());
-	//permutation_t bought_set_spirit = boughtSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
+	// permutation_t bought_set_spirit = boughtSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
 	permutation_t buyer_set_spirit = buyerSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
 
 	boughtSet->GetValue().GetRootOfSet()->GetValue().setlSpiritFromRootPlayer((buyer_set_spirit));
@@ -657,12 +633,11 @@ Set<Player> *world_cup_t::findSet(int playerId)
 	ReversedTreeNode<Player> *current_element = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
 	ReversedTreeNode<Player> *next_element;
 	ReversedTreeNode<Player> *root = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
-	permutation_t spiritsUpTheTree=permutation_t().neutral();// = root->GetValue().getSpiritFromRootPlayer();
-	// int gamesPlayedCounter = AllplayersTable.Find(playerId).getGamesFromRootPlayer();
-	// int current_gamesFromRootPlayer, next_gamesFromRootPlayer;
+	permutation_t spiritsUpTheTree = permutation_t().neutral(); // = root->GetValue().getSpiritFromRootPlayer();
+	
 	int GamesPlayedTotalFromRoots = 0;
 
-	// int toSubtract = 0;
+	
 
 	while (root->GetParent() != NULL)
 	{
@@ -681,16 +656,10 @@ Set<Player> *world_cup_t::findSet(int playerId)
 	while (current_element->GetValue() != root->GetValue())
 	{
 
-		// int current_gamesFromRootPlayer = current_element->GetValue().getGamesFromRootPlayer();
-
 		current_element->GetValue().setGamesFromRootPlayer(GamesPlayedTotalFromRoots);
 		permutation_t currentSpiritFromRoot = current_element->GetValue().getSpiritFromRootPlayer();
-		// current_element->GetValue().setGamesFromRootPlayer
 		current_element->GetValue().setlSpiritFromRootPlayer(spiritsUpTheTree);
-		spiritsUpTheTree=spiritsUpTheTree.operator*(currentSpiritFromRoot.inv());
-		//permutation_t currentSpiritFromRoot = current_element->GetValue().getSpiritFromRootPlayer();
-		//permutation_t currentSpiritFromRootInv = currentSpiritFromRoot.inv();
-		//current_element->GetValue().setlSpiritFromRootPlayer(currentSpiritFromRootInv.operator*(spiritsUpTheTree));
+		spiritsUpTheTree = spiritsUpTheTree.operator*(currentSpiritFromRoot.inv());
 		next_element = current_element->GetParent();
 		current_element->SetParent(root);
 		current_element = next_element;
@@ -706,5 +675,4 @@ int world_cup_t::getGamesPlayedFromMasterRoot(int playrId)
 		current_element = current_element->GetParent();
 	}
 	return current_element->GetValue().getGamesFromRootPlayer();
-	
 }

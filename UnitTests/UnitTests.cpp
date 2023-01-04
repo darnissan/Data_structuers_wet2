@@ -1104,11 +1104,11 @@ TEST_CASE("buy_team")
         output_t<int> resn6 = obj->play_match(10, 30);
         REQUIRE(resn6.status() == StatusType::SUCCESS);
         REQUIRE(resn6.ans() == 0);
-        
+
         output_t<int> resn24 = obj->num_played_games_for_player(11);
         REQUIRE(resn24.status() == StatusType::SUCCESS);
         REQUIRE(resn24.ans() == 4);
-        
+    
         res = obj->buy_team(30, 10);
         REQUIRE(res == StatusType::SUCCESS);
         

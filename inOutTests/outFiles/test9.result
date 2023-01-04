@@ -652,7 +652,7 @@ add_player: SUCCESS
 add_team: SUCCESS
 add_team: SUCCESS
 get_team_points: SUCCESS, 0
-get_partial_spirit: SUCCESS, 2,5,3,4,1
+get_partial_spirit: SUCCESS, 1,4,2,5,3
 add_player_cards: FAILURE
 num_played_games_for_player: SUCCESS, 18
 play_match: FAILURE
@@ -835,7 +835,7 @@ add_player: SUCCESS
 add_team: SUCCESS
 num_played_games_for_player: FAILURE
 num_played_games_for_player: SUCCESS, 5
-num_played_games_for_player: SUCCESS, 20
+num_played_games_for_player: SUCCESS, 19
 add_team: SUCCESS
 get_ith_pointless_ability: SUCCESS, 48718
 get_ith_pointless_ability: SUCCESS, 36665

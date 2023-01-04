@@ -231,6 +231,8 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
 	ReversedTreeNode<Player> *team2OnReversedTree = team2.getTeamReversedTreeRoot();
 	int gamesPlayed1 = team1OnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer();
 	int gamesPlayed2 = team2OnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer();
+	team1Node->GetValue().setGamesPlayed(gamesPlayed1+1);
+	team2Node->GetValue().setGamesPlayed(gamesPlayed2+1);
 	team1OnHT->GetValue().GetRootOfSet()->GetValue().setGamesFromRootPlayer(gamesPlayed1 + 1);
 	team2OnHT->GetValue().GetRootOfSet()->GetValue().setGamesFromRootPlayer(gamesPlayed2 + 1);
 	// team1.getTeamReversedTreeRoot()->GetValue().setGamesFromRootPlayer(team1.getGamesPlayed() + 1);

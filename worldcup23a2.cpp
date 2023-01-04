@@ -594,7 +594,7 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 {
 	ListNode<Set<Player>> *buyerSet = TeamsHashTable.FindPointer(buyerId);
 	ListNode<Set<Player>> *boughtSet = TeamsHashTable.FindPointer(boughtId);
-	// int bought_size = boughtSet->GetValue().GetSizeOfSet();
+	 int bought_size = boughtSet->GetValue().GetSizeOfSet();
 	int buyer_size = buyerSet->GetValue().GetSizeOfSet();
 	// need to take care of the case that buyerTeam is empty
 	if (buyer_size == 0)
@@ -602,7 +602,7 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 		AVLNode<Team> *buyerOnTree = teamsTree.find(teamsTree.root, buyerId);
 		buyerOnTree->GetValue().setTeamReversedTreeRoot(boughtSet->GetValue().GetRootOfSet());
 		// permutation_t bought_set_spirit = boughtSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
-		buyerSet->GetValue().IncreaseSizeOfSetBy(buyer_size);
+		buyerSet->GetValue().IncreaseSizeOfSetBy(bought_size);
 		buyerSet->GetValue().setRootOfSet(boughtSet->GetValue().GetRootOfSet());
 		// buyerSet->GetValue().GetRootOfSet()->GetValue().setlSpiritFromRootPlayer(bought_set_spirit);
 

@@ -1116,12 +1116,12 @@ TEST_CASE("buy_team")
         output_t<permutation_t> resn7 = obj->get_partial_spirit(31);
         REQUIRE(resn7.status() == StatusType::SUCCESS);
         REQUIRE(str(resn7.ans()) == str(perm));
-        /*
+        
         output_t<permutation_t> resn8 = obj->get_partial_spirit(11);
         std::cout<<str(resn8.ans())<<std::endl;
         REQUIRE(resn8.status() == StatusType::SUCCESS);
         REQUIRE(str(resn8.ans()) == str(perm * perm * perm));
-        */
+        
         // Num played games is correct
         output_t<int> resn10 = obj->num_played_games_for_player(11);
         REQUIRE(resn10.status() == StatusType::SUCCESS);

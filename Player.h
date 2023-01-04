@@ -18,9 +18,9 @@ private:
     bool isRootPlayer = false;
     ReversedTreeNode<Player> *playerReversedTreeNode = nullptr;
     permutation_t playerSpirit;
-    permutation_t spiritsBeforeMe;
-    permutation_t SpiritFromRootPlayer;
-    permutation_t WholeTeamSpiritSoFar;
+    permutation_t spiritsBeforeMe=permutation_t().neutral();
+    permutation_t SpiritFromRootPlayer=permutation_t().neutral();
+    permutation_t WholeTeamSpiritSoFar=permutation_t().neutral();
 
 public:
     Player(int playerID) : playerID(playerID){};
@@ -61,5 +61,6 @@ public:
     void setWholeTeamSpiritSoFar(permutation_t WholeTeamSpiritSoFar);
     permutation_t getWholeTeamSpiritSoFar();
     void deletePlayerReversedTreeNode();
+    void multiplayPlayerSpiritToWholeTeamSpiritSoFar(permutation_t playerSpirit);
 };
 #endif // PLAYER_H_

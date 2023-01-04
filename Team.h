@@ -13,7 +13,7 @@ private:
     int points=0;
     int sumPlayersAbility=0;
     int gamesPlayed=0;
-    permutation_t teamSpirit=permutation_t().neutral();
+    //permutation_t teamSpirit=permutation_t().neutral();
     int teamStrength;
     ReversedTreeNode<Player> *teamReversedTreeRoot=nullptr;
 public:
@@ -32,8 +32,8 @@ public:
     void increaseNumOfPlayers();
     void increaseNumOfGoalKeepers();
     void setFirstPlayerID(int FirstPlayerID);
-    void multiplyNewPlayerToTeamSpirit(permutation_t newPlayerSpirit);
-    permutation_t getTeamSpirit();
+    //void multiplyNewPlayerToTeamSpirit(permutation_t newPlayerSpirit);
+    //permutation_t getTeamSpirit();
     int getTeamStrength();
     bool operator ==(const Team& team);
     bool operator >(const Team& team);

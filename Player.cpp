@@ -162,3 +162,7 @@ void Player::deletePlayerReversedTreeNode()
         playerReversedTreeNode = nullptr;
     }
 }
+void Player::multiplayPlayerSpiritToWholeTeamSpiritSoFar(permutation_t playerSpirit)
+{
+    this->WholeTeamSpiritSoFar = this->WholeTeamSpiritSoFar.operator*(playerSpirit);
+}

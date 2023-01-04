@@ -58,6 +58,7 @@ void Team::setFirstPlayerID(int FirstPlayerID)
 {
     this->FirstPlayerID=FirstPlayerID;
 }
+/*
 void Team::multiplyNewPlayerToTeamSpirit(permutation_t newPlayerSpirit)
 {
     if (this->numOfPlayers==0)
@@ -74,6 +75,7 @@ permutation_t Team::getTeamSpirit()
 {
     return this->teamSpirit;
 }
+*/
 int Team::getTeamStrength()
 {
     return this->teamStrength;

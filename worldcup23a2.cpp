@@ -231,8 +231,8 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
 	ReversedTreeNode<Player> *team2OnReversedTree = team2.getTeamReversedTreeRoot();
 	int gamesPlayed1 = team1OnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer();
 	int gamesPlayed2 = team2OnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer();
-	team1Node->GetValue().setGamesPlayed(gamesPlayed1+1);
-	team2Node->GetValue().setGamesPlayed(gamesPlayed2+1);
+	team1Node->GetValue().setGamesPlayed(gamesPlayed1 + 1);
+	team2Node->GetValue().setGamesPlayed(gamesPlayed2 + 1);
 	team1OnHT->GetValue().GetRootOfSet()->GetValue().setGamesFromRootPlayer(gamesPlayed1 + 1);
 	team2OnHT->GetValue().GetRootOfSet()->GetValue().setGamesFromRootPlayer(gamesPlayed2 + 1);
 	// team1.getTeamReversedTreeRoot()->GetValue().setGamesFromRootPlayer(team1.getGamesPlayed() + 1);
@@ -437,10 +437,16 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
 			return StatusType::FAILURE;
 		}
 		findSet(playerId); // taking care of the path compression
+		permutation_t spiritsFromMaster = getSpiritFromMasterRoot(playerId);
 		permutation_t spiritsBeforeMe = playerNode->GetValue().getSpiritsBeforeMe();
 		permutation_t spiritsFromRoot = playerNode->GetValue().getSpiritFromRootPlayer();
-		permutation_t result = spiritsFromRoot.operator*(spiritsBeforeMe);
-		result = result.operator*(playerNode->GetValue().getPlayerSpirit());
+		permutation_t playerspirit = playerNode->GetValue().getPlayerSpirit();
+										 permutation_t result = spiritsFromRoot.operator*(spiritsBeforeMe);
+		if (playerNode->GetParent()!=nullptr)
+		{
+			result = spiritsFromMaster.operator*(result);
+		}
+		result = result.operator*(playerspirit);
 		return result;
 	}
 	catch (std::bad_alloc &ba)
@@ -565,7 +571,7 @@ void world_cup_t::unionSets(int teamId1, int teamId2)
 	ListNode<Set<Player>> *larger_set = set1;
 	ListNode<Set<Player>> *smaller_set = set2;
 	permutation_t larger_set_spirit = permutation_t().neutral();
-	 permutation_t smaller_set_spirit = smaller_set->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
+	permutation_t smaller_set_spirit = smaller_set->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
 
 	larger_set_spirit = larger_set->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
 
@@ -615,9 +621,8 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 	buyerOnTree->GetValue().setTeamReversedTreeRoot(boughtSet->GetValue().GetRootOfSet());
 	// permutation_t bought_set_spirit = boughtSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
 	permutation_t buyer_set_spirit = buyerSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();
-
 	boughtSet->GetValue().GetRootOfSet()->GetValue().setlSpiritFromRootPlayer((buyer_set_spirit));
-
+	buyerSet->GetValue().GetRootOfSet()->GetValue().setlSpiritFromRootPlayer((buyer_set_spirit.inv()));
 	// larger_set->GetValue().IncreaseSizeOfSetBy(smaller_size);
 	// smaller_set->GetValue().GetRootOfSet()->SetParent(larger_set->GetValue().GetRootOfSet());
 	buyerSet->GetValue().IncreaseSizeOfSetBy(buyer_size);
@@ -636,10 +641,8 @@ Set<Player> *world_cup_t::findSet(int playerId)
 	ReversedTreeNode<Player> *next_element;
 	ReversedTreeNode<Player> *root = AllplayersTable.Find(playerId).getPlayerReversedTreeNode();
 	permutation_t spiritsUpTheTree = permutation_t().neutral(); // = root->GetValue().getSpiritFromRootPlayer();
-	
-	int GamesPlayedTotalFromRoots = 0;
 
-	
+	int GamesPlayedTotalFromRoots = 0;
 
 	while (root->GetParent() != NULL)
 	{
@@ -677,4 +680,13 @@ int world_cup_t::getGamesPlayedFromMasterRoot(int playrId)
 		current_element = current_element->GetParent();
 	}
 	return current_element->GetValue().getGamesFromRootPlayer();
+}
+permutation_t world_cup_t::getSpiritFromMasterRoot(int playrId)
+{
+	ReversedTreeNode<Player> *current_element = AllplayersTable.Find(playrId).getPlayerReversedTreeNode();
+	while (current_element->GetParent() != NULL)
+	{
+		current_element = current_element->GetParent();
+	}
+	return current_element->GetValue().getSpiritFromRootPlayer();
 }

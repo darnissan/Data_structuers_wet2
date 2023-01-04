@@ -1100,18 +1100,18 @@ TEST_CASE("buy_team")
         REQUIRE(resn23.ans() == 3);
 
         REQUIRE(obj->add_player(32, 30, perm, 1, 4, 1, true) == StatusType::SUCCESS);
-
+        
         output_t<int> resn6 = obj->play_match(10, 30);
         REQUIRE(resn6.status() == StatusType::SUCCESS);
         REQUIRE(resn6.ans() == 0);
-
+        
         output_t<int> resn24 = obj->num_played_games_for_player(11);
         REQUIRE(resn24.status() == StatusType::SUCCESS);
         REQUIRE(resn24.ans() == 4);
-
+        
         res = obj->buy_team(30, 10);
         REQUIRE(res == StatusType::SUCCESS);
-
+        
         // Partial spirit is correct
         output_t<permutation_t> resn7 = obj->get_partial_spirit(31);
         REQUIRE(resn7.status() == StatusType::SUCCESS);

@@ -293,15 +293,22 @@ output_t<int> world_cup_t::num_played_games_for_player(int playerId)
 		// ReversedTreeNode<Player> *rootPlayerNode = findRootReversedTree(playerNode);
 
 		findSet(playerId);
+		int gamesFromRoot = playerNode->GetValue().getGamesFromRootPlayer();
+		int GamesfromMaster = 0;
+		if(playerNode->GetParent() != NULL)
+			GamesfromMaster = playerNode->GetParent()->GetValue().getGamesFromRootPlayer();
+		/*
 		int GamesfromMaster = 0;
 		int gamesBeforeMe = playerNode->GetValue().getGamesTeamPlayedBefore();
-		int gamesFromRoot = playerNode->GetValue().getGamesFromRootPlayer();
+		
 		if (playerNode->GetParent() != NULL)
 		{
 			GamesfromMaster = getGamesPlayedFromMasterRoot(playerId);
 		}
+		*/
 
-		int result = gamesFromRoot - gamesBeforeMe + GamesfromMaster;
+
+		int result = gamesFromRoot + GamesfromMaster;
 		result = result + playerNode->GetValue().getGamesPlayedINIT();
 		return result;
 	}

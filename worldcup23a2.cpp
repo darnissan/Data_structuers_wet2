@@ -616,7 +616,7 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 	int boughtGames = boughtRootPlayerNode->GetValue().getGamesFromRootPlayer();
 	int buyerGames = buyerRootPlayerNode->GetValue().getGamesFromRootPlayer();
 	boughtRootPlayerNode->GetValue().setGamesFromRootPlayer(boughtGames - buyerGames);
-
+	boughtRootPlayerNode->GetValue().setWholeTeamSpiritSoFar(buyerRootPlayerNode->GetValue().getWholeTeamSpiritSoFar().operator*(boughtRootPlayerNode->GetValue().getWholeTeamSpiritSoFar()));
 	AVLNode<Team> *buyerOnTree = teamsTree.find(teamsTree.root, buyerId);
 	buyerOnTree->GetValue().setTeamReversedTreeRoot(boughtSet->GetValue().GetRootOfSet());
 	// permutation_t bought_set_spirit = boughtSet->GetValue().GetRootOfSet()->GetValue().getWholeTeamSpiritSoFar();

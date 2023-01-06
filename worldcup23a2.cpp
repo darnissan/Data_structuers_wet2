@@ -168,7 +168,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 			ReversedTreeNode<Player> *teamOnReversedTree = teamOnHT->GetValue().GetRootOfSet();
 			playerOnHT->GetValue().setIsRootPlayer(false);
 			playerOnHT->GetValue().setIsTeamActive(true);
-			playerOnHT->GetValue().setGamesTeamPlayedBefore(teamOnTree->GetValue().getGamesPlayed());
+			playerOnHT->GetValue().setGamesTeamPlayedBefore(teamOnReversedTree->GetValue().getGamesFromRootPlayer());
 			playerOnHT->GetValue().setGamesFromRootPlayer(0);
 			playerOnHT->GetValue().setSpiritsBeforeMe(teamOnReversedTree->GetValue().getWholeTeamSpiritSoFar());
 			playerOnHT->GetValue().setlSpiritFromRootPlayer(teamOnReversedTree->GetValue().getSpiritFromRootPlayer().inv());
@@ -575,7 +575,7 @@ void world_cup_t::unionSets(int buyerId, int boughtId)
 	permutation_t bought_spiritFromRoot = boughtRootPlayerNode->GetValue().getSpiritFromRootPlayer();
 	permutation_t buyer_spiritFromRoot = buyerRootPlayerNode->GetValue().getSpiritFromRootPlayer();
 	permutation_t neutralP = buyer_wholeTeamSpirit.neutral();
-	permutation_t buyerFRmultiplyWT = buyer_spiritFromRoot.operator*(buyer_wholeTeamSpirit);
+	// permutation_t buyerFRmultiplyWT = buyer_spiritFromRoot.operator*(buyer_wholeTeamSpirit);
 	permutation_t testSpirit = buyer_spiritFromRoot.inv().operator*(buyer_wholeTeamSpirit);
 	buyerRootPlayerNode->GetValue().setWholeTeamSpiritSoFar(buyer_wholeTeamSpirit.operator*(bought_wholeTeamSpirit));
 	//--------------------------OPTIONAL------------------------------------------
@@ -583,9 +583,11 @@ void world_cup_t::unionSets(int buyerId, int boughtId)
 	//--------------------------OPTIONAL------------------------------------------
 	boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(testSpirit.operator*(bought_spiritFromRoot));
 
+	//-----------------GAMES RELATED-----------------------
 	int boughtGames = boughtRootPlayerNode->GetValue().getGamesFromRootPlayer();
 	int buyerGames = buyerRootPlayerNode->GetValue().getGamesFromRootPlayer();
 	boughtRootPlayerNode->GetValue().setGamesFromRootPlayer(boughtGames - buyerGames);
+	//-----------------GAMES RELATED-----------------------
 
 	buyerSet->GetValue().IncreaseSizeOfSetBy(boughtSize);
 	boughtSet->GetValue().GetRootOfSet()->SetParent(buyerSet->GetValue().GetRootOfSet());
@@ -616,7 +618,8 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 	//-----------------GAMES RELATED-----------------------
 	int boughtGames = boughtRootPlayerNode->GetValue().getGamesFromRootPlayer();
 	int buyerGames = buyerRootPlayerNode->GetValue().getGamesFromRootPlayer();
-	boughtRootPlayerNode->GetValue().setGamesFromRootPlayer(boughtGames - buyerGames);
+	// boughtRootPlayerNode->GetValue().setGamesFromRootPlayer(boughtGames - buyerGames);
+	buyerRootPlayerNode->GetValue().setGamesFromRootPlayer(buyerGames - boughtGames);
 	//-----------------GAMES RELATED-----------------------
 
 	permutation_t buyer_wholeTeamSpirit = buyerRootPlayerNode->GetValue().getWholeTeamSpiritSoFar();
@@ -662,7 +665,9 @@ Set<Player> *world_cup_t::findSet(int playerId)
 	while (current_element->GetValue() != root->GetValue())
 	{
 
+		int currentGamesFR = current_element->GetValue().getGamesFromRootPlayer();
 		current_element->GetValue().setGamesFromRootPlayer(GamesPlayedTotalFromRoots);
+		GamesPlayedTotalFromRoots -= currentGamesFR;
 		permutation_t currentSpiritFromRoot = current_element->GetValue().getSpiritFromRootPlayer();
 		permutation_t currentSpiritFromRootInv = currentSpiritFromRoot.inv();
 		current_element->GetValue().setlSpiritFromRootPlayer(spiritsUpTheTree);

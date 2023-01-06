@@ -576,12 +576,12 @@ void world_cup_t::unionSets(int buyerId, int boughtId)
 	permutation_t buyer_spiritFromRoot = buyerRootPlayerNode->GetValue().getSpiritFromRootPlayer();
 	permutation_t neutralP = buyer_wholeTeamSpirit.neutral();
 	permutation_t buyerFRmultiplyWT = buyer_spiritFromRoot.operator*(buyer_wholeTeamSpirit);
-
+	permutation_t testSpirit = buyer_spiritFromRoot.inv().operator*(buyer_wholeTeamSpirit);
 	buyerRootPlayerNode->GetValue().setWholeTeamSpiritSoFar(buyer_wholeTeamSpirit.operator*(bought_wholeTeamSpirit));
 	//--------------------------OPTIONAL------------------------------------------
 	boughtRootPlayerNode->GetValue().setWholeTeamSpiritSoFar(neutralP);
 	//--------------------------OPTIONAL------------------------------------------
-	boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(buyerFRmultiplyWT.operator*(bought_spiritFromRoot));
+	boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(testSpirit.operator*(bought_spiritFromRoot));
 
 	int boughtGames = boughtRootPlayerNode->GetValue().getGamesFromRootPlayer();
 	int buyerGames = buyerRootPlayerNode->GetValue().getGamesFromRootPlayer();

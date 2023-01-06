@@ -227,8 +227,8 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
 	}
 	ListNode<Set<Player>> *team1OnHT = TeamsHashTable.FindPointer(teamId1);
 	ListNode<Set<Player>> *team2OnHT = TeamsHashTable.FindPointer(teamId2);
-	ReversedTreeNode<Player> *team1OnReversedTree = team1.getTeamReversedTreeRoot();
-	ReversedTreeNode<Player> *team2OnReversedTree = team2.getTeamReversedTreeRoot();
+	ReversedTreeNode<Player> *team1OnReversedTree = team1OnHT->GetValue().GetRootOfSet();
+	ReversedTreeNode<Player> *team2OnReversedTree = team2OnHT->GetValue().GetRootOfSet();
 	int gamesPlayed1 = team1OnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer();
 	int gamesPlayed2 = team2OnHT->GetValue().GetRootOfSet()->GetValue().getGamesFromRootPlayer();
 	team1Node->GetValue().setGamesPlayed(gamesPlayed1 + 1);

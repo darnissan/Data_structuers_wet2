@@ -440,6 +440,7 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
 		permutation_t spiritsFromMaster = getSpiritFromMasterRoot(playerId);
 		permutation_t spiritsBeforeMe = playerNode->GetValue().getSpiritsBeforeMe();
 		permutation_t spiritsFromRoot = playerNode->GetValue().getSpiritFromRootPlayer();
+		//permutation_t MASTERmultiplyFR = spiritsFromMaster.operator*(spiritsFromRoot);
 		permutation_t playerspirit = playerNode->GetValue().getPlayerSpirit();
 		permutation_t result = spiritsFromRoot.operator*(spiritsBeforeMe);
 		if (playerNode->GetParent() != nullptr)
@@ -630,21 +631,20 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 
 	buyerRootPlayerNode->GetValue().setWholeTeamSpiritSoFar(neutralP);
 	boughtRootPlayerNode->GetValue().setWholeTeamSpiritSoFar(buyer_wholeTeamSpirit.operator*(bought_wholeTeamSpirit));
-	permutation_t buyerFRbuyerWT = buyer_spiritFromRoot.operator*(buyer_wholeTeamSpirit);
+	//permutation_t buyerFRbuyerWT = buyer_spiritFromRoot.operator*(buyer_wholeTeamSpirit);
 
-
-	//boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(buyerFRbuyerWT.operator*(bought_spiritFromRoot));
+	// boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(buyerFRbuyerWT.operator*(bought_spiritFromRoot));
 	boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(buyer_wholeTeamSpirit.operator*(bought_spiritFromRoot));
+	permutation_t newBoughtFR = boughtRootPlayerNode->GetValue().getSpiritFromRootPlayer();
+	//	permutation_t buyerWTboughtFR = buyer_wholeTeamSpirit.operator*(bought_spiritFromRoot);
+		buyerRootPlayerNode->GetValue().setlSpiritFromRootPlayer((newBoughtFR).inv().operator*(buyer_spiritFromRoot));
 
-		permutation_t buyerWTboughtFR = buyer_wholeTeamSpirit.operator*(bought_spiritFromRoot);
-	buyerRootPlayerNode->GetValue().setlSpiritFromRootPlayer((buyerWTboughtFR).inv());
+		buyerSet->GetValue().IncreaseSizeOfSetBy(buyer_size);
+		buyerSet->GetValue().GetRootOfSet()->SetParent(boughtSet->GetValue().GetRootOfSet());
+		buyerSet->GetValue().setRootOfSet(boughtSet->GetValue().GetRootOfSet());
+		boughtSet->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
 
-	buyerSet->GetValue().IncreaseSizeOfSetBy(buyer_size);
-	buyerSet->GetValue().GetRootOfSet()->SetParent(boughtSet->GetValue().GetRootOfSet());
-	buyerSet->GetValue().setRootOfSet(boughtSet->GetValue().GetRootOfSet());
-	boughtSet->GetValue().GetRootOfSet()->SetSetOfTree(NULL);
-
-	TeamsHashTable.Remove(boughtSet->GetValue().GetIdOfSet(), boughtSet->GetValue());
+		TeamsHashTable.Remove(boughtSet->GetValue().GetIdOfSet(), boughtSet->GetValue());
 }
 
 Set<Player> *world_cup_t::findSet(int playerId)

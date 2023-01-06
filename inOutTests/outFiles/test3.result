@@ -29,7 +29,7 @@ add_player_cards: FAILURE
 add_player: SUCCESS
 buy_team: INVALID_INPUT
 add_player: FAILURE
-add_player_cards: INVALID_INPUT
+add_player_cards: FAILURE
 get_team_points: INVALID_INPUT
 add_team: SUCCESS
 num_played_games_for_player: SUCCESS, 26
@@ -197,7 +197,7 @@ play_match: SUCCESS, 3
 add_player: SUCCESS
 num_played_games_for_player: FAILURE
 get_partial_spirit: FAILURE
-num_played_games_for_player: SUCCESS, 30
+num_played_games_for_player: SUCCESS, 29
 get_team_points: SUCCESS, 0
 add_player: SUCCESS
 play_match: FAILURE
@@ -218,7 +218,7 @@ get_partial_spirit: FAILURE
 add_player: INVALID_INPUT
 add_player: SUCCESS
 get_team_points: SUCCESS, 0
-get_partial_spirit: SUCCESS, *,*,*,*,*
+get_partial_spirit: SUCCESS, 1,2,5,4,3
 add_player: SUCCESS
 add_player: SUCCESS
 add_player_cards: FAILURE
@@ -230,7 +230,7 @@ play_match: FAILURE
 get_team_points: FAILURE
 num_played_games_for_player: SUCCESS, 23
 add_team: SUCCESS
-num_played_games_for_player: SUCCESS, 12
+num_played_games_for_player: SUCCESS, 11
 num_played_games_for_player: FAILURE
 add_player: SUCCESS
 add_player: SUCCESS
@@ -257,7 +257,7 @@ get_team_points: FAILURE
 add_team: SUCCESS
 add_player: FAILURE
 num_played_games_for_player: FAILURE
-get_partial_spirit: SUCCESS, *,*,*,*,*
+get_partial_spirit: SUCCESS, 4,1,5,2,3
 add_player: SUCCESS
 add_player: SUCCESS
 add_player: SUCCESS
@@ -266,7 +266,7 @@ add_player: SUCCESS
 play_match: SUCCESS, 3
 get_ith_pointless_ability: FAILURE
 add_player: SUCCESS
-num_played_games_for_player: SUCCESS, 13
+num_played_games_for_player: SUCCESS, 12
 num_played_games_for_player: SUCCESS, 8
 add_player: SUCCESS
 add_player: SUCCESS
@@ -294,17 +294,17 @@ play_match: FAILURE
 add_team: SUCCESS
 get_partial_spirit: FAILURE
 add_team: SUCCESS
-get_partial_spirit: SUCCESS, *,*,*,*,*
+get_partial_spirit: SUCCESS, 1,2,5,4,3
 add_player: FAILURE
 get_team_points: SUCCESS, 0
 play_match: FAILURE
 add_player: SUCCESS
-get_partial_spirit: SUCCESS, *,*,*,*,*
+get_partial_spirit: SUCCESS, 1,2,5,4,3
 play_match: FAILURE
 num_played_games_for_player: SUCCESS, 13
 add_player_cards: SUCCESS
 add_player: SUCCESS
-num_played_games_for_player: SUCCESS, 13
+num_played_games_for_player: SUCCESS, 12
 num_played_games_for_player: SUCCESS, 25
 add_player: SUCCESS
 get_partial_spirit: SUCCESS, 5,1,4,2,3
@@ -331,7 +331,7 @@ add_player: SUCCESS
 add_player_cards: SUCCESS
 add_player_cards: SUCCESS
 add_team: SUCCESS
-num_played_games_for_player: SUCCESS, 22
+num_played_games_for_player: SUCCESS, 20
 add_team: SUCCESS
 num_played_games_for_player: FAILURE
 play_match: FAILURE

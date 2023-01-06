@@ -32,7 +32,7 @@ $(O_FILES_DIR)/TeamAndAbilities.o : TeamAndAbilities.cpp TeamAndAbilities.h Rank
 	$(GPP) -c $(COMP_FLAG) TeamAndAbilities.cpp -o $@
 
 
-$(O_FILES_DIR)/worldcup23a2.o : worldcup23a2.cpp worldcup23a2.h wet2util.h AVLTree.h Team.h Player.h TeamAndAbilities.cpp TeamAndAbilities.h HashTable.h RankTree.h  BiDirectionList.h DisjointSet.h  ReversedTree.h
+$(O_FILES_DIR)/worldcup23a2.o : worldcup23a2.cpp worldcup23a2.h wet2util.h AvlTree.h Team.h Player.h TeamAndAbilities.cpp TeamAndAbilities.h HashTable.h RankTree.h  BiDirectionList.h DisjointSet.h  ReversedTree.h
 	@mkdir -p $(O_FILES_DIR)
 	$(GPP) -c $(COMP_FLAG) worldcup23a2.cpp -o $@
 	

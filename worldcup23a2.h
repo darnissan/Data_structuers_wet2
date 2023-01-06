@@ -47,6 +47,7 @@ private:
 	void unionSetsBoughtBigger(int teamId1, int teamId2);
 	void unionEmptySet(int buyerId, int boughtId);
 	int getGamesPlayedFromMasterRoot(int playerId);
+	permutation_t getSpiritFromMasterRoot(int playerId);
 public:
 	// <DO-NOT-MODIFY> {
 

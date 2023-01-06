@@ -631,8 +631,12 @@ void world_cup_t::unionSetsBoughtBigger(int buyerId, int boughtId)
 	buyerRootPlayerNode->GetValue().setWholeTeamSpiritSoFar(neutralP);
 	boughtRootPlayerNode->GetValue().setWholeTeamSpiritSoFar(buyer_wholeTeamSpirit.operator*(bought_wholeTeamSpirit));
 	permutation_t buyerFRbuyerWT = buyer_spiritFromRoot.operator*(buyer_wholeTeamSpirit);
-	boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(buyerFRbuyerWT.operator*(bought_spiritFromRoot));
-	permutation_t buyerWTboughtFR = buyer_wholeTeamSpirit.operator*(bought_spiritFromRoot);
+
+
+	//boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(buyerFRbuyerWT.operator*(bought_spiritFromRoot));
+	boughtRootPlayerNode->GetValue().setlSpiritFromRootPlayer(buyer_wholeTeamSpirit.operator*(bought_spiritFromRoot));
+
+		permutation_t buyerWTboughtFR = buyer_wholeTeamSpirit.operator*(bought_spiritFromRoot);
 	buyerRootPlayerNode->GetValue().setlSpiritFromRootPlayer((buyerWTboughtFR).inv());
 
 	buyerSet->GetValue().IncreaseSizeOfSetBy(buyer_size);

@@ -1,5 +1,3 @@
-
-
 add_team: SUCCESS
 add_team: SUCCESS
 add_team: SUCCESS
@@ -574,7 +572,7 @@ add_player: FAILURE
 add_player: SUCCESS
 add_player: SUCCESS
 get_partial_spirit: SUCCESS, 5,4,1,2,3
-get_partial_spirit: SUCCESS, 1,3,4,2,5
+get_partial_spirit: SUCCESS, 2,1,3,5,4
 add_team: SUCCESS
 add_player: FAILURE
 get_team_points: SUCCESS, 0

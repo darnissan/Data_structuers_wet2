@@ -2223,7 +2223,7 @@ add_player: SUCCESS
 play_match: FAILURE
 add_team: SUCCESS
 add_player: SUCCESS
-get_partial_spirit: SUCCESS, 4,3,2,5,1
+get_partial_spirit: SUCCESS, 5,2,3,1,4
 add_player: SUCCESS
 num_played_games_for_player: SUCCESS, 16
 get_partial_spirit: FAILURE

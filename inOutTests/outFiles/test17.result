@@ -1074,7 +1074,7 @@ num_played_games_for_player: SUCCESS, 7
 add_player: FAILURE
 remove_team: FAILURE
 add_player: FAILURE
-get_partial_spirit: SUCCESS, 1,4,5,3,2
+get_partial_spirit: SUCCESS, 4,2,3,5,1
 add_player: FAILURE
 get_team_points: SUCCESS, 0
 num_played_games_for_player: SUCCESS, 29
@@ -1252,7 +1252,7 @@ add_player: FAILURE
 get_partial_spirit: SUCCESS, 2,5,1,4,3
 get_team_points: FAILURE
 add_player: SUCCESS
-get_partial_spirit: SUCCESS, 3,1,5,4,2
+get_partial_spirit: SUCCESS, 5,4,3,2,1
 get_partial_spirit: FAILURE
 get_team_points: SUCCESS, 0
 buy_team: FAILURE
@@ -1594,7 +1594,7 @@ add_team: SUCCESS
 remove_team: SUCCESS
 play_match: FAILURE
 get_partial_spirit: SUCCESS, 1,2,5,4,3
-num_played_games_for_player: SUCCESS, 3
+num_played_games_for_player: SUCCESS, 4
 play_match: FAILURE
 add_player: FAILURE
 add_player: FAILURE

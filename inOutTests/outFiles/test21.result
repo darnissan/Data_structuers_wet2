@@ -731,7 +731,7 @@ remove_team: SUCCESS
 add_team: SUCCESS
 add_player: SUCCESS
 add_team: SUCCESS
-get_partial_spirit: SUCCESS, 5,2,3,1,4
+get_partial_spirit: SUCCESS, 2,3,1,4,5
 get_team_points: FAILURE
 remove_team: FAILURE
 get_team_points: FAILURE
@@ -810,7 +810,7 @@ get_ith_pointless_ability: FAILURE
 add_player: SUCCESS
 add_player: SUCCESS
 add_player: SUCCESS
-get_partial_spirit: SUCCESS, 5,2,3,1,4
+get_partial_spirit: SUCCESS, 2,3,1,4,5
 add_player: SUCCESS
 buy_team: FAILURE
 num_played_games_for_player: FAILURE

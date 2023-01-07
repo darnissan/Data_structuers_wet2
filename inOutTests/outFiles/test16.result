@@ -1256,7 +1256,7 @@ num_played_games_for_player: SUCCESS, 9
 add_player: SUCCESS
 get_partial_spirit: FAILURE
 add_player: FAILURE
-get_partial_spirit: SUCCESS, 5,1,2,4,3
+get_partial_spirit: SUCCESS, 3,5,2,4,1
 get_partial_spirit: FAILURE
 get_partial_spirit: SUCCESS, 5,1,4,3,2
 add_team: SUCCESS

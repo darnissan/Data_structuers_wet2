@@ -549,7 +549,7 @@ get_ith_pointless_ability: SUCCESS, 78259
 add_team: SUCCESS
 buy_team: FAILURE
 add_team: SUCCESS
-get_partial_spirit: SUCCESS, 2,3,5,4,1
+get_partial_spirit: SUCCESS, 5,3,2,4,1
 play_match: FAILURE
 num_played_games_for_player: SUCCESS, 1
 add_player: FAILURE

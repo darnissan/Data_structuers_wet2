@@ -31,7 +31,7 @@ private:
 	AvlTree<Team> teamsTree;
 	HashTable<Player> AllplayersTable;
 	RankTree<TeamAndAbilities> teamsAbilitiesRankTree;
-
+	permutation_t getSpiritFromMasterRoot(int playerId);
 	HashTable<Set<Player>> TeamsHashTable;
 
 	// DisjointSet<Player> playersByTeamId;
